@@ -14,6 +14,7 @@ import Home from "./page/Home";
 import Toolbar from './component/Toolbar';
 import SignInPage from "./page/SignIn";
 import { MarketNewsPage } from "./page/MarketNews";
+import { LiveMarketsPage } from "./page/LiveMarkets";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path={Paths.HOME} element={<Home />} />
           <Route path={Paths.SIGNIN} element={<SignInPage />} />
           <Route path={Paths.MARKET_NEWS} element={<MarketNewsPage />} />
+          <Route path={Paths.LIVE_MARKETS} element={<LiveMarketsPage />} />
         </Routes>
       </Router>
   )
