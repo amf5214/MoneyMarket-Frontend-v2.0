@@ -3,7 +3,7 @@ import Paths from "./paths.service";
 
 export const handleSignUp = async (firstName:string, lastName:string, email:string, password:string, username:string) => {
     try {
-        const response = await axios.post(`${Paths.API_BASE}/auth/signin`,
+        const response = await axios.post(`${Paths.API_BASE}/auth/signup`,
         JSON.stringify({
             firstName:firstName,
             lastName:lastName,
