@@ -1,8 +1,9 @@
 import axios from "axios";
+import Paths from "./paths.service";
 
-const loadUser = async (cookie:string) => {
+export const loadUser = async (cookie:string) => {
     try {
-        const response = await axios.get('/user',
+        const response = await axios.get(`${Paths.API_BASE}/user`,
             {
                 headers: { 'Authorization': `Bearer ${cookie}` },
             });
