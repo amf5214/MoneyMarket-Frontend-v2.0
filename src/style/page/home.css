@@ -1,0 +1,48 @@
+@-webkit-keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+.body-content {
+    font-family: "Kanit", serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center; 
+    background: -webkit-linear-gradient(120deg, #004643, #004643f1, #004643e7, #004643d1, #004643c1, #004643a1);
+    background: linear-gradient(120deg, #004643, #004643f1, #004643e7, #004643d1, #004643c1, #004643a1); 
+    background-size: 400% 400%;
+    -webkit-animation: gradient 60s ease infinite;
+	animation: gradient 60s ease infinite;
+}
+
+.hero-content {
+    font-family: "Kanit", serif;
+    padding: 3rem 3rem;
+    color: white;  
+    background-color: #038C3E;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    text-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
