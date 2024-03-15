@@ -1,7 +1,7 @@
 import axios from "axios";
 import Paths from "./paths.service";
 
-export const loadUser = async (cookie:string) => {
+const loadUser = async (cookie:string) => {
     try {
         const response = await axios.get(`${Paths.API_BASE}/user`,
             {
@@ -13,3 +13,5 @@ export const loadUser = async (cookie:string) => {
         return null;
     }
 }
+
+export default loadUser;
