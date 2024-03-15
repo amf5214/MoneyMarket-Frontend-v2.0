@@ -95,6 +95,9 @@ export const SignUpCard = () => {
             setShowInvalid(true);
         }
 
+        setFirstName("");
+        setLastName("");
+        setUsername("");
         setEmail("");
         setPwd("");
     }
