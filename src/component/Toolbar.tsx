@@ -82,6 +82,65 @@ const Toolbar = () => {
                     </DropdownMenu>
                 </Dropdown>
             </NavbarContent>
+
+            {/* Menubar toogle button - Visibility = Narrow screen */ }
+            <NavbarContent className="sm:hidden" justify="end">
+                <NavbarMenuToggle
+                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                    className="sm:hidden"
+                />
+            </NavbarContent>
+
+            {/* Menubar with nav links - Visibility = Narrow screen */ }
+            <NavbarMenu>
+                <NavbarMenuItem style={{marginTop: ".5rem"}}>
+                    <User  
+                        as={"button"}
+                        name={"Michael Weston"}
+                        avatarProps={{
+                            src: "https://i.pravatar.cc/200?img=13",
+                            color: "primary",  
+                            isBordered: true
+                        }}
+                    />
+                </NavbarMenuItem>
+                <Divider />
+                <NavbarMenuItem>
+                    <Link href="#" color={"foreground"}>
+                        My Settings
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Link href="#" color={"foreground"}>
+                        Live Markets
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Link href="#" color={"foreground"}>
+                        Market News
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Link href="#" color={"foreground"}>
+                        Learning Hub
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Link href="#" color={"foreground"}>
+                        Content Hub
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Link href="#" color={"foreground"}>
+                        Help
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem>
+                    <Link href="#" color={"foreground"}>
+                        Log Out
+                    </Link>
+                </NavbarMenuItem>
+            </NavbarMenu>
         </Navbar>
     )
 }
