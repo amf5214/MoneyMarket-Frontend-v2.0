@@ -12,6 +12,8 @@ import './style/App.css';
 import Paths from "./services/paths.service";
 import Home from "./page/Home";
 import Toolbar from './component/Toolbar';
+import SignInPage from "./page/signin";
+
 function App() {
 
   return (
@@ -19,6 +21,8 @@ function App() {
         <Toolbar />
         <Routes>
           <Route path={Paths.HOME} element={<Home />} />
+          <Route path={Paths.SIGNIN} element={<SignInPage />} />
+        </Routes>
       </Router>
   )
 }
