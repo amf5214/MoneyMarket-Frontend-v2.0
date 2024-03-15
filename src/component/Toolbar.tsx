@@ -1,18 +1,39 @@
 // React imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // NextUI imports
 import { Avatar, Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, User } from "@nextui-org/react";
 
 // Other imports
 import SearchIcon from '@mui/icons-material/Search';
+import Cookies from "js-cookie";
 
 // Style imports
 import '../style/component/toolbar.css'
+import { loadUser } from "../services/account.service";
 
 const Toolbar = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const updateUser = async () => {
+            if(Cookies.get("Authorization")) {
+                const user = await loadUser(Cookies.get("Authorization"));
+                setUser(await user);
+            }
+        }
+
+        updateUser();
+    }, []);
+
+
+    const handleSignout = () => {
+        Cookies.set("Authorization", "");
+        setUser(null);
+    }
 
     return (
         <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" isBordered className="h-full relative flex navheader">
@@ -61,7 +82,7 @@ const Toolbar = () => {
                     <DropdownTrigger>
                         <Avatar   
                             as={"button"}
-                            name={"Michael Weston"}
+                            name={user != null ? user["firstName"] + " " + user["lastName"] : "Not signed in"}
                             src="https://i.pravatar.cc/200?img=13"
                             color="primary"  
                             isBordered
@@ -70,8 +91,8 @@ const Toolbar = () => {
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                             <DropdownItem key="profile" className="h-14 gap-2">
                                 <User   
-                                    name={"Michael Weston"}
-                                    description={"Product Designer"}
+                                    name={user != null ? user["firstName"] + " " + user["lastName"] : "Not signed in"}
+                                    description={user != null ? user["username"] : "Not signed in"}
                                     avatarProps={{
                                         src: "https://i.pravatar.cc/200?img=13"                                    }}
                                 />
@@ -96,7 +117,7 @@ const Toolbar = () => {
                 <NavbarMenuItem style={{marginTop: ".5rem"}}>
                     <User  
                         as={"button"}
-                        name={"Michael Weston"}
+                        name={user != null ? user["firstName"] + " " + user["lastName"] : "Not signed in"}
                         avatarProps={{
                             src: "https://i.pravatar.cc/200?img=13",
                             color: "primary",  
