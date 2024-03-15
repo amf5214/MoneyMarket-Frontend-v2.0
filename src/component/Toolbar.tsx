@@ -10,7 +10,8 @@ import Cookies from "js-cookie";
 
 // Style imports
 import '../style/component/toolbar.css'
-import { loadUser } from "../services/account.service";
+import loadUser from "../services/account.service";
+import Paths from "../services/paths.service";
 
 const Toolbar = () => {
 
@@ -50,7 +51,7 @@ const Toolbar = () => {
                     <Link href="#" color={"foreground"}>
                         Live Markets
                     </Link>
-                    <Link href="#" color={"foreground"}>
+                    <Link href={Paths.MARKET_NEWS} color={"foreground"}>
                         Market News
                     </Link>
                     <Link href="#" color={"foreground"}>
@@ -139,7 +140,7 @@ const Toolbar = () => {
                     </Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem>
-                    <Link href="#" color={"foreground"}>
+                    <Link href={Paths.MARKET_NEWS} color={"foreground"}>
                         Market News
                     </Link>
                 </NavbarMenuItem>
