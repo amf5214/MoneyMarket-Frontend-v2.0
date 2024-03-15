@@ -40,6 +40,48 @@ const Toolbar = () => {
                     </Link>
                 </NavbarContent>
             </NavbarContent>
+            
+            {/* Search bar and avatar - Visibility = Wide screen */ }
+            <NavbarContent className="hidden md:flex gap-4" justify="end">
+                <NavbarItem>
+                    <Input
+                        classNames={{
+                            base: "max-w-full sm:max-w-[10rem] h-10",
+                            mainWrapper: "h-full",
+                            input: "text-small",
+                            inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+                        }}
+                        placeholder="Type to search..."
+                        size="sm"
+                        startContent={<SearchIcon />}
+                        type="search"
+                    />
+                </NavbarItem>
+                <Dropdown placement="bottom-end">
+                    <DropdownTrigger>
+                        <Avatar   
+                            as={"button"}
+                            name={"Michael Weston"}
+                            src="https://i.pravatar.cc/200?img=13"
+                            color="primary"  
+                            isBordered
+                        />
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Profile Actions" variant="flat">
+                            <DropdownItem key="profile" className="h-14 gap-2">
+                                <User   
+                                    name={"Michael Weston"}
+                                    description={"Product Designer"}
+                                    avatarProps={{
+                                        src: "https://i.pravatar.cc/200?img=13"                                    }}
+                                />
+                            </DropdownItem>
+                            <DropdownItem key="settings">My Settings</DropdownItem>
+                            <DropdownItem key="help">Help</DropdownItem>
+                            <DropdownItem key="logout">Log Out</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </NavbarContent>
         </Navbar>
     )
 }
