@@ -15,7 +15,7 @@ export const handleSignUp = async (firstName:string, lastName:string, email:stri
             headers: {'Content-Type': 'application/json'},
         });
 
-        return await response.data['access_token'];
+        return await "successful";
 
     } catch(err) {
         console.log(err)
