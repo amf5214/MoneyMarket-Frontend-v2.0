@@ -99,7 +99,9 @@ const Toolbar = () => {
                             </DropdownItem>
                             <DropdownItem key="settings">My Settings</DropdownItem>
                             <DropdownItem key="help">Help</DropdownItem>
-                            <DropdownItem key="logout">Log Out</DropdownItem>
+                            {user != null ?
+                            <DropdownItem onClick={handleSignout} key="logout">Log Out</DropdownItem>
+                            : <DropdownItem href="/signin" key="signin">Sign In</DropdownItem>}
                     </DropdownMenu>
                 </Dropdown>
             </NavbarContent>
@@ -157,9 +159,9 @@ const Toolbar = () => {
                     </Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem>
-                    <Link href="#" color={"foreground"}>
-                        Log Out
-                    </Link>
+                    {user != null ?
+                    <Link onClick={handleSignout} key="logout">Log Out</Link>
+                    : <Link href="/signin" key="signin">Sign In</Link>}
                 </NavbarMenuItem>
             </NavbarMenu>
         </Navbar>
