@@ -7,7 +7,7 @@ export const loadUser = async (cookie:string) => {
             {
                 headers: { 'Authorization': `Bearer ${cookie}` },
             });
-        return await response.data['username'];
+        return await response.data;
     } catch(err) {
         console.log(err);
         return null;
