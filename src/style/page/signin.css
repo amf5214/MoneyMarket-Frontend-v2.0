@@ -1,0 +1,9 @@
+.signup-row {
+    flex-direction: row;
+}
+
+@media(max-width: 768px) {
+    .signup-row {
+        flex-direction: column;
+    }
+}

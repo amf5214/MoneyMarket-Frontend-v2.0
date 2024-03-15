@@ -12,7 +12,7 @@ import './style/App.css';
 import Paths from "./services/paths.service";
 import Home from "./page/Home";
 import Toolbar from './component/Toolbar';
-import SignInPage from "./page/signin";
+import SignInPage from "./page/SignIn";
 
 function App() {
 

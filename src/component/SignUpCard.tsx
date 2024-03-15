@@ -1,10 +1,12 @@
-import { Button, Card, CardBody, Divider, Progress } from "@nextui-org/react";
+import { Button, Card, CardBody, Divider, Progress, ScrollShadow } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InvalidSignupModal } from "./InvalidSignupModal";
 import { SuccessfulSignupModal } from "./SuccessfulSignupModal";
 import { handleSignUp } from "../services/signup.service";
 import { Password } from "@mui/icons-material";
+
+import "../style/page/signin.css"
 
 // Regular expressions to serve as validation rules for input fields
 const NAME_REGEX = /^[a-zA-Z-]{3,30}$/;
@@ -108,39 +110,43 @@ export const SignUpCard = () => {
             <SuccessfulSignupModal show={showSuccess} setShow={setShowSuccess} />
             <Card className="min-w-[25vw] min-h-[50vh]">
                 <CardBody className="flex flex-col justify-around items-center">
-                    <Progress aria-label="Loading..." value={progress} className="max-w-md"/>
-                    <h1 className="text-center font-bold text-slate-800" style={{fontSize: "x-large", fontWeight: "bold"}}>Sign In</h1>
-                    <form className="flex flex-col gap-y-4 justify-around items-center"
-                        style={{flex: ".5 0 auto", marginBottom: "1rem"}}>     
-                        <figure >
-                            <h1 className="text-center">First Name:</h1>
-                            <input type="text" value={firstName} placeholder="Enter First Name" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setFirstName(e.target.value)}/>
-                        </figure>
-                        <Divider />
-                        <figure >
-                            <h1 className="text-center">Last Name:</h1>
-                            <input type="text" value={lastName} placeholder="Enter Last Name" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setLastName(e.target.value)}/>
-                        </figure>
-                        <Divider />
-                        <figure >
-                            <h1 className="text-center">Username:</h1>
-                            <input type="text" value={username} placeholder="Enter Username" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setUsername(e.target.value)}/>
-                        </figure>
-                        <Divider />
-                        <figure>
-                            <h1 className="text-center">Email address:</h1>
-                            <input autoFocus type="email" value={email} placeholder="Enter email" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setEmail(e.target.value)}/>
-                        </figure>
-                        <Divider />
-                        <figure >
-                            <h1 className="text-center">Password:</h1>
-                            <input type="password" value={pwd} placeholder="Enter password" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setPwd(e.target.value)}/>
-                        </figure>
-                        
-                    </form>
-                    <Button isDisabled={progress == 100 ? false : true} color="primary" variant="shadow" className="max-w-[100%]" onClick={handleSubmit}>
-                        Submit
-                    </Button>
+                    <ScrollShadow className="flex flex-col justify-around items-center">
+                        <Progress aria-label="Loading..." value={progress} className="max-w-md"/>
+                        <h1 className="text-center font-bold text-slate-800" style={{fontSize: "x-large", fontWeight: "bold"}}>Sign Up</h1>
+                        <form className="flex flex-col gap-y-4 justify-around items-center"
+                            style={{flex: ".5 0 auto", marginBottom: "1rem"}}>     
+                            <div className={`flex justify-center gap-x-4 signup-row`}>
+                                <figure >
+                                    <h1 className="text-center">First Name:</h1>
+                                    <input type="text" value={firstName} placeholder="Enter First Name" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setFirstName(e.target.value)}/>
+                                </figure>
+                                <figure >
+                                    <h1 className="text-center">Last Name:</h1>
+                                    <input type="text" value={lastName} placeholder="Enter Last Name" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setLastName(e.target.value)}/>
+                                </figure>
+                            </div>
+                            <Divider />
+                            <div className={`flex justify-center gap-x-4 signup-row`}>
+                                <figure >
+                                    <h1 className="text-center">Username:</h1>
+                                    <input type="text" value={username} placeholder="Enter Username" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setUsername(e.target.value)}/>
+                                </figure>
+                                <figure>
+                                    <h1 className="text-center">Email address:</h1>
+                                    <input autoFocus type="email" value={email} placeholder="Enter email" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setEmail(e.target.value)}/>
+                                </figure>
+                            </div>
+                            <Divider />
+                            <figure >
+                                <h1 className="text-center">Password:</h1>
+                                <input type="password" value={pwd} placeholder="Enter password" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setPwd(e.target.value)}/>
+                            </figure>
+                            
+                        </form>
+                        <Button isDisabled={progress == 100 ? false : true} color="primary" variant="shadow" className="max-w-[100%]" onClick={handleSubmit}>
+                            Submit
+                        </Button>
+                    </ScrollShadow>
                 </CardBody>
             </Card>
         </>
