@@ -33,14 +33,7 @@ export const LiveMarketsPage = () => {
         <>
             <div className="bg-gray-100 market-news-body" style={{height: "90vh"}}>
                 <div className="mx-auto max-w-7xl px-4 w-full">
-                    <div className="flex justify-end w-full" style={{paddingTop: "1rem"}}>
-                    <ButtonGroup className="flex space-x-4">
-                        <Chip  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Chip>
-                        <Chip  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Chip>
-                        <Chip  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Chip>
-                    </ButtonGroup>
-                    </div>
-                    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
+                    <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
                         <NavbarContent justify="start" />
                         <NavbarContent className="md:flex gap-4 lg:flex justify-center" justify="center">
                             <NavbarItem>
@@ -58,7 +51,13 @@ export const LiveMarketsPage = () => {
                                 />
                             </NavbarItem>
                         </NavbarContent>
-                        <NavbarContent justify="end" />
+                        <NavbarContent justify="end">
+                            <ButtonGroup className="flex space-x-4">
+                                <Chip  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Chip>
+                                <Chip  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Chip>
+                                <Chip  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Chip>
+                            </ButtonGroup>
+                        </NavbarContent>
                     </Navbar>
                 </div>
             </div>
