@@ -8,9 +8,13 @@ import {
 // Style imports 
 import './style/App.css';
 
+import Toolbar from './component/Toolbar';
 function App() {
 
   return (
+      <Router>
+        <Toolbar />
+      </Router>
   )
 }
 
