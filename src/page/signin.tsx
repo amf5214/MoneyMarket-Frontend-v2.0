@@ -12,7 +12,7 @@ const SignInPage = () => {
                         <SignInCard />
                     </Tab>
                     <Tab key="signup" title="Sign up">
-                        
+                        <SignUpCard />
                     </Tab>
                 </Tabs>
             </div>
