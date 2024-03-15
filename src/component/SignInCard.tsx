@@ -1,11 +1,14 @@
 import { Button, Card, CardBody, Divider } from "@nextui-org/react";
 import { handleSignin } from "../services/signin.service";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InvalidSigninModal } from "./InvalidSigninModal";
 import { SuccessfulSigninModal } from "./SuccessfulSigninModal";
+import { useNavigate } from "react-router-dom";
 
 export const SignInCard = () => {
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
@@ -26,11 +29,16 @@ export const SignInCard = () => {
         setEmail("");
         setPwd("");
     }
+
+    const hideSuccess = () => {
+        setShowSuccess(false);
+        navigate("/");
+    }
     
     return (
         <>        
             <InvalidSigninModal show={showInvalid} setShow={setShowInvalid} />
-            <SuccessfulSigninModal show={showSuccess} setShow={setShowSuccess} />
+            <SuccessfulSigninModal show={showSuccess} setShow={hideSuccess} />
             <Card className="min-w-[25vw] min-h-[50vh]">
                 <CardBody className="flex flex-col justify-around items-center">
                     <h1 className="text-center font-bold text-slate-800" style={{fontSize: "x-large", fontWeight: "bold"}}>Sign In</h1>

@@ -1,21 +1,17 @@
 import { Divider, Modal, ModalBody, ModalContent, ModalHeader, ModalFooter, Button } from "@nextui-org/react"
 
 interface Props {
-    setShow: (show:boolean) => void;
+    setShow: () => void;
     show: boolean;
 }
 
 export const SuccessfulSigninModal = ( { show, setShow }:Props ) => {
 
-    const handleClose = () => {
-        setShow(false);
-    }
-
     return (
         <Modal 
             size={"md"} 
             isOpen={show} 
-            onClose={handleClose}
+            onClose={setShow}
             backdrop="blur"
             classNames={{base:"", header:"border-b-[1px]", footer: "border-t-[1px]", backdrop: "bg-green-600"}}
             >
@@ -25,7 +21,7 @@ export const SuccessfulSigninModal = ( { show, setShow }:Props ) => {
                     <p>Successful Sign In</p>
                 </ModalBody>
                 <ModalFooter>
-                    <Button variant="shadow" color="primary" onPress={handleClose}>
+                    <Button variant="shadow" color="primary" onPress={setShow}>
                     Close
                     </Button>
                 </ModalFooter>
