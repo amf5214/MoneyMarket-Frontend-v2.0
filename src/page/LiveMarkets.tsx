@@ -5,6 +5,7 @@ import Ticker, { FinancialTicker, NewsTicker } from 'nice-react-ticker';
 import Cookies from "js-cookie";
 import { getMarketStatus, getWLAStocks } from "../services/marketdata.service";
 import { ActiveStock } from "../services/activestock";
+import "../style/page/livemarkets.css";
 
 export const LiveMarketsPage = () => {
 
@@ -36,23 +37,24 @@ export const LiveMarketsPage = () => {
     useEffect(() => {
         const updateActiveStocks = async () => {
             if(Cookies.get('Authorization') != null) {
-                const data = await getWLAStocks(Cookies.get('Authorization'));
-                setActiveStocksArray(await data.mostActive);
+                setActiveStocksArray(activeStocks);
+                setActiveStocksArray((await getWLAStocks(Cookies.get('Authorization'))).mostActive);
             }
         }
         updateActiveStocks();
-        console.log(activeStockArray);
     }, [])
     
     return (
         <>
             <div className="bg-gray-100 market-news-body" style={{height: "90vh"}}>
-                <div className="mx-auto max-w-7xl px-4 w-full">
-                    <Ticker slideSpeed={100}>
-                        { activeStockArray.map((item, idx) => (
-                            <FinancialTicker id={idx} change={item.changeAmount > 0} symbol={item.ticker} lastPrice={`${Math.round(item.price)}`} percentage={item.changeAmount > 0 ? item.changePercentage: item.changePercentage.substring(1)} currentPrice={`${item.price}`} />
-                        ))}
-                    </Ticker>
+                <div className="mx-auto w-full" style={{height: "4.5rem"}}>
+                    <div style={{height: "100%"}}>
+                        <Ticker slideSpeed={100}>
+                            { activeStockArray.map((item, idx) => (
+                                <FinancialTicker id={idx} key={idx} change={item.changeAmount > 0} symbol={item.ticker} lastPrice={`${Math.round(item.price)}`} percentage={item.changeAmount > 0 ? item.changePercentage: item.changePercentage.substring(1)} currentPrice={`${item.price}`} />
+                            ))}
+                        </Ticker>
+                    </div> 
                     <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
                         <NavbarContent justify="start" />
                         <NavbarContent className="md:flex gap-4 lg:flex justify-center" justify="center">
