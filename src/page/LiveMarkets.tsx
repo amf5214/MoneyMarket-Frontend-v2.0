@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import Ticker, { FinancialTicker, NewsTicker } from 'nice-react-ticker';
 import Cookies from "js-cookie";
-import { getMarketStatus } from "../services/marketdata.service";
+import { getMarketStatus, getWLAStocks } from "../services/marketdata.service";
+import { ActiveStock } from "../services/activestock";
 
 export const LiveMarketsPage = () => {
 
@@ -15,6 +16,9 @@ export const LiveMarketsPage = () => {
     const [nyseState, setNYSEState] = useState("");
     const [nasdaqState, setNasdaqState] = useState("");
     const [otcState, setOTCState] = useState("");
+
+    const activeStocks:ActiveStock[] = [];
+    const [activeStockArray, setActiveStocksArray] = useState(activeStocks);
 
       // Effect that pulls data on market status and updates the state variables
       useEffect(() => {
@@ -28,11 +32,27 @@ export const LiveMarketsPage = () => {
         }
         getMarket();
     }, []);
+
+    useEffect(() => {
+        const updateActiveStocks = async () => {
+            if(Cookies.get('Authorization') != null) {
+                const data = await getWLAStocks(Cookies.get('Authorization'));
+                setActiveStocksArray(await data.mostActive);
+            }
+        }
+        updateActiveStocks();
+        console.log(activeStockArray);
+    }, [])
     
     return (
         <>
             <div className="bg-gray-100 market-news-body" style={{height: "90vh"}}>
                 <div className="mx-auto max-w-7xl px-4 w-full">
+                    <Ticker slideSpeed={100}>
+                        { activeStockArray.map((item, idx) => (
+                            <FinancialTicker id={idx} change={item.changeAmount > 0} symbol={item.ticker} lastPrice={`${Math.round(item.price)}`} percentage={item.changeAmount > 0 ? item.changePercentage: item.changePercentage.substring(1)} currentPrice={`${item.price}`} />
+                        ))}
+                    </Ticker>
                     <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
                         <NavbarContent justify="start" />
                         <NavbarContent className="md:flex gap-4 lg:flex justify-center" justify="center">
@@ -52,10 +72,10 @@ export const LiveMarketsPage = () => {
                             </NavbarItem>
                         </NavbarContent>
                         <NavbarContent justify="end">
-                            <ButtonGroup className="flex space-x-4">
-                                <Chip  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Chip>
-                                <Chip  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Chip>
-                                <Chip  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Chip>
+                            <ButtonGroup className="">
+                                <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
+                                <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
+                                <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
                             </ButtonGroup>
                         </NavbarContent>
                     </Navbar>
