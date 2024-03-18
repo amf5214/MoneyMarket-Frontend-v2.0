@@ -1,11 +1,12 @@
-import { Button, ButtonGroup, Chip, Input, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react"
-import { useEffect, useState } from "react";
+import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Chip, Input, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react"
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import Ticker, { FinancialTicker, NewsTicker } from 'nice-react-ticker';
 import Cookies from "js-cookie";
 import { getMarketStatus, getWLAStocks } from "../services/marketdata.service";
 import { ActiveStock } from "../services/activestock";
 import "../style/page/livemarkets.css";
+import { useAsyncList } from "@react-stately/data";
 
 export const LiveMarketsPage = () => {
 
@@ -21,8 +22,8 @@ export const LiveMarketsPage = () => {
     const activeStocks:ActiveStock[] = [];
     const [activeStockArray, setActiveStocksArray] = useState(activeStocks);
 
-      // Effect that pulls data on market status and updates the state variables
-      useEffect(() => {
+    // Effect that pulls data on market status and updates the state variables
+    useEffect(() => {
         const getMarket = async () => {
             if(Cookies.get('Authorization') != null) {
                 const response = await getMarketStatus(Cookies.get('Authorization'));
@@ -43,7 +44,33 @@ export const LiveMarketsPage = () => {
         }
         updateActiveStocks();
     }, [])
-    
+
+    type TickerType = {
+        Index: number;
+        label: string;
+        name: string;
+        Symbol: string;
+    }
+
+    let list = useAsyncList<TickerType>({
+        async load({signal, filterText}) {
+            let hintArray:any[] = [];
+            await fetch('stocks.json', {signal})
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    // Handle the data here (e.g., set it in component state)
+                    hintArray = data['Symbols']
+                    hintArray = hintArray.filter((item) => item.Symbol.toLowerCase().includes(filterText?.toLowerCase())).slice(0,15)
+                })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                });
+            return {items: hintArray};
+        }
+    })
+
     return (
         <>
             <div className="bg-gray-100 market-news-body" style={{height: "90vh"}}>
@@ -57,21 +84,20 @@ export const LiveMarketsPage = () => {
                     </div> 
                     <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
                         <NavbarContent justify="start" />
-                        <NavbarContent className="md:flex gap-4 lg:flex justify-center" justify="center">
-                            <NavbarItem>
-                                <Input
-                                    classNames={{
-                                        base: "max-w-full sm:max-w-[10rem] h-10",
-                                        mainWrapper: "h-full",
-                                        input: "text-small",
-                                        inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-                                    }}
-                                    placeholder="Type to search..."
-                                    size="sm"
-                                    startContent={<SearchIcon />}
-                                    type="search"
-                                />
-                            </NavbarItem>
+                        <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
+                                <Autocomplete 
+                                    label="Select a stock" 
+                                    className="max-w-xs" 
+                                    items={list.items}
+                                    isLoading={list.isLoading}
+                                    onInputChange={list.setFilterText}
+                                >
+                                    {(item:any) => (
+                                        <AutocompleteItem key={item.label}>
+                                            {String(item.Symbol)}
+                                        </AutocompleteItem>
+                                    )}
+                                </Autocomplete>
                         </NavbarContent>
                         <NavbarContent justify="end">
                             <ButtonGroup className="">
@@ -86,3 +112,4 @@ export const LiveMarketsPage = () => {
         </>
     )
 }
+
