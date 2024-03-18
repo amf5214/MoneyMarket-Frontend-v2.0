@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InvalidSignupModal } from "./InvalidSignupModal";
 import { SuccessfulSignupModal } from "./SuccessfulSignupModal";
-import { handleSignUp } from "../services/signup.service";
+import { handleSignUp } from "../services/auth/signup.service";
 import { Password } from "@mui/icons-material";
 
 import "../style/page/signin.css"

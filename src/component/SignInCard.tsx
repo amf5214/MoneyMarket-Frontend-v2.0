@@ -1,5 +1,5 @@
 import { Button, Card, CardBody, Divider } from "@nextui-org/react";
-import { handleSignin } from "../services/signin.service";
+import { handleSignin } from "../services/auth/signin.service";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InvalidSigninModal } from "./InvalidSigninModal";
