@@ -7,6 +7,7 @@ import { getMarketStatus, getWLAStocks } from "../services/marketdata.service";
 import { ActiveStock } from "../services/activestock";
 import "../style/page/livemarkets.css";
 import { useAsyncList } from "@react-stately/data";
+import { TickerAutocomplete } from "../component/TickerAutocomplete";
 
 export const LiveMarketsPage = () => {
 
@@ -45,32 +46,6 @@ export const LiveMarketsPage = () => {
         updateActiveStocks();
     }, [])
 
-    type TickerType = {
-        Index: number;
-        label: string;
-        name: string;
-        Symbol: string;
-    }
-
-    let list = useAsyncList<TickerType>({
-        async load({signal, filterText}) {
-            let hintArray:any[] = [];
-            await fetch('stocks.json', {signal})
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    // Handle the data here (e.g., set it in component state)
-                    hintArray = data['Symbols']
-                    hintArray = hintArray.filter((item) => item.Symbol.toLowerCase().includes(filterText?.toLowerCase())).slice(0,15)
-                })
-                .catch((error) => {
-                    console.error('Error fetching data:', error);
-                });
-            return {items: hintArray};
-        }
-    })
-
     return (
         <>
             <div className="bg-gray-100 market-news-body" style={{height: "90vh"}}>
@@ -85,19 +60,7 @@ export const LiveMarketsPage = () => {
                     <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
                         <NavbarContent justify="start" />
                         <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
-                                <Autocomplete 
-                                    label="Select a stock" 
-                                    className="max-w-xs" 
-                                    items={list.items}
-                                    isLoading={list.isLoading}
-                                    onInputChange={list.setFilterText}
-                                >
-                                    {(item:any) => (
-                                        <AutocompleteItem key={item.label}>
-                                            {String(item.Symbol)}
-                                        </AutocompleteItem>
-                                    )}
-                                </Autocomplete>
+                            <TickerAutocomplete />
                         </NavbarContent>
                         <NavbarContent justify="end">
                             <ButtonGroup className="">
