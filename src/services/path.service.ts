@@ -1,4 +1,4 @@
-enum Paths {
+enum Path {
   HOME = "/",
   SIGNIN = "/signin",
   MARKET_NEWS = "/market-news",
@@ -6,4 +6,4 @@ enum Paths {
   LIVE_MARKETS = "/live-markets"
 }
 
-export default Paths;
+export default Path;
