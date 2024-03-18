@@ -10,12 +10,15 @@ import App from './App.tsx'
 
 // Style imports
 import './index.css'
+import { AuthProvider } from './provider/AuthProvider'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <NextUIProvider>
-      <App />
-    </NextUIProvider>
+    <AuthProvider>
+      <NextUIProvider>
+        <App />
+      </NextUIProvider>
+    </AuthProvider>
   </React.StrictMode>,
 )
