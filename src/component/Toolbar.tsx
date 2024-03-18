@@ -46,21 +46,21 @@ const Toolbar = () => {
                         <p style={{ marginLeft: ".5rem" }}>Money Market</p>
                     </Link>  
                 </NavbarBrand>
-                 {/* Nav buttons in the middle of the screen - Visibility = Wide screen */ }
-                 <NavbarContent className="hidden lg:flex gap-4" justify="center">
-                    <Link href="#" color={"foreground"}>
-                        Live Markets
-                    </Link>
-                    <Link href={Paths.MARKET_NEWS} color={"foreground"}>
-                        Market News
-                    </Link>
-                    <Link href="#" color={"foreground"}>
-                        Learning Hub
-                    </Link>
-                    <Link href="#" color={"foreground"}>
-                        Content Hub
-                    </Link>
-                </NavbarContent>
+            </NavbarContent>
+             {/* Nav buttons in the middle of the screen - Visibility = Wide screen */ }
+            <NavbarContent className="hidden md:flex gap-4" justify="center">
+                <Link href="#" color={"foreground"}>
+                    Live Markets
+                </Link>
+                <Link href={Paths.MARKET_NEWS} color={"foreground"}>
+                    Market News
+                </Link>
+                <Link href="#" color={"foreground"}>
+                    Learning Hub
+                </Link>
+                <Link href="#" color={"foreground"}>
+                    Content Hub
+                </Link>
             </NavbarContent>
             
             {/* Search bar and avatar - Visibility = Wide screen */ }
@@ -128,12 +128,12 @@ const Toolbar = () => {
                         }}
                     />
                 </NavbarMenuItem>
-                <Divider />
                 <NavbarMenuItem>
-                    <Link href="#" color={"foreground"}>
-                        My Settings
-                    </Link>
+                    {user != null ?
+                    <Link onClick={handleSignout} key="logout">Log Out</Link>
+                    : <Link href="/signin" key="signin">Sign In</Link>}
                 </NavbarMenuItem>
+                <Divider />
                 <NavbarMenuItem>
                     <Link href="#" color={"foreground"}>
                         Live Markets
@@ -154,15 +154,16 @@ const Toolbar = () => {
                         Content Hub
                     </Link>
                 </NavbarMenuItem>
+                <Divider />
+                <NavbarMenuItem>
+                    <Link href="#" color={"foreground"}>
+                        My Settings
+                    </Link>
+                </NavbarMenuItem>
                 <NavbarMenuItem>
                     <Link href="#" color={"foreground"}>
                         Help
                     </Link>
-                </NavbarMenuItem>
-                <NavbarMenuItem>
-                    {user != null ?
-                    <Link onClick={handleSignout} key="logout">Log Out</Link>
-                    : <Link href="/signin" key="signin">Sign In</Link>}
                 </NavbarMenuItem>
             </NavbarMenu>
         </Navbar>
