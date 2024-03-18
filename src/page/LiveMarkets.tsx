@@ -9,17 +9,24 @@ import "../style/page/livemarkets.css";
 import { useAsyncList } from "@react-stately/data";
 import { TickerAutocomplete } from "../component/TickerAutocomplete";
 
+// Page to access market data
 export const LiveMarketsPage = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    // Array of market state possible values
     const states = ["open", "extended-hours", "closed"];
+
+    // Style classes for market status objects
     const openClass = "bg-green-200 text-green-600";
     const closeClass = "bg-red-200 text-red-600";
+
+    // State variables for status of markets
     const [nyseState, setNYSEState] = useState("");
     const [nasdaqState, setNasdaqState] = useState("");
     const [otcState, setOTCState] = useState("");
 
+    // State variable to array of active stocks that will be shown in the wla ticker feed
     const activeStocks:ActiveStock[] = [];
     const [activeStockArray, setActiveStocksArray] = useState(activeStocks);
 
