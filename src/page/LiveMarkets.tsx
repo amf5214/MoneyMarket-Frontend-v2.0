@@ -12,8 +12,6 @@ import { TickerAutocomplete } from "../component/TickerAutocomplete";
 // Page to access market data
 export const LiveMarketsPage = () => {
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     // Array of market state possible values
     const states = ["open", "extended-hours", "closed"];
 
@@ -64,7 +62,7 @@ export const LiveMarketsPage = () => {
                             ))}
                         </Ticker>
                     </div> 
-                    <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
+                    <Navbar isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
                         <NavbarContent justify="start" />
                         <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
                             <TickerAutocomplete />
