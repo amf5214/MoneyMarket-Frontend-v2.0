@@ -71,6 +71,9 @@ export const LiveMarketsPage = () => {
                         </NavbarContent>
                     </Navbar>
                 </div>
+                <div className="mx-auto w-full h-full flex flex-row sm:flex-col">
+                        
+                </div>
             </div>
         </>
     )
