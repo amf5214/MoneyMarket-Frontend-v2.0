@@ -1,14 +1,18 @@
 import { Button, Card, CardBody, Divider } from "@nextui-org/react";
 import { handleSignin } from "../services/auth/signin.service";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InvalidSigninModal } from "./InvalidSigninModal";
 import { SuccessfulSigninModal } from "./SuccessfulSigninModal";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../provider/AuthProvider";
+import loadUser from "../services/auth/account.service";
 
 export const SignInCard = () => {
 
     const navigate = useNavigate();
+
+    const { user, setUser } = useContext(AuthContext);
 
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
@@ -21,6 +25,10 @@ export const SignInCard = () => {
 
         if(await cookie != null) {
             Cookies.set("Authorization", await cookie);
+            if(cookie != undefined) {
+                const user = await loadUser(await cookie);
+                setUser(await user);
+            }
             setShowSuccess(true);
         } else {
             setShowInvalid(true);
