@@ -55,11 +55,16 @@ export const LiveMarketsPage = () => {
     // Effect that pulls data on market status and updates the state variables
     useEffect(() => {
         const getMarket = async () => {
-            if(Cookies.get('Authorization') != null) {
-                const response = await getMarketStatus(Cookies.get('Authorization'));
-                setNYSEState(await response.exchanges.nyse);
-                setNasdaqState(await response.exchanges.nasdaq);
-                setOTCState(await response.exchanges.otc);
+            try {
+                if(Cookies.get('Authorization') != null) {
+                    const response = await getMarketStatus(Cookies.get('Authorization'));
+                    setNYSEState(await response.exchanges.nyse);
+                    setNasdaqState(await response.exchanges.nasdaq);
+                    setOTCState(await response.exchanges.otc);
+                } 
+            }
+            catch(err) {
+                console.log(err);
             }
         }
         getMarket();
@@ -68,9 +73,14 @@ export const LiveMarketsPage = () => {
     // Effect to get the wla data and update state variable for array
     useEffect(() => {
         const updateActiveStocks = async () => {
-            if(Cookies.get('Authorization') != null) {
-                setActiveStocksArray(activeStocks);
-                setActiveStocksArray((await getWLAStocks(Cookies.get('Authorization'))).mostActive);
+            try {
+                if(Cookies.get('Authorization') != null) {
+                    setActiveStocksArray(activeStocks);
+                    setActiveStocksArray((await getWLAStocks(Cookies.get('Authorization'))).mostActive);
+                }
+            }
+            catch(err) {
+                console.log(err);
             }
         }
         updateActiveStocks();
@@ -78,11 +88,17 @@ export const LiveMarketsPage = () => {
 
     // Handler for stock search
     const handleSearch = async () => {
-        const cookie = Cookies.get("Authorization");
-        const testDto = new TickerData(symbol, timeSpan, formatDateString(startDate, API_FORMAT, "-", 1), formatDateString(endDate, API_FORMAT, "-", 1), '5000');
-        if(cookie != undefined) {
-            const response = await getStockData(testDto, cookie);
-            setGraphData(response);
+        try {
+            const cookie = Cookies.get("Authorization");
+            const testDto = new TickerData(symbol, timeSpan, formatDateString(startDate, API_FORMAT, "-", 1), formatDateString(endDate, API_FORMAT, "-", 1), '5000');
+            if(cookie != undefined) {
+                const response = await getStockData(testDto, cookie);
+                setGraphData(response);
+            }
+        }
+        
+        catch(err) {
+            console.log(err);
         }
         
     }
@@ -99,34 +115,31 @@ export const LiveMarketsPage = () => {
                         </Ticker>
                     </div> 
                 </div>
-                <Navbar isBordered maxWidth="full" className="hidden md:flex w-full bg-gray-100 relative navheader justify-center">
-                    <NavbarContent justify="start">
-                        <ButtonGroup className="">
-                            <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
-                            <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
-                            <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
-                        </ButtonGroup>
-                    </NavbarContent>
-
-                    <NavbarContent justify="center" />
-                    
-                    <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="end">
+                <ButtonGroup className="" style={{ alignSelf: "flex-end" }}>
+                    <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
+                    <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
+                    <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
+                </ButtonGroup>
+                <Navbar maxWidth="full" className="hidden md:flex w-full bg-gray-100 relative navheader justify-center" style={{margin: "1rem 0 auto"}}>
+                    <NavbarContent justify="start" />
+                    <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
                         <TickerAutocomplete setSymbol={setSymbol} />
                         <Button color={"primary"} onClick={handleSearch} >
                             Search
                         </Button>
                     </NavbarContent>
+                    <NavbarContent justify="end" />
                 </Navbar>
                 <div className="container-lg mx-auto w-full flex lg:flex-row md:flex-row sm:flex-col xs:flex-col justify-center items-center" style={{marginTop: "2rem"}}>
                     {graphData.length != 0 ?
                         <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
-                            <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={300} width={680} />
+                            <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={660} />
                         </div>
                     : null
                     }
                     {graphData.length != 0 ?
                         <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
-                            <FinancialsGraph ticker={symbol} height={680} width={680} />
+                            <FinancialsGraph ticker={symbol} height={660} width={660} />
                         </div>
                     : null
                     }
