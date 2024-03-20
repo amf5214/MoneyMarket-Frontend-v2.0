@@ -14,6 +14,7 @@ import { API_FORMAT, formatDateString } from "../services/date.service";
 import { DateTime } from 'luxon';
 import { CandlestickGraph } from "../component/CandlestickGraph";
 import { FinancialsGraph } from "../component/FinancialsGraph";
+import { getTickerDetails } from "../services/live-markets/tickerdetails.service";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -62,9 +63,13 @@ export const LiveMarketsPage = () => {
     const [timeSpan, setTimeSpan] = useState("day");
 
     // State variable to store data to be graphed
-  // Array of StockPoint objects
-  const initialArray:any[] = [];
-  const [graphData, setGraphData] = useState(initialArray);
+    // Array of StockPoint objects
+    const initialArray:any[] = [];
+    const [graphData, setGraphData] = useState(initialArray);
+
+    // State variable for ticker details
+    const initialObject:any = {};
+    const [tickerDetails, setTickerDetails] = useState(initialObject);
 
     // Effect that pulls data on market status and updates the state variables
     useEffect(() => {
@@ -117,6 +122,31 @@ export const LiveMarketsPage = () => {
         
     }
 
+    // Update ticker details
+    useEffect(() => {
+        const updateTickerDetials = async () =>{
+            const cookie = Cookies.get("Authorization");
+            if(cookie != undefined) {
+                try {
+                    const details = await getTickerDetails(symbol, cookie);
+                    const info = (await details).results;
+                    setTickerDetails({
+                        ticker: await info.ticker,
+                        name: await info.name,
+                        market_cap: await info.market_cap,
+                        description: await info.description
+                    })
+                }
+                catch(err) {
+                    console.log(err);
+                }
+            }
+        }
+
+        updateTickerDetials();
+        console.log(tickerDetails);
+    }, [graphData]);
+
     return (
         <>
             <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body" >
@@ -129,7 +159,7 @@ export const LiveMarketsPage = () => {
                         </Ticker>
                     </div> 
                 </div>
-                <ButtonGroup className="" style={{ alignSelf: "flex-center" }}>
+                <ButtonGroup style={{ alignSelf: "flex-center" }}>
                     <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
                     <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
                     <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
@@ -144,21 +174,35 @@ export const LiveMarketsPage = () => {
                     </NavbarContent>
                     <NavbarContent justify="end" />
                 </Navbar>
-                <div className="container-lg mx-auto w-full flex flex-col xl:flex-row justify-center items-center" style={{marginTop: "2rem"}}>
-                    {graphData.length != 0 ?
-                        <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
+                {graphData.length != 0 ?
+                    <div className="container-lg mx-auto w-full flex flex-row justify-center items-center live-markets-card-wrapper">
+                        <div className="container mx-auto flex flex-row flex-wrap justify-center items-center" >
+                            <Card style={{margin:"2rem"}}>
+                                <CardBody>
+                                    <figure>
+                                        <h1 className="text-center">{ tickerDetails.ticker }</h1>
+                                    </figure>
+                                    <figure>
+                                        <h1 className="text-center">{ tickerDetails.name }</h1>
+                                    </figure>
+                                    <figure style={{margin: "1rem 0"}}>
+                                        <h1 className="text-center">Market Capitalization: ${ tickerDetails.market_cap > 1000000000 ? `${Math.round(tickerDetails.market_cap / 1000000000) } B` : tickerDetails.market_cap > 1000000 ? `${Math.round(tickerDetails.market_cap / 1000000) } M` : `${Math.round(tickerDetails.market_cap / 1000) } K`}</h1>
+                                    </figure>
+                                    <figure style={{padding: "1rem 2rem" }}>
+                                        <h1 className="text-center">{ tickerDetails.description }</h1>
+                                    </figure>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center ">
                             <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={600} />
                         </div>
-                    : null
-                    }
-                    {graphData.length != 0 ?
-                        <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center">
                             <FinancialsGraph ticker={symbol} height={560} width={600} />
                         </div>
-                    : null
-                    }
-                    
-                </div>
+                    </div>
+                : null
+                }
             </div>
         </>
     )
