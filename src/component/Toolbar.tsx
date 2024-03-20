@@ -44,7 +44,7 @@ const Toolbar = () => {
             </NavbarContent>
              {/* Nav buttons in the middle of the screen - Visibility = Wide screen */ }
             <NavbarContent className="hidden md:flex gap-4" justify="center">
-                <Link href="#" color={"foreground"}>
+                <Link href={Path.LIVE_MARKETS} color={"foreground"}>
                     Live Markets
                 </Link>
                 <Link href={Path.MARKET_NEWS} color={"foreground"}>
@@ -152,7 +152,7 @@ const Toolbar = () => {
                     </NavbarMenuItem>
                     <Divider />
                     <NavbarMenuItem>
-                        <Link href="#" color={"foreground"}>
+                        <Link href={Path.LIVE_MARKETS} color={"foreground"}>
                             Live Markets
                         </Link>
                     </NavbarMenuItem>
