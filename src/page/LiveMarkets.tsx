@@ -111,7 +111,7 @@ export const LiveMarketsPage = () => {
                     
                     <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="end">
                         <TickerAutocomplete setSymbol={setSymbol} />
-                        <Button onClick={handleSearch} >
+                        <Button color={"primary"} onClick={handleSearch} >
                             Search
                         </Button>
                     </NavbarContent>
