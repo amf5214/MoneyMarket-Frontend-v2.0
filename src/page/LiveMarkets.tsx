@@ -12,6 +12,7 @@ import { getStockData } from "../services/live-markets/ticker.service";
 import { TickerData } from "../services/live-markets/dto";
 import { API_FORMAT, formatDateString } from "../services/date.service";
 import { DateTime } from 'luxon';
+import { CandlestickGraph } from "../component/CandlestickGraph";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -116,6 +117,13 @@ export const LiveMarketsPage = () => {
                     </NavbarContent>
                 </Navbar>
                 <div className="container-lg mx-auto w-full flex flex-row sm:flex-col">
+                    {graphData.length != 0 ?
+                        <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col">
+                            <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={300} width={680} />
+                        </div>
+                    : null
+                    }
+                    
                 </div>
             </div>
         </>
