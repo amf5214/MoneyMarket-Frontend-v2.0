@@ -116,9 +116,15 @@ export const LiveMarketsPage = () => {
                         </Button>
                     </NavbarContent>
                 </Navbar>
-                <div className="container-lg mx-auto w-full flex flex-row sm:flex-col">
+                <div className="container-lg mx-auto w-full flex sm:flex-col md:flex-row lg:flex-row justify-center items-center" style={{marginTop: "2rem"}}>
                     {graphData.length != 0 ?
-                        <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col">
+                        <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
+                            <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={300} width={680} />
+                        </div>
+                    : null
+                    }
+                    {graphData.length != 0 ?
+                        <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
                             <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={300} width={680} />
                         </div>
                     : null
