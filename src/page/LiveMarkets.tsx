@@ -88,7 +88,7 @@ export const LiveMarketsPage = () => {
 
     return (
         <>
-            <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body" style={{height: "100vh"}}>
+            <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body" >
                 <div className="mx-auto w-full" style={{height: "4.5rem"}}>
                     <div style={{height: "100%"}}>
                         <Ticker slideSpeed={100}>
