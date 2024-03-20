@@ -96,22 +96,26 @@ export const LiveMarketsPage = () => {
                             ))}
                         </Ticker>
                     </div> 
-                    <Navbar isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
-                        <NavbarContent justify="start" />
-                        <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
-                            <TickerAutocomplete />
-                        </NavbarContent>
-                        <NavbarContent justify="end">
-                            <ButtonGroup className="">
-                                <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
-                                <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
-                                <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
-                            </ButtonGroup>
-                        </NavbarContent>
-                    </Navbar>
                 </div>
-                <div className="mx-auto w-full h-full flex flex-row sm:flex-col">
-                        
+                <Navbar isBordered maxWidth="full" className="hidden md:flex w-full bg-gray-100 relative navheader justify-center">
+                    <NavbarContent justify="start">
+                        <ButtonGroup className="">
+                            <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
+                            <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
+                            <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
+                        </ButtonGroup>
+                    </NavbarContent>
+
+                    <NavbarContent justify="center" />
+                    
+                    <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="end">
+                        <TickerAutocomplete setSymbol={setSymbol} />
+                        <Button onClick={handleSearch} >
+                            Search
+                        </Button>
+                    </NavbarContent>
+                </Navbar>
+                <div className="container-lg mx-auto w-full flex flex-row sm:flex-col">
                 </div>
             </div>
         </>
