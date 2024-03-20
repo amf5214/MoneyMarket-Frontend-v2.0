@@ -9,7 +9,7 @@ import {
 import './style/App.css';
 
 // Local imports
-import Paths from "./services/paths.service";
+import Path from "./services/path.service";
 import Home from "./page/Home";
 import Toolbar from './component/Toolbar';
 import SignInPage from "./page/SignIn";
@@ -22,10 +22,10 @@ function App() {
       <Router>
         <Toolbar />
         <Routes>
-          <Route path={Paths.HOME} element={<Home />} />
-          <Route path={Paths.SIGNIN} element={<SignInPage />} />
-          <Route path={Paths.MARKET_NEWS} element={<MarketNewsPage />} />
-          <Route path={Paths.LIVE_MARKETS} element={<LiveMarketsPage />} />
+          <Route path={Path.HOME} element={<Home />} />
+          <Route path={Path.SIGNIN} element={<SignInPage />} />
+          <Route path={Path.MARKET_NEWS} element={<MarketNewsPage />} />
+          <Route path={Path.LIVE_MARKETS} element={<LiveMarketsPage />} />
         </Routes>
       </Router>
   )

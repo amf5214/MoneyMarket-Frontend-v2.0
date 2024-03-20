@@ -1,9 +1,9 @@
 import axios from "axios";
-import Paths from "./paths.service";
+import Path from "../path.service";
 import { ActiveStock } from "./activestock";
 
 export const getMarketStatus = async (cookie:string) => {
-    const response = await axios.get(`${Paths.API_BASE}/stockdata/market-status`,
+    const response = await axios.get(`${Path.API_BASE}/stockdata/market-status`,
     {
         headers: {'content-type': "application/json", 'Authorization': 'Bearer ' + cookie },
     });
@@ -11,7 +11,7 @@ export const getMarketStatus = async (cookie:string) => {
 }
 
 export const getWLAStocks = async (cookie:string) => {
-    const response:any = await axios.get(`${Paths.API_BASE}/stockdata/winners-losers`,
+    const response:any = await axios.get(`${Path.API_BASE}/stockdata/winners-losers`,
     {
         headers: { 'Authorization': 'Bearer ' + cookie },
     });

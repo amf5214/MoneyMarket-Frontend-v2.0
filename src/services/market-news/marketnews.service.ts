@@ -1,9 +1,9 @@
 import axios from "axios";
 import { NewsStory } from "./newsstory.dto";
-import Paths from "./paths.service";
+import Path from "../path.service";
 
 const getNews = async (cookie:string) => {
-    const result = await axios.post(`${Paths.API_BASE}/news/market-news`,
+    const result = await axios.post(`${Path.API_BASE}/news/market-news`,
     JSON.stringify({limit:3}), 
     {
         headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${cookie}`}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import getNews from "../services/marketnews.service";
-import { NewsStory } from "../services/newsstory.dto";
+import getNews from "../services/market-news/marketnews.service";
+import { NewsStory } from "../services/market-news/newsstory.dto";
 
 export const MarketNewsPage = () => {
 

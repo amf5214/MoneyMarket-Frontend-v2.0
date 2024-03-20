@@ -3,25 +3,54 @@ import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import Ticker, { FinancialTicker, NewsTicker } from 'nice-react-ticker';
 import Cookies from "js-cookie";
-import { getMarketStatus, getWLAStocks } from "../services/marketdata.service";
-import { ActiveStock } from "../services/activestock";
+import { getMarketStatus, getWLAStocks } from "../services/ticker-carousel/marketdata.service";
+import { ActiveStock } from "../services/ticker-carousel/activestock";
 import "../style/page/livemarkets.css";
 import { useAsyncList } from "@react-stately/data";
 import { TickerAutocomplete } from "../component/TickerAutocomplete";
+import { getStockData } from "../services/live-markets/ticker.service";
+import { TickerData } from "../services/live-markets/dto";
+import { API_FORMAT, formatDateString } from "../services/date.service";
+import { DateTime } from 'luxon';
+import { CandlestickGraph } from "../component/CandlestickGraph";
+import { FinancialsGraph } from "../component/FinancialsGraph";
 
+// Page to access market data
 export const LiveMarketsPage = () => {
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    // Array of market state possible values
     const states = ["open", "extended-hours", "closed"];
+
+    // Style classes for market status objects
     const openClass = "bg-green-200 text-green-600";
     const closeClass = "bg-red-200 text-red-600";
+
+    // State variables for status of markets
     const [nyseState, setNYSEState] = useState("");
     const [nasdaqState, setNasdaqState] = useState("");
     const [otcState, setOTCState] = useState("");
 
+    // State variable to array of active stocks that will be shown in the wla ticker feed
     const activeStocks:ActiveStock[] = [];
     const [activeStockArray, setActiveStocksArray] = useState(activeStocks);
+
+    // State variable to store current ticker value
+    const [symbol, setSymbol] = useState("");
+
+    // State variable to store start and end date
+    let dt:DateTime = DateTime.local();
+    dt = dt.minus({'weeks': 4});
+    const date:Date = dt.toJSDate();
+    const [startDate, setStartDate] = useState(date);
+    const [endDate, setEndDate] = useState(new Date());
+
+    // State variable to store aggregation level
+    const [timeSpan, setTimeSpan] = useState("day");
+
+    // State variable to store data to be graphed
+  // Array of StockPoint objects
+  const initialArray:any[] = [];
+  const [graphData, setGraphData] = useState(initialArray);
 
     // Effect that pulls data on market status and updates the state variables
     useEffect(() => {
@@ -36,6 +65,7 @@ export const LiveMarketsPage = () => {
         getMarket();
     }, []);
 
+    // Effect to get the wla data and update state variable for array
     useEffect(() => {
         const updateActiveStocks = async () => {
             if(Cookies.get('Authorization') != null) {
@@ -46,9 +76,20 @@ export const LiveMarketsPage = () => {
         updateActiveStocks();
     }, [])
 
+    // Handler for stock search
+    const handleSearch = async () => {
+        const cookie = Cookies.get("Authorization");
+        const testDto = new TickerData(symbol, timeSpan, formatDateString(startDate, API_FORMAT, "-", 1), formatDateString(endDate, API_FORMAT, "-", 1), '5000');
+        if(cookie != undefined) {
+            const response = await getStockData(testDto, cookie);
+            setGraphData(response);
+        }
+        
+    }
+
     return (
         <>
-            <div className="bg-gray-100 market-news-body" style={{height: "90vh"}}>
+            <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body" >
                 <div className="mx-auto w-full" style={{height: "4.5rem"}}>
                     <div style={{height: "100%"}}>
                         <Ticker slideSpeed={100}>
@@ -57,22 +98,39 @@ export const LiveMarketsPage = () => {
                             ))}
                         </Ticker>
                     </div> 
-                    <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="full" className="h-full w-full bg-gray-100 relative flex navheader justify-center">
-                        <NavbarContent justify="start" />
-                        <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
-                            <TickerAutocomplete />
-                        </NavbarContent>
-                        <NavbarContent justify="end">
-                            <ButtonGroup className="">
-                                <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
-                                <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
-                                <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
-                            </ButtonGroup>
-                        </NavbarContent>
-                    </Navbar>
                 </div>
-                <div className="mx-auto w-full h-full flex flex-row sm:flex-col">
-                        
+                <Navbar isBordered maxWidth="full" className="hidden md:flex w-full bg-gray-100 relative navheader justify-center">
+                    <NavbarContent justify="start">
+                        <ButtonGroup className="">
+                            <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
+                            <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
+                            <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
+                        </ButtonGroup>
+                    </NavbarContent>
+
+                    <NavbarContent justify="center" />
+                    
+                    <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="end">
+                        <TickerAutocomplete setSymbol={setSymbol} />
+                        <Button color={"primary"} onClick={handleSearch} >
+                            Search
+                        </Button>
+                    </NavbarContent>
+                </Navbar>
+                <div className="container-lg mx-auto w-full flex lg:flex-row md:flex-row sm:flex-col xs:flex-col justify-center items-center" style={{marginTop: "2rem"}}>
+                    {graphData.length != 0 ?
+                        <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
+                            <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={300} width={680} />
+                        </div>
+                    : null
+                    }
+                    {graphData.length != 0 ?
+                        <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
+                            <FinancialsGraph ticker={symbol} height={680} width={680} />
+                        </div>
+                    : null
+                    }
+                    
                 </div>
             </div>
         </>
