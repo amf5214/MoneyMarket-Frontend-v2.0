@@ -115,12 +115,12 @@ export const LiveMarketsPage = () => {
                         </Ticker>
                     </div> 
                 </div>
-                <ButtonGroup className="" style={{ alignSelf: "flex-end" }}>
+                <ButtonGroup className="" style={{ alignSelf: "flex-center" }}>
                     <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
                     <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
                     <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
                 </ButtonGroup>
-                <Navbar maxWidth="full" className="hidden md:flex w-full bg-gray-100 relative navheader justify-center" style={{margin: "1rem 0 auto"}}>
+                <Navbar maxWidth="full" className="flex w-full bg-gray-100 relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 1}}>
                     <NavbarContent justify="start" />
                     <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
                         <TickerAutocomplete setSymbol={setSymbol} />
@@ -130,16 +130,16 @@ export const LiveMarketsPage = () => {
                     </NavbarContent>
                     <NavbarContent justify="end" />
                 </Navbar>
-                <div className="container-lg mx-auto w-full flex lg:flex-row md:flex-row sm:flex-col xs:flex-col justify-center items-center" style={{marginTop: "2rem"}}>
+                <div className="container-lg mx-auto w-full flex flex-col xl:flex-row justify-center items-center" style={{marginTop: "2rem"}}>
                     {graphData.length != 0 ?
                         <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
-                            <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={660} />
+                            <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={600} />
                         </div>
                     : null
                     }
                     {graphData.length != 0 ?
                         <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
-                            <FinancialsGraph ticker={symbol} height={660} width={660} />
+                            <FinancialsGraph ticker={symbol} height={560} width={600} />
                         </div>
                     : null
                     }
