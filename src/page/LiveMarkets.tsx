@@ -13,7 +13,7 @@ import { TickerData } from "../services/live-markets/dto";
 import { API_FORMAT, formatDateString } from "../services/date.service";
 import { DateTime } from 'luxon';
 import { CandlestickGraph } from "../component/CandlestickGraph";
-import { FinancialsGraph } from "../component/FinancialsGraphModal";
+import { FinancialsGraph } from "../component/FinancialsGraph";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -117,7 +117,7 @@ export const LiveMarketsPage = () => {
                         </Button>
                     </NavbarContent>
                 </Navbar>
-                <div className="container-lg mx-auto w-full flex sm:flex-col md:flex-row lg:flex-row justify-center items-center" style={{marginTop: "2rem"}}>
+                <div className="container-lg mx-auto w-full flex lg:flex-row md:flex-row sm:flex-col xs:flex-col justify-center items-center" style={{marginTop: "2rem"}}>
                     {graphData.length != 0 ?
                         <div className="container mx-auto flex sm:w-max-[100%] md:w-max-[40%] lg:w-max-[40%] flex-col justify-center items-center">
                             <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={300} width={680} />
