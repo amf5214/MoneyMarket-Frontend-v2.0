@@ -8,6 +8,10 @@ import { ActiveStock } from "../services/ticker-carousel/activestock";
 import "../style/page/livemarkets.css";
 import { useAsyncList } from "@react-stately/data";
 import { TickerAutocomplete } from "../component/TickerAutocomplete";
+import { getStockData } from "../services/live-markets/ticker.service";
+import { TickerData } from "../services/live-markets/dto";
+import { API_FORMAT, formatDateString } from "../services/date.service";
+import { DateTime } from 'luxon';
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -28,6 +32,24 @@ export const LiveMarketsPage = () => {
     const activeStocks:ActiveStock[] = [];
     const [activeStockArray, setActiveStocksArray] = useState(activeStocks);
 
+    // State variable to store current ticker value
+    const [symbol, setSymbol] = useState("");
+
+    // State variable to store start and end date
+    let dt:DateTime = DateTime.local();
+    dt = dt.minus({'weeks': 4});
+    const date:Date = dt.toJSDate();
+    const [startDate, setStartDate] = useState(date);
+    const [endDate, setEndDate] = useState(new Date());
+
+    // State variable to store aggregation level
+    const [timeSpan, setTimeSpan] = useState("day");
+
+    // State variable to store data to be graphed
+  // Array of StockPoint objects
+  const initialArray:any[] = [];
+  const [graphData, setGraphData] = useState(initialArray);
+
     // Effect that pulls data on market status and updates the state variables
     useEffect(() => {
         const getMarket = async () => {
@@ -41,6 +63,7 @@ export const LiveMarketsPage = () => {
         getMarket();
     }, []);
 
+    // Effect to get the wla data and update state variable for array
     useEffect(() => {
         const updateActiveStocks = async () => {
             if(Cookies.get('Authorization') != null) {
@@ -50,6 +73,17 @@ export const LiveMarketsPage = () => {
         }
         updateActiveStocks();
     }, [])
+
+    // Handler for stock search
+    const handleSearch = async () => {
+        const cookie = Cookies.get("Authorization");
+        const testDto = new TickerData(symbol, timeSpan, formatDateString(startDate, API_FORMAT, "-", 1), formatDateString(endDate, API_FORMAT, "-", 1), '5000');
+        if(cookie != undefined) {
+            const response = await getStockData(testDto, cookie);
+            setGraphData(response);
+        }
+        
+    }
 
     return (
         <>
