@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Chip, Input, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react"
+import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Card, CardBody, Chip, Divider, Input, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react"
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import Ticker, { FinancialTicker, NewsTicker } from 'nice-react-ticker';
@@ -29,6 +29,20 @@ export const LiveMarketsPage = () => {
     const [nyseState, setNYSEState] = useState("");
     const [nasdaqState, setNasdaqState] = useState("");
     const [otcState, setOTCState] = useState("");
+
+    useEffect(() => {
+        if(nyseState == states[1]) {
+            setNYSEState("in extended");
+        }
+
+        if(nasdaqState == states[1]) {
+            setNasdaqState("in extended");
+        }
+
+        if(otcState == states[1]) {
+            setOTCState("in extended");
+        }
+    }, [nyseState, nasdaqState, otcState])
 
     // State variable to array of active stocks that will be shown in the wla ticker feed
     const activeStocks:ActiveStock[] = [];
