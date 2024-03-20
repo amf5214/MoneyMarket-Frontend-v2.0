@@ -1,7 +1,16 @@
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
 
-export const TickerAutocomplete = () => {
+interface Props {
+    setSymbol:(text:string) => void;
+}
+
+export const TickerAutocomplete = ( { setSymbol }:Props ) => {
+
+    const handleChange = (text:string) => {
+        list.setFilterText(text);
+        setSymbol(text);
+    }
 
     type TickerType = {
         Index: number;
@@ -35,7 +44,7 @@ export const TickerAutocomplete = () => {
             className="max-w-xs" 
             items={list.items}
             isLoading={list.isLoading}
-            onInputChange={list.setFilterText}
+            onInputChange={handleChange}
         >
             {(item:any) => (
                 <AutocompleteItem key={item.label}>
