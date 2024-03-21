@@ -175,9 +175,9 @@ export const LiveMarketsPage = () => {
                     <NavbarContent justify="end" />
                 </Navbar>
                 {graphData.length != 0 ?
-                    <div className="container-lg mx-auto w-full flex flex-row justify-center items-center live-markets-card-wrapper">
-                        <div className="container mx-auto flex flex-row flex-wrap justify-center items-center" >
-                            <Card style={{margin:"2rem"}}>
+                    <div className="container-lg mx-auto w-full flex flex-row live-markets-card-wrapper">
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center" >
+                            <Card>
                                 <CardBody>
                                     <figure>
                                         <h1 className="text-center">{ tickerDetails.ticker }</h1>
@@ -195,10 +195,18 @@ export const LiveMarketsPage = () => {
                             </Card>
                         </div>
                         <div className="container-lg mx-auto flex flex-col justify-center items-center ">
-                            <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={600} />
+                            <Card>
+                                <CardBody>
+                                    <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={600} />
+                                </CardBody>
+                            </Card>
                         </div>
                         <div className="container-lg mx-auto flex flex-col justify-center items-center">
-                            <FinancialsGraph ticker={symbol} height={560} width={600} />
+                            <Card className="h-full flex-col mx-auto flex justify-center items-center">
+                                <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
+                                    <FinancialsGraph ticker={symbol} height={560} width={600} />
+                                </CardBody>
+                            </Card>
                         </div>
                     </div>
                 : null
