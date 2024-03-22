@@ -17,3 +17,13 @@
 .live-markets-card-wrapper > * > * {
     max-width: 100%;
 }
+
+#candlestick-button {
+    background: transparent;
+    color: white;
+}
+
+#candlestick-button:hover {
+    background-color: whitesmoke;
+    color: #2A2B38;
+}

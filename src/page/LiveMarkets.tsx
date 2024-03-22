@@ -179,7 +179,7 @@ export const LiveMarketsPage = () => {
                         <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{backgroundColor: "#2A2B38", color: "white", paddingBottom: "2rem", margin: "2rem", borderRadius: "1rem" }}>
 
                             <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2" style={{margin: "2rem"}} >
-                                <Card>
+                                <Card className="xl:max-w-[70%]">
                                     <CardBody>
                                         <figure>
                                             <h1 className="text-center">{ tickerDetails.ticker }</h1>
@@ -198,6 +198,13 @@ export const LiveMarketsPage = () => {
                             </div>
 
                             <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                                <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
+                                    <Button id="candlestick-button">Day</Button>
+                                    <Button id="candlestick-button">Week</Button>
+                                    <Button id="candlestick-button">Month</Button>
+                                    <Button id="candlestick-button">Quarter</Button>
+                                    <Button id="candlestick-button">Year</Button>
+                                </ButtonGroup>
                                 <Card>
                                     <CardBody>
                                         <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={600} />
@@ -206,6 +213,11 @@ export const LiveMarketsPage = () => {
                             </div>
                             
                             <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                                <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
+                                    <Button id="candlestick-button">Cash Flow</Button>
+                                    {/* <Button id="candlestick-button">Operating Income</Button>
+                                    <Button id="candlestick-button">Profit</Button> */}
+                                </ButtonGroup>
                                 <Card className="h-full flex-col mx-auto flex justify-center items-center">
                                     <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
                                         <FinancialsGraph ticker={symbol} height={560} width={600} />
