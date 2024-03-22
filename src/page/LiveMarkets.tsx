@@ -149,7 +149,7 @@ export const LiveMarketsPage = () => {
 
     return (
         <>
-            <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body" >
+            <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body">
                 <div className="mx-auto w-full" style={{height: "4.5rem"}}>
                     <div style={{height: "100%"}}>
                         <Ticker slideSpeed={100}>
@@ -175,38 +175,44 @@ export const LiveMarketsPage = () => {
                     <NavbarContent justify="end" />
                 </Navbar>
                 {graphData.length != 0 ?
-                    <div className="container-lg mx-auto w-full flex flex-row live-markets-card-wrapper">
-                        <div className="container-lg mx-auto flex flex-col justify-center items-center" >
-                            <Card>
-                                <CardBody>
-                                    <figure>
-                                        <h1 className="text-center">{ tickerDetails.ticker }</h1>
-                                    </figure>
-                                    <figure>
-                                        <h1 className="text-center">{ tickerDetails.name }</h1>
-                                    </figure>
-                                    <figure style={{margin: "1rem 0"}}>
-                                        <h1 className="text-center">Market Capitalization: ${ tickerDetails.market_cap > 1000000000 ? `${Math.round(tickerDetails.market_cap / 1000000000) } B` : tickerDetails.market_cap > 1000000 ? `${Math.round(tickerDetails.market_cap / 1000000) } M` : `${Math.round(tickerDetails.market_cap / 1000) } K`}</h1>
-                                    </figure>
-                                    <figure style={{padding: "1rem 2rem" }}>
-                                        <h1 className="text-center">{ tickerDetails.description }</h1>
-                                    </figure>
-                                </CardBody>
-                            </Card>
-                        </div>
-                        <div className="container-lg mx-auto flex flex-col justify-center items-center ">
-                            <Card>
-                                <CardBody>
-                                    <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={600} />
-                                </CardBody>
-                            </Card>
-                        </div>
-                        <div className="container-lg mx-auto flex flex-col justify-center items-center">
-                            <Card className="h-full flex-col mx-auto flex justify-center items-center">
-                                <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
-                                    <FinancialsGraph ticker={symbol} height={560} width={600} />
-                                </CardBody>
-                            </Card>
+                    <div className="container-lg mx-auto w-full">
+                        <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{backgroundColor: "#2A2B38", color: "white", paddingBottom: "2rem", margin: "2rem", borderRadius: "1rem" }}>
+
+                            <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2" style={{margin: "2rem"}} >
+                                <Card>
+                                    <CardBody>
+                                        <figure>
+                                            <h1 className="text-center">{ tickerDetails.ticker }</h1>
+                                        </figure>
+                                        <figure>
+                                            <h1 className="text-center">{ tickerDetails.name }</h1>
+                                        </figure>
+                                        <figure style={{margin: "1rem 0"}}>
+                                            <h1 className="text-center">Market Capitalization: ${ tickerDetails.market_cap > 1000000000 ? `${Math.round(tickerDetails.market_cap / 1000000000) } B` : tickerDetails.market_cap > 1000000 ? `${Math.round(tickerDetails.market_cap / 1000000) } M` : `${Math.round(tickerDetails.market_cap / 1000) } K`}</h1>
+                                        </figure>
+                                        <figure style={{padding: "1rem 2rem" }}>
+                                            <h1 className="text-center">{ tickerDetails.description }</h1>
+                                        </figure>
+                                    </CardBody>
+                                </Card>
+                            </div>
+
+                            <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                                <Card>
+                                    <CardBody>
+                                        <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={600} />
+                                    </CardBody>
+                                </Card>
+                            </div>
+                            
+                            <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                                <Card className="h-full flex-col mx-auto flex justify-center items-center">
+                                    <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
+                                        <FinancialsGraph ticker={symbol} height={560} width={600} />
+                                    </CardBody>
+                                </Card>
+                            </div>
+
                         </div>
                     </div>
                 : null
