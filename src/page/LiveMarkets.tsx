@@ -233,11 +233,10 @@ export const LiveMarketsPage = () => {
                 </Navbar>
 
                 {graphData.length != 0 ?
-                    <div className="container-lg mx-auto w-full flex flex-col">
-                        <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{backgroundColor: "#2A2B38", color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", marginTop: "1rem", borderRadius: "1rem" }}>
-
-                            <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2" style={{margin: "2rem"}} >
-                                <Card className="w-full" style={{border: "3px white solid", color: "white", filter: "drop-shadow(5px 5px 5px)", backgroundColor: "rgb(42, 43, 56)"}}>
+                    <div className="container-lg mx-auto w-full flex flex-col live-markets-sub" style={{marginTop: "1rem"}}>
+                        <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{ color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", marginTop: "1rem", borderRadius: "1rem" }}>
+                            <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2" style={{margin: "1rem"}} >
+                                <Card className="w-full" style={{border: "3px white solid", color: "white", filter: "drop-shadow(5px 5px 5px)", backgroundColor: "#038C3E"}}>
                                     <CardBody>
                                         <figure>
                                             <h1 className="text-center">{ tickerDetails.ticker }</h1>
