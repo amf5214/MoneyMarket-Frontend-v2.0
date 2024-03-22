@@ -106,13 +106,19 @@ export const LiveMarketsPage = () => {
     }, [])
 
     // Handler for stock search
-    const handleSearch = async () => {
+    const handleSearch = async (givenStartDate?:Date, span?:string) => {
         try {
             const cookie = Cookies.get("Authorization");
-            const testDto = new TickerData(symbol, timeSpan, formatDateString(startDate, API_FORMAT, "-", 1), formatDateString(endDate, API_FORMAT, "-", 1), '5000');
-            if(cookie != undefined) {
+            let testDto:TickerData;
+            if(givenStartDate != undefined && span != undefined) {
+                testDto = new TickerData(symbol, span, formatDateString(givenStartDate, API_FORMAT, "-", 1), formatDateString(endDate, API_FORMAT, "-", 1), '5000');
+            } else {
+                testDto = new TickerData(symbol, timeSpan, formatDateString(startDate, API_FORMAT, "-", 1), formatDateString(endDate, API_FORMAT, "-", 1), '5000');
+            }
+            if(cookie != undefined && testDto != undefined) {
                 const response = await getStockData(testDto, cookie);
-                setGraphData(response);
+                setGraphData(await response);
+                console.log(await response);
             }
         }
         
@@ -144,8 +150,57 @@ export const LiveMarketsPage = () => {
         }
 
         updateTickerDetials();
-        console.log(tickerDetails);
     }, [graphData]);
+
+    const handleDaySpan = async () => {
+        let dt:DateTime = DateTime.local();
+        dt = dt.minus({'days': 1});
+        const date:Date = dt.toJSDate();
+        setStartDate(date);
+        setTimeSpan('hour');
+        const span = 'hour';
+        await handleSearch(date, span);
+    }
+    
+    const handleWeekSpan = async () => {
+        let dt:DateTime = DateTime.local();
+        dt = dt.minus({'weeks': 1});
+        const date:Date = dt.toJSDate();
+        setStartDate(date);
+        setTimeSpan('day');
+        const span = 'day';
+        await handleSearch(date, span);
+    }
+    
+    const handleMonthSpan = async () => {
+        let dt:DateTime = DateTime.local();
+        dt = dt.minus({'months': 1});
+        const date:Date = dt.toJSDate();
+        setStartDate(date);
+        setTimeSpan('day');
+        const span = 'day';
+        await handleSearch(date, span);
+    }
+
+    const handleQuarterSpan = async () => {
+        let dt:DateTime = DateTime.local();
+        dt = dt.minus({'months': 3});
+        const date:Date = dt.toJSDate();
+        setStartDate(date);
+        setTimeSpan('week');
+        const span = 'week';
+        await handleSearch(date, span);
+    }
+
+    const handleYearSpan = async () => {
+        let dt:DateTime = DateTime.local();
+        dt = dt.minus({'years': 1});
+        const date:Date = dt.toJSDate();
+        setStartDate(date);
+        setTimeSpan('month');
+        const span = 'month';
+        await handleSearch(date, span);
+    }
 
     return (
         <>
@@ -199,11 +254,11 @@ export const LiveMarketsPage = () => {
 
                             <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
                                 <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
-                                    <Button id="candlestick-button">Day</Button>
-                                    <Button id="candlestick-button">Week</Button>
-                                    <Button id="candlestick-button">Month</Button>
-                                    <Button id="candlestick-button">Quarter</Button>
-                                    <Button id="candlestick-button">Year</Button>
+                                    <Button onClick={handleDaySpan} id="candlestick-button">Day</Button>
+                                    <Button onClick={handleWeekSpan} id="candlestick-button">Week</Button>
+                                    <Button onClick={handleMonthSpan} id="candlestick-button">Month</Button>
+                                    <Button onClick={handleQuarterSpan} id="candlestick-button">Quarter</Button>
+                                    <Button onClick={handleYearSpan} id="candlestick-button">Year</Button>
                                 </ButtonGroup>
                                 <Card>
                                     <CardBody>
