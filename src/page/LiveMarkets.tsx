@@ -220,11 +220,7 @@ export const LiveMarketsPage = () => {
                         </Ticker>
                     </div> 
                 </div>
-                <ButtonGroup style={{ alignSelf: "flex-center" }}>
-                    <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
-                    <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
-                    <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
-                </ButtonGroup>
+                
                 <Navbar maxWidth="full" className="flex w-full bg-gray-100 relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 1}}>
                     <NavbarContent justify="start" />
                     <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
@@ -235,24 +231,19 @@ export const LiveMarketsPage = () => {
                     </NavbarContent>
                     <NavbarContent justify="end" />
                 </Navbar>
+
                 {graphData.length != 0 ?
-                    <div className="container-lg mx-auto w-full">
-                        <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{backgroundColor: "#2A2B38", color: "white", paddingBottom: "2rem", margin: "2rem", borderRadius: "1rem" }}>
+                    <div className="container-lg mx-auto w-full flex flex-col">
+                        <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{backgroundColor: "#2A2B38", color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", marginTop: "1rem", borderRadius: "1rem" }}>
 
                             <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2" style={{margin: "2rem"}} >
-                                <Card className="xl:max-w-[70%]">
+                                <Card className="w-full" style={{border: "3px white solid", color: "white", filter: "drop-shadow(5px 5px 5px)", backgroundColor: "rgb(42, 43, 56)"}}>
                                     <CardBody>
                                         <figure>
                                             <h1 className="text-center">{ tickerDetails.ticker }</h1>
                                         </figure>
                                         <figure>
                                             <h1 className="text-center">{ tickerDetails.name }</h1>
-                                        </figure>
-                                        <figure style={{margin: "1rem 0"}}>
-                                            <h1 className="text-center">Market Capitalization: ${ tickerDetails.market_cap > 1000000000 ? `${Math.round(tickerDetails.market_cap / 1000000000) } B` : tickerDetails.market_cap > 1000000 ? `${Math.round(tickerDetails.market_cap / 1000000) } M` : `${Math.round(tickerDetails.market_cap / 1000) } K`}</h1>
-                                        </figure>
-                                        <figure style={{padding: "1rem 2rem" }}>
-                                            <h1 className="text-center">{ tickerDetails.description }</h1>
                                         </figure>
                                     </CardBody>
                                 </Card>
@@ -287,6 +278,11 @@ export const LiveMarketsPage = () => {
                             </div>
 
                         </div>
+                        {/* <ButtonGroup style={{ alignSelf: "center"}}>
+                            <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
+                            <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
+                            <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
+                        </ButtonGroup> */}
                     </div>
                 : null
                 }
