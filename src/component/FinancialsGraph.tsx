@@ -42,7 +42,7 @@ import { getStockCashFlow } from "../services/live-markets/financials.service";
       }
 
       getFinancialData();
-   }, [])
+   }, [ticker])
 
    // Effect to create the yeargroup objects that create x axis grouping on the graph
    useEffect(() => {

@@ -71,6 +71,8 @@ export const LiveMarketsPage = () => {
     const initialObject:any = {};
     const [tickerDetails, setTickerDetails] = useState(initialObject);
 
+    const [displaySymbol, setDisplaySymbol] = useState("");
+
     // Effect that pulls data on market status and updates the state variables
     useEffect(() => {
         const getMarket = async () => {
@@ -118,7 +120,7 @@ export const LiveMarketsPage = () => {
             if(cookie != undefined && testDto != undefined) {
                 const response = await getStockData(testDto, cookie);
                 setGraphData(await response);
-                console.log(await response);
+                setDisplaySymbol(symbol);
             }
         }
         
@@ -126,6 +128,10 @@ export const LiveMarketsPage = () => {
             console.log(err);
         }
         
+    }
+
+    const handleSearchButton = () => {
+        handleSearch();
     }
 
     // Update ticker details
@@ -223,7 +229,7 @@ export const LiveMarketsPage = () => {
                     <NavbarContent justify="start" />
                     <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
                         <TickerAutocomplete setSymbol={setSymbol} />
-                        <Button color={"primary"} onClick={handleSearch} >
+                        <Button color={"primary"} onClick={handleSearchButton} >
                             Search
                         </Button>
                     </NavbarContent>
@@ -262,7 +268,7 @@ export const LiveMarketsPage = () => {
                                 </ButtonGroup>
                                 <Card>
                                     <CardBody>
-                                        <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={symbol} height={280} width={600} />
+                                        <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={displaySymbol} height={280} width={600} />
                                     </CardBody>
                                 </Card>
                             </div>
@@ -275,7 +281,7 @@ export const LiveMarketsPage = () => {
                                 </ButtonGroup>
                                 <Card className="h-full flex-col mx-auto flex justify-center items-center">
                                     <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
-                                        <FinancialsGraph ticker={symbol} height={560} width={600} />
+                                        <FinancialsGraph ticker={displaySymbol} height={560} width={600} />
                                     </CardBody>
                                 </Card>
                             </div>
