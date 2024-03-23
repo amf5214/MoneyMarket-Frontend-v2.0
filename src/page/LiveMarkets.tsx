@@ -276,16 +276,6 @@ export const LiveMarketsPage = () => {
                     </div>
                     :
                     <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{ color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", borderRadius: "1rem" }}>
-                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2" style={{margin: "1rem"}} >
-                            <Card className="w-full" style={{border: "3px white solid", color: "white", filter: "drop-shadow(5px 5px 5px)", backgroundColor: "#038C3E"}}>
-                                <CardBody>
-                                    <figure>
-                                        <h1 className="text-center">{ "Search for a stock" }</h1>
-                                    </figure>
-                                </CardBody>
-                            </Card>
-                        </div>
-
                         <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
                             <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
                                 <Button onClick={handleDaySpan} id="candlestick-button">Day</Button>
