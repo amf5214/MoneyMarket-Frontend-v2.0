@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import getNews from "../services/market-news/marketnews.service";
 import { NewsStory } from "../services/market-news/newsstory.dto";
+import AuthContext from "../provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 export const MarketNewsPage = () => {
 

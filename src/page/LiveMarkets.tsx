@@ -223,13 +223,11 @@ export const LiveMarketsPage = () => {
                 
                 <Navbar maxWidth="full" className="flex w-full relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 0, background: "transparent", backdropFilter: "none"}}>
                     <NavbarContent justify="start" />
-                    <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="center">
-                        <TickerAutocomplete setSymbol={setSymbol} />
-                        <Button color={"primary"} onClick={handleSearchButton} >
-                            Search
-                        </Button>
+                    <NavbarContent justify="center" />
+                    <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="end">
+                        <TickerAutocomplete setSymbol={setSymbol} onClose={handleSearchButton}/>
                     </NavbarContent>
-                    <NavbarContent justify="end" />
+                    
                 </Navbar>
 
                 {graphData.length != 0 ?
