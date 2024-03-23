@@ -125,7 +125,7 @@ const Toolbar = () => {
 
             {/* Menubar toogle button - Visibility = Narrow screen */ }
             {localUser != null ?
-                <NavbarContent className="sm:hidden" justify="end">
+                <NavbarContent className="md:hidden" justify="end">
                     <NavbarMenuToggle
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                         className="sm:hidden"
