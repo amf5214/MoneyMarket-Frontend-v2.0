@@ -296,8 +296,8 @@ export const LiveMarketsPage = () => {
                             </ButtonGroup>
                             <Card>
                                 <CardBody>
-                                    <Skeleton className="rounded-lg min-h-[560] min-w-[600]">
-                                        <div className="rounded-lg bg-default-300" style={{height: 460, width: 500}}></div>
+                                    <Skeleton className="rounded-lg min-h-[660] min-w-[700]">
+                                        <div className="rounded-lg bg-default-300" style={{height: 560, width: 600}}></div>
                                     </Skeleton>
                                 </CardBody>
                             </Card>
@@ -309,8 +309,8 @@ export const LiveMarketsPage = () => {
                             </ButtonGroup>
                             <Card className="h-full flex-col mx-auto flex justify-center items-center">
                                 <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
-                                    <Skeleton className="rounded-lg h-[560] w-[600]">
-                                        <div className="rounded-lg bg-default-300" style={{height: 460, width: 500}}></div>
+                                    <Skeleton className="rounded-lg h-[660] w-[700]">
+                                        <div className="rounded-lg bg-default-300" style={{height: 560, width: 600}}></div>
                                     </Skeleton>
                                 </CardBody>
                             </Card>
