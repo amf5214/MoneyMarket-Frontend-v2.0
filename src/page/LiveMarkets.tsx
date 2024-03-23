@@ -222,9 +222,17 @@ export const LiveMarketsPage = () => {
                 </div>
                 
                 <Navbar maxWidth="full" className="flex w-full relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 0, background: "transparent", backdropFilter: "none"}}>
-                    <NavbarContent justify="start" />
-                    <NavbarContent justify="center" />
-                    <NavbarContent className="sm:flex md:flex gap-4 lg:flex justify-center" justify="end">
+                    {graphData.length != 0 ?
+                        <NavbarContent className="hidden md:flex" justify="start">          
+                                <ButtonGroup>
+                                    <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
+                                    <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
+                                    <Button  className={otcState == states[2] ? closeClass : openClass}>OTC is {otcState}</Button>
+                                </ButtonGroup>
+                            
+                        </NavbarContent>
+                    : null }
+                    <NavbarContent className="flex gap-4 justify-center" justify="end" >
                         <TickerAutocomplete setSymbol={setSymbol} onClose={handleSearchButton}/>
                     </NavbarContent>
                     
