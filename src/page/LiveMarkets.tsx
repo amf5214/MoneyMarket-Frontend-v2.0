@@ -210,7 +210,7 @@ export const LiveMarketsPage = () => {
 
     return (
         <>
-            <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body live-markets-sub">
+            <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body live-markets-sub min-h-[90vh]">
                 <div className="mx-auto w-full" style={{height: "4.5rem"}}>
                     <div style={{height: "100%"}}>
                         <Ticker slideSpeed={100}>
