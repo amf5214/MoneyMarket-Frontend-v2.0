@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Card, CardBody, Chip, Divider, Input, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react"
+import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Card, CardBody, Chip, Divider, Input, Navbar, NavbarContent, NavbarItem, Skeleton } from "@nextui-org/react"
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import Ticker, { FinancialTicker, NewsTicker } from 'nice-react-ticker';
@@ -274,7 +274,50 @@ export const LiveMarketsPage = () => {
                         </div>
 
                     </div>
-                    : null }
+                    :
+                    <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{ color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", borderRadius: "1rem" }}>
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2" style={{margin: "1rem"}} >
+                            <Card className="w-full" style={{border: "3px white solid", color: "white", filter: "drop-shadow(5px 5px 5px)", backgroundColor: "#038C3E"}}>
+                                <CardBody>
+                                    <figure>
+                                        <h1 className="text-center">{ "Search for a stock" }</h1>
+                                    </figure>
+                                </CardBody>
+                            </Card>
+                        </div>
+
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                            <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
+                                <Button onClick={handleDaySpan} id="candlestick-button">Day</Button>
+                                <Button onClick={handleWeekSpan} id="candlestick-button">Week</Button>
+                                <Button onClick={handleMonthSpan} id="candlestick-button">Month</Button>
+                                <Button onClick={handleQuarterSpan} id="candlestick-button">Quarter</Button>
+                                <Button onClick={handleYearSpan} id="candlestick-button">Year</Button>
+                            </ButtonGroup>
+                            <Card>
+                                <CardBody>
+                                    <Skeleton className="rounded-lg min-h-[560] min-w-[600]">
+                                        <div className="rounded-lg bg-default-300" style={{height: 460, width: 500}}></div>
+                                    </Skeleton>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                            <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
+                                <Button id="candlestick-button">Cash Flow</Button>
+                            </ButtonGroup>
+                            <Card className="h-full flex-col mx-auto flex justify-center items-center">
+                                <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
+                                    <Skeleton className="rounded-lg h-[560] w-[600]">
+                                        <div className="rounded-lg bg-default-300" style={{height: 460, width: 500}}></div>
+                                    </Skeleton>
+                                </CardBody>
+                            </Card>
+                        </div>
+
+                    </div>
+                    }
             </div>
         </>
     )
