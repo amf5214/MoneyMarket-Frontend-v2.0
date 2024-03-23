@@ -210,7 +210,7 @@ export const LiveMarketsPage = () => {
 
     return (
         <>
-            <div className="container-lg flex flex-col w-full justify-start bg-gray-100 market-news-body live-markets-sub min-h-[90vh]">
+            <div className="container-lg flex flex-col w-full justify-center items-center bg-gray-100 market-news-body live-markets-sub min-h-[90vh]">
                 <div className="mx-auto w-full" style={{height: "4.5rem"}}>
                     <div style={{height: "100%"}}>
                         <Ticker slideSpeed={100}>
@@ -221,7 +221,7 @@ export const LiveMarketsPage = () => {
                     </div> 
                 </div>
                 
-                <Navbar maxWidth="full" className="flex w-full relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 0, background: "transparent", backdropFilter: "none"}}>
+                <Navbar maxWidth="full" className="flex w-[92vw] relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 0, background: "transparent", backdropFilter: "none"}}>
                     {graphData.length != 0 ?
                         <NavbarContent className="hidden md:flex" justify="start">          
                                 <ButtonGroup>
@@ -241,7 +241,7 @@ export const LiveMarketsPage = () => {
                 {graphData.length != 0 ?
                     <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{ color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", borderRadius: "1rem" }}>
                         <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2" style={{margin: "1rem"}} >
-                            <Card className="w-full" style={{border: "3px white solid", color: "white", filter: "drop-shadow(5px 5px 5px)", backgroundColor: "#038C3E"}}>
+                            <Card className="w-[89vw]" style={{border: "3px white solid", color: "white", filter: "drop-shadow(5px 5px 5px)", backgroundColor: "#038C3E"}}>
                                 <CardBody>
                                     <figure>
                                         <h1 className="text-center">{ tickerDetails.ticker }</h1>
