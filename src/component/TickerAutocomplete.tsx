@@ -1,11 +1,13 @@
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
+import SearchIcon from '@mui/icons-material/Search';
 
 interface Props {
     setSymbol:(text:string) => void;
+    onClose: () => void;
 }
 
-export const TickerAutocomplete = ( { setSymbol }:Props ) => {
+export const TickerAutocomplete = ( { setSymbol, onClose }:Props ) => {
 
     const handleChange = (text:string) => {
         list.setFilterText(text);
@@ -50,11 +52,13 @@ export const TickerAutocomplete = ( { setSymbol }:Props ) => {
 
     return (
         <Autocomplete 
-            label="Select a stock" 
+            label="Search a stock" 
             className="max-w-xs" 
             items={list.items}
             isLoading={list.isLoading}
+            startContent={<SearchIcon />}
             onInputChange={handleChange}
+            onBlur={onClose}
         >
             {(item:any) => (
                 <AutocompleteItem key={item.label}>
