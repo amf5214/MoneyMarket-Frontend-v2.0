@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Divider, Progress, ScrollShadow } from "@nextui-org/react";
+import { Button, Card, CardBody, Divider, Input, Progress, ScrollShadow, Textarea } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { InvalidSignupModal } from "./InvalidSignupModal";
@@ -108,38 +108,31 @@ export const SignUpCard = () => {
         <>        
             <InvalidSignupModal show={showInvalid} setShow={setShowInvalid} />
             <SuccessfulSignupModal show={showSuccess} setShow={setShowSuccess} />
-            <Card className="min-w-[25vw] min-h-[50vh]">
+            <Card className="min-w-[25vw] min-h-[50vh]" style={{padding: "2rem"}}>
                 <CardBody className="flex flex-col justify-around items-center">
                     <ScrollShadow className="flex flex-col justify-around items-center">
                         <Progress aria-label="Loading..." value={progress} className="max-w-md"/>
                         <h1 className="text-center font-bold text-slate-800" style={{fontSize: "x-large", fontWeight: "bold"}}>Sign Up</h1>
                         <form className="flex flex-col gap-y-4 justify-around items-center"
-                            style={{flex: ".5 0 auto", marginBottom: "1rem"}}>     
-                            <div className={`flex justify-center gap-x-4 signup-row`}>
+                            style={{flex: ".5 0 auto", margin: "2rem"}}>     
+                            <div className={`flex justify-center gap-x-4 gap-y-4 signup-row`}>
                                 <figure >
-                                    <h1 className="text-center">First Name:</h1>
-                                    <input type="text" value={firstName} placeholder="Enter First Name" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setFirstName(e.target.value)}/>
+                                    <Input type="text" variant="bordered" value={firstName} label="First Name:" placeholder="Enter First Name" isInvalid={!firstNameValid} className="text-center rounded-lg" onChange={(e) => setFirstName(e.target.value)}/>
                                 </figure>
                                 <figure >
-                                    <h1 className="text-center">Last Name:</h1>
-                                    <input type="text" value={lastName} placeholder="Enter Last Name" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setLastName(e.target.value)}/>
+                                    <Input type="text" variant="bordered" value={lastName} label="Last Name:" placeholder="Enter Last Name" isInvalid={!lastNameValid} className="text-center rounded-lg" onChange={(e) => setLastName(e.target.value)}/>
                                 </figure>
                             </div>
-                            <Divider />
-                            <div className={`flex justify-center gap-x-4 signup-row`}>
+                            <div className={`flex justify-center gap-x-4 gap-y-4 signup-row`}>
                                 <figure >
-                                    <h1 className="text-center">Username:</h1>
-                                    <input type="text" value={username} placeholder="Enter Username" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setUsername(e.target.value)}/>
+                                    <Input type="text" variant="bordered" value={username} label="Username:" placeholder="Enter Username" isInvalid={!usernameValid} className="text-center rounded-lg" onChange={(e) => setUsername(e.target.value)}/>
                                 </figure>
                                 <figure>
-                                    <h1 className="text-center">Email address:</h1>
-                                    <input autoFocus type="email" value={email} placeholder="Enter email" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setEmail(e.target.value)}/>
+                                    <Input variant="bordered" type="email" value={email} label="Email address:" placeholder="Enter email" isInvalid={!emailValid} className="text-center rounded-lg" onChange={(e) => setEmail(e.target.value)}/>
                                 </figure>
                             </div>
-                            <Divider />
                             <figure >
-                                <h1 className="text-center">Password:</h1>
-                                <input type="password" value={pwd} placeholder="Enter password" className="text-center rounded-lg bg-slate-800 text-white" onChange={(e) => setPwd(e.target.value)}/>
+                                <Input variant="bordered" type="password" value={pwd} label="Password:" placeholder="Enter password" isInvalid={!passwordValid} className="text-center rounded-lg" onChange={(e) => setPwd(e.target.value)}/>
                             </figure>
                             
                         </form>
