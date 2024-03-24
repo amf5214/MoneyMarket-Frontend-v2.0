@@ -13,10 +13,13 @@ import '../style/component/toolbar.css'
 import loadUser from "../services/auth/account.service";
 import Path from "../services/path.service";
 import AuthContext from "../provider/AuthProvider";
+import { useLocation } from "react-router-dom";
 
 const Toolbar = () => {
 
     const { user, setUser } = useContext(AuthContext);
+
+    const location = useLocation();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -44,16 +47,16 @@ const Toolbar = () => {
             </NavbarContent>
              {/* Nav buttons in the middle of the screen - Visibility = Wide screen */ }
             <NavbarContent className="hidden md:flex gap-4" justify="center">
-                <Link href={Path.LIVE_MARKETS} color={"foreground"}>
+                <Link href={Path.LIVE_MARKETS} color={location.pathname == Path.LIVE_MARKETS ? "primary" : "foreground"}>
                     Live Markets
                 </Link>
-                <Link href={Path.MARKET_NEWS} color={"foreground"}>
+                <Link href={Path.MARKET_NEWS} color={location.pathname == Path.MARKET_NEWS ? "primary" : "foreground"}>
                     Market News
                 </Link>
-                <Link href="#" color={"foreground"}>
+                <Link href="#" color={location.pathname.includes(Path.LEARNING_HUB) ? "primary" : "foreground"}>
                     Learning Hub
                 </Link>
-                <Link href="#" color={"foreground"}>
+                <Link href="#" color={location.pathname.includes(Path.CONTENT_HUB) ? "primary" : "foreground"}>
                     Content Hub
                 </Link>
             </NavbarContent>
