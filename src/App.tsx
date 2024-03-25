@@ -15,17 +15,19 @@ import Toolbar from './component/Toolbar';
 import SignInPage from "./page/SignIn";
 import { MarketNewsPage } from "./page/MarketNews";
 import { LiveMarketsPage } from "./page/LiveMarkets";
+import PrivateRoutes from "./component/PrivateRoutes";
 
 function App() {
 
   return (
       <Router>
-        <Toolbar />
         <Routes>
           <Route path={Path.HOME} element={<Home />} />
           <Route path={Path.SIGNIN} element={<SignInPage />} />
-          <Route path={Path.MARKET_NEWS} element={<MarketNewsPage />} />
-          <Route path={Path.LIVE_MARKETS} element={<LiveMarketsPage />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path={Path.MARKET_NEWS} element={<MarketNewsPage />} />
+            <Route path={Path.LIVE_MARKETS} element={<LiveMarketsPage />} />
+          </Route>
         </Routes>
       </Router>
   )
