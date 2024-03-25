@@ -242,6 +242,7 @@ export const LiveMarketsPage = () => {
 
     return (
         <>
+            <Toolbar />
             <div className="container-lg flex flex-col w-full justify-center items-center bg-gray-100 market-news-body live-markets-sub min-h-[90vh]">
                 <div className="mx-auto w-full" style={{height: "4.5rem"}}>
                     <div style={{height: "100%"}}>
