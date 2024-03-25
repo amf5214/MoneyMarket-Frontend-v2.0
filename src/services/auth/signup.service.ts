@@ -1,5 +1,6 @@
 import axios from "axios";
 import Path from "../path.service";
+import { ApiError } from "../error.service";
 
 export const handleSignUp = async (firstName:string, lastName:string, email:string, password:string, username:string) => {
     try {
@@ -18,7 +19,10 @@ export const handleSignUp = async (firstName:string, lastName:string, email:stri
         return "successful";
 
     } catch(err) {
-        console.log(err)
+        console.log(err);
+        if(err.response.status === 401) {
+            return ApiError.UNAUTHORIZED;
+        }
         return null;
     }
 }

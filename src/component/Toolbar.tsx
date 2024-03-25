@@ -14,6 +14,7 @@ import loadUser from "../services/auth/account.service";
 import Path from "../services/path.service";
 import AuthContext from "../provider/AuthProvider";
 import { useLocation } from "react-router-dom";
+import { ApiError } from "../services/error.service";
 
 const Toolbar = () => {
 
@@ -33,6 +34,10 @@ const Toolbar = () => {
     useEffect(() => {
         setLocalUser(user);
     }, [user])
+
+    useEffect(() => {
+        console.log(location);
+    }, [location])
 
     return (
         <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" isBordered className="h-full relative flex navheader">
@@ -62,7 +67,7 @@ const Toolbar = () => {
             </NavbarContent>
             
             {/* Search bar and avatar - Visibility = Wide screen */ }
-            {localUser != null ?
+            {(localUser != null && localUser != ApiError.UNAUTHORIZED) ?
                 <NavbarContent className="hidden md:flex gap-4" justify="end">
                     <NavbarItem>
                         <Input
@@ -82,7 +87,7 @@ const Toolbar = () => {
                         <DropdownTrigger>
                             <Avatar   
                                 as={"button"}
-                                name={localUser != null ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
+                                name={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
                                 src="https://i.pravatar.cc/200?img=13"
                                 color="primary"  
                                 isBordered
@@ -91,8 +96,8 @@ const Toolbar = () => {
                         <DropdownMenu aria-label="Profile Actions" variant="flat">
                                 <DropdownItem key="profile" className="h-14 gap-2">
                                     <User   
-                                        name={localUser != null ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
-                                        description={localUser != null ? localUser["username"] : "Not signed in"}
+                                        name={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
+                                        description={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["username"] : "Not signed in"}
                                         avatarProps={{
                                             src: "https://i.pravatar.cc/200?img=13"                                    }}
                                     />
@@ -127,7 +132,7 @@ const Toolbar = () => {
             }
 
             {/* Menubar toogle button - Visibility = Narrow screen */ }
-            {localUser != null ?
+            {(localUser && localUser != ApiError.UNAUTHORIZED) != null ?
                 <NavbarContent className="md:hidden" justify="end">
                     <NavbarMenuToggle
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -137,7 +142,7 @@ const Toolbar = () => {
             : null}
 
             {/* Menubar with nav links - Visibility = Narrow screen */ }
-            {localUser != null ?
+            {(localUser && localUser != ApiError.UNAUTHORIZED) != null ?
                 <NavbarMenu>
                     <NavbarMenuItem style={{marginTop: ".5rem"}}>
                         <User  

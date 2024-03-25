@@ -4,6 +4,9 @@ import ReactApexChart from "react-apexcharts";
 import { Modal } from "react-bootstrap";
 import { DateTime } from 'luxon';
 import { getStockCashFlow } from "../services/live-markets/financials.service";
+import { Api } from "@mui/icons-material";
+import { ApiError } from "../services/error.service";
+import { useNavigate } from "react-router-dom";
 
  interface Props {
    ticker: string;
@@ -13,6 +16,8 @@ import { getStockCashFlow } from "../services/live-markets/financials.service";
 
  // Modal to create and display graph of company financial information
  export const FinancialsGraph = ( { ticker, width, height }:Props ) => {
+
+   const navigate = useNavigate();
 
    // State variable to hold actual data to be graphed. 
    // Object with {x:Date, y:number} objects
@@ -36,8 +41,12 @@ import { getStockCashFlow } from "../services/live-markets/financials.service";
          
          if(cookies != null) {
             const response = await getStockCashFlow(ticker, cookies);
-            setFinancialData(response.yAxis);
-            setYears(response.years)
+            if(await response == ApiError.UNAUTHORIZED) {
+               navigate("/signin")
+            } else if (response != ApiError.UNAUTHORIZED && response != undefined) {
+               setFinancialData(response.yAxis);
+               setYears(response.years);
+            }
          }
       }
 

@@ -1,3 +1,4 @@
+import { ApiError } from "../error.service";
 import Path from "../path.service";
 import axios from "axios";
 
@@ -12,7 +13,10 @@ export const handleSignin = async (email:string, pwd:string) => {
         return await response.data['access_token'];
 
     } catch(err) {
-        console.log(err)
+        console.log(err);
+        if(err.response.status === 401) {
+            return ApiError.UNAUTHORIZED;
+        }
         return null;
     }
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Path from "../path.service";
+import { ApiError } from "../error.service";
 
 const loadUser = async (cookie:string) => {
     try {
@@ -10,6 +11,9 @@ const loadUser = async (cookie:string) => {
         return await response.data;
     } catch(err) {
         console.log(err);
+        if(err.response.status === 401) {
+            return ApiError.UNAUTHORIZED;
+        }
         return null;
     }
 }

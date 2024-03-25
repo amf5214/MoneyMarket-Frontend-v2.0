@@ -15,9 +15,14 @@ import { DateTime } from 'luxon';
 import { CandlestickGraph } from "../component/CandlestickGraph";
 import { FinancialsGraph } from "../component/FinancialsGraph";
 import { getTickerDetails } from "../services/live-markets/tickerdetails.service";
+import { useNavigate } from "react-router-dom";
+import { ApiError } from "../services/error.service";
+import Toolbar from "../component/Toolbar";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
+
+    const navigate = useNavigate();
 
     // Array of market state possible values
     const states = ["open", "extended-hours", "closed"];
@@ -79,9 +84,15 @@ export const LiveMarketsPage = () => {
             try {
                 if(Cookies.get('Authorization') != null) {
                     const response = await getMarketStatus(Cookies.get('Authorization'));
-                    setNYSEState(await response.exchanges.nyse);
-                    setNasdaqState(await response.exchanges.nasdaq);
-                    setOTCState(await response.exchanges.otc);
+                    if(response != undefined && response != ApiError.UNAUTHORIZED) {
+                        setNYSEState(await response.exchanges.nyse);
+                        setNasdaqState(await response.exchanges.nasdaq);
+                        setOTCState(await response.exchanges.otc);
+                    } else {
+                        if(response == ApiError.UNAUTHORIZED) {
+                            navigate("/signin")
+                        }
+                    }
                 } 
             }
             catch(err) {
@@ -97,7 +108,15 @@ export const LiveMarketsPage = () => {
             try {
                 if(Cookies.get('Authorization') != null) {
                     setActiveStocksArray(activeStocks);
-                    setActiveStocksArray((await getWLAStocks(Cookies.get('Authorization'))).mostActive);
+                    const response = await getWLAStocks(Cookies.get('Authorization'));
+                    if(response != undefined && response != ApiError.UNAUTHORIZED) {
+                        setActiveStocksArray(response.mostActive);
+                    } else {
+                        if(response == ApiError.UNAUTHORIZED) {
+                            navigate("/signin");
+                        }
+                    }
+                    
                 }
             }
             catch(err) {
@@ -119,8 +138,15 @@ export const LiveMarketsPage = () => {
             }
             if(cookie != undefined && testDto != undefined) {
                 const response = await getStockData(testDto, cookie);
-                setGraphData(await response);
-                setDisplaySymbol(symbol);
+                if(response != undefined && response != ApiError.UNAUTHORIZED) {
+                    setGraphData(await response);
+                    setDisplaySymbol(symbol);
+                } else {
+                    if(response == ApiError.UNAUTHORIZED) {
+                        navigate("/signin");
+                    }
+                }
+                
             }
         }
         
@@ -141,13 +167,19 @@ export const LiveMarketsPage = () => {
             if(cookie != undefined) {
                 try {
                     const details = await getTickerDetails(symbol, cookie);
-                    const info = (await details).results;
-                    setTickerDetails({
-                        ticker: await info.ticker,
-                        name: await info.name,
-                        market_cap: await info.market_cap,
-                        description: await info.description
-                    })
+                    if(details != undefined && details != ApiError.UNAUTHORIZED) {
+                        const info = (await details).results;
+                        setTickerDetails({
+                            ticker: await info.ticker,
+                            name: await info.name,
+                            market_cap: await info.market_cap,
+                            description: await info.description
+                        });
+                    } else {
+                        if(details == ApiError.UNAUTHORIZED) {
+                            navigate("/signin");
+                        }
+                    }
                 }
                 catch(err) {
                     console.log(err);

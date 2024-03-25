@@ -4,8 +4,13 @@ import getNews from "../services/market-news/marketnews.service";
 import { NewsStory } from "../services/market-news/newsstory.dto";
 import AuthContext from "../provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { UndoRounded } from "@mui/icons-material";
+import { ApiError } from "../services/error.service";
+import Toolbar from "../component/Toolbar";
 
 export const MarketNewsPage = () => {
+
+    const navigate = useNavigate();
 
     const initNews:NewsStory[] = [];
     const [news, setNews] = useState(initNews);
@@ -13,7 +18,16 @@ export const MarketNewsPage = () => {
     useEffect(() => {
         const updateNews = async () => {
             if(Cookies.get("Authorization") != null) {
-                setNews(await getNews(Cookies.get("Authorization")));
+                const response = await getNews(Cookies.get("Authorization"));
+                if(response != undefined && response != ApiError.UNAUTHORIZED) {
+                    setNews(response);
+                } else {
+                    if(response == ApiError.UNAUTHORIZED) {
+                        navigate("/signin");
+                    }
+                } 
+            } else {
+                navigate("/signin");
             }
         }
         updateNews();
