@@ -15,10 +15,11 @@ import { DateTime } from 'luxon';
 import { CandlestickGraph } from "../component/CandlestickGraph";
 import { FinancialsGraph } from "../component/FinancialsGraph";
 import { getTickerDetails } from "../services/live-markets/tickerdetails.service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { ApiError } from "../services/error.service";
 import Toolbar from "../component/Toolbar";
 import { useWindowSize } from "../hook/size.hook";
+import Path from "../services/path.service";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -56,7 +57,17 @@ export const LiveMarketsPage = () => {
     const [activeStockArray, setActiveStocksArray] = useState(activeStocks);
 
     // State variable to store current ticker value
-    const [symbol, setSymbol] = useState("");
+    const {ticker} = useParams();
+    const [symbol, setSymbol] = useState(ticker != undefined ? ticker : "AMZN");
+
+    useEffect(() => {
+        if(ticker == undefined || ticker == "") {
+            navigate(Path.LIVE_MARKETS + "/AMZN");
+            setSymbol("AMZN");
+        } else {
+            setSymbol(ticker);
+        }
+    }, [ticker]);
 
     // State variable to store start and end date
     let dt:DateTime = DateTime.local();
@@ -157,9 +168,9 @@ export const LiveMarketsPage = () => {
         
     }
 
-    const handleSearchButton = () => {
+    useEffect(() => {
         handleSearch();
-    }
+    },[symbol])
 
     // Update ticker details
     useEffect(() => {
@@ -267,15 +278,15 @@ export const LiveMarketsPage = () => {
                     <div style={{height: "100%"}}>
                         <Ticker slideSpeed={100}>
                             { activeStockArray.map((item, idx) => (
-                                <FinancialTicker id={idx} key={idx} change={item.changeAmount > 0} symbol={item.ticker} lastPrice={`${Math.round(item.price)}`} percentage={item.changeAmount > 0 ? item.changePercentage: item.changePercentage.substring(1)} currentPrice={`${item.price}`} />
+                                <FinancialTicker id={idx} key={idx} change={item.changeAmount > 0} symbol={item.ticker} lastPrice={`${Number.parseFloat(`${item.price - item.changeAmount}`).toFixed(2)}`} percentage={item.changeAmount > 0 ? item.changePercentage: item.changePercentage.substring(1)} currentPrice={`${Number.parseFloat(`${item.price}`).toFixed(2)}`} />
                             ))}
                         </Ticker>
                     </div> 
                 </div>
                 
-                <Navbar maxWidth="full" className="flex w-[92vw] relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 0, background: "transparent", backdropFilter: "none"}}>
+                {/* <Navbar maxWidth="full" className="flex w-[92vw] relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 0, background: "transparent", backdropFilter: "none"}}>
                     {graphData.length != 0 ?
-                        <NavbarContent className="hidden md:flex" justify="start">          
+                        <NavbarContent className="hidden md:flex" justify="center">          
                                 <ButtonGroup>
                                     <Button  className={nyseState == states[2] ? closeClass : openClass}>NYSE is {nyseState}</Button>
                                     <Button  className={nasdaqState == states[2] ? closeClass : openClass}>Nasdaq is {nasdaqState}</Button>
@@ -284,11 +295,8 @@ export const LiveMarketsPage = () => {
                             
                         </NavbarContent>
                     : null }
-                    <NavbarContent className="flex gap-4 justify-center" justify="end" >
-                        <TickerAutocomplete setSymbol={setSymbol} onClose={handleSearchButton}/>
-                    </NavbarContent>
                     
-                </Navbar>
+                </Navbar> */}
 
                 {graphData.length != 0 ?
                     <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{ color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", borderRadius: "1rem" }}>
