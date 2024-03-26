@@ -18,6 +18,7 @@ import { getTickerDetails } from "../services/live-markets/tickerdetails.service
 import { useNavigate } from "react-router-dom";
 import { ApiError } from "../services/error.service";
 import Toolbar from "../component/Toolbar";
+import { useWindowSize } from "../hook/size.hook";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -240,6 +241,24 @@ export const LiveMarketsPage = () => {
         await handleSearch(date, span);
     }
 
+    const [width, height] = useWindowSize();
+    const [graphSize, setGraphSize] = useState([width, height]);
+    useEffect(() => {
+        let newWidth = width;
+        if(width >= 1024) {
+            newWidth = width * 0.4;
+        } else {
+            newWidth = width * 0.8;
+        }
+        let newHeight = height;
+        
+        newHeight = height * 0.8;
+        
+        console.log([newWidth, newHeight]);
+
+        setGraphSize([newWidth, newHeight]);
+    }, [width, height]);
+
     return (
         <>
             <Toolbar />
@@ -286,7 +305,7 @@ export const LiveMarketsPage = () => {
                             </Card>
                         </div>
 
-                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 lg:col-span-1">
                             <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
                                 <Button onClick={handleDaySpan} id="candlestick-button">Day</Button>
                                 <Button onClick={handleWeekSpan} id="candlestick-button">Week</Button>
@@ -296,12 +315,12 @@ export const LiveMarketsPage = () => {
                             </ButtonGroup>
                             <Card>
                                 <CardBody>
-                                    <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={displaySymbol} height={280} width={600} />
+                                    <CandlestickGraph data={graphData} dates={[startDate, endDate]} symbol={displaySymbol} height={graphSize[1]} width={graphSize[0]} />
                                 </CardBody>
                             </Card>
                         </div>
                         
-                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 lg:col-span-1">
                             <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
                                 <Button id="candlestick-button">Cash Flow</Button>
                                 {/* <Button id="candlestick-button">Operating Income</Button>
@@ -309,7 +328,7 @@ export const LiveMarketsPage = () => {
                             </ButtonGroup>
                             <Card className="h-full flex-col mx-auto flex justify-center items-center">
                                 <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
-                                    <FinancialsGraph ticker={displaySymbol} height={560} width={600} />
+                                    <FinancialsGraph ticker={displaySymbol} height={graphSize[1]} width={graphSize[0]} />
                                 </CardBody>
                             </Card>
                         </div>
@@ -317,7 +336,7 @@ export const LiveMarketsPage = () => {
                     </div>
                     :
                     <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{ color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", borderRadius: "1rem" }}>
-                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 lg:col-span-1">
                             <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
                                 <Button onClick={handleDaySpan} id="candlestick-button">Day</Button>
                                 <Button onClick={handleWeekSpan} id="candlestick-button">Week</Button>
@@ -328,20 +347,20 @@ export const LiveMarketsPage = () => {
                             <Card>
                                 <CardBody>
                                     <Skeleton className="rounded-lg min-h-[660] min-w-[700]">
-                                        <div className="rounded-lg bg-default-300" style={{height: 560, width: 600}}></div>
+                                        <div className="rounded-lg bg-default-300" style={{height: graphSize[1] * .5, width: graphSize[0]}}></div>
                                     </Skeleton>
                                 </CardBody>
                             </Card>
                         </div>
                         
-                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 xl:col-span-1">
+                        <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 lg:col-span-1">
                             <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
                                 <Button id="candlestick-button">Cash Flow</Button>
                             </ButtonGroup>
                             <Card className="h-full flex-col mx-auto flex justify-center items-center">
                                 <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
                                     <Skeleton className="rounded-lg h-[660] w-[700]">
-                                        <div className="rounded-lg bg-default-300" style={{height: 560, width: 600}}></div>
+                                        <div className="rounded-lg bg-default-300" style={{height: graphSize[1] * .5, width: graphSize[0]}}></div>
                                     </Skeleton>
                                 </CardBody>
                             </Card>
@@ -353,4 +372,3 @@ export const LiveMarketsPage = () => {
         </>
     )
 }
-

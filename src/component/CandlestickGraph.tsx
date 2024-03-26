@@ -111,8 +111,8 @@ export const CandlestickGraph = ( { data, height, width, symbol, dates }:Candles
     
     return (
         <>
-            <ReactApexChart options={state.options} series={state.series} type="candlestick" height={height} width={width}/>
-            <ReactApexChart options={state.optionsBar} series={state.seriesBar} type="bar" height={height*.6} width={width} />
+            <ReactApexChart options={state.options} series={state.series} type="candlestick" height={height*.5} width={width}/>
+            <ReactApexChart options={state.optionsBar} series={state.seriesBar} type="bar" height={height*.3} width={width} />
         </>
     )
     
