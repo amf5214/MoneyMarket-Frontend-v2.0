@@ -278,7 +278,7 @@ export const LiveMarketsPage = () => {
                     <div style={{height: "100%"}}>
                         <Ticker slideSpeed={100}>
                             { activeStockArray.map((item, idx) => (
-                                <FinancialTicker id={idx} key={idx} change={item.changeAmount > 0} symbol={item.ticker} lastPrice={`${Math.round(item.price)}`} percentage={item.changeAmount > 0 ? item.changePercentage: item.changePercentage.substring(1)} currentPrice={`${item.price}`} />
+                                <FinancialTicker id={idx} key={idx} change={item.changeAmount > 0} symbol={item.ticker} lastPrice={`${Number.parseFloat(`${item.price - item.changeAmount}`).toFixed(2)}`} percentage={item.changeAmount > 0 ? item.changePercentage: item.changePercentage.substring(1)} currentPrice={`${Number.parseFloat(`${item.price}`).toFixed(2)}`} />
                             ))}
                         </Ticker>
                     </div> 
