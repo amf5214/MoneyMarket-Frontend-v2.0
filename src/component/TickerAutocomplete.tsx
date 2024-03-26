@@ -5,11 +5,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Path from "../services/path.service";
 
-interface Props {
-    setSymbol:(text:string) => void;
-    onClose: () => void;
-}
-
 export const TickerAutocomplete = () => {
 
     const [symbol, setSymbol] = useState("");
