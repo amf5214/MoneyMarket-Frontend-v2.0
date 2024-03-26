@@ -1,17 +1,31 @@
-import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, useNavbar } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
 import SearchIcon from '@mui/icons-material/Search';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Path from "../services/path.service";
 
 interface Props {
     setSymbol:(text:string) => void;
     onClose: () => void;
 }
 
-export const TickerAutocomplete = ( { setSymbol, onClose }:Props ) => {
+export const TickerAutocomplete = () => {
+
+    const [symbol, setSymbol] = useState("");
+
+    const navigate = useNavigate();
 
     const handleChange = (text:string) => {
         list.setFilterText(text);
         setSymbol(text);
+    }
+
+    const onClose = () => {
+        if(symbol != "" && symbol != " ") {
+            navigate(Path.LIVE_MARKETS + "/" + symbol);
+            setSymbol("");
+        }
     }
 
     type TickerType = {
@@ -25,7 +39,7 @@ export const TickerAutocomplete = ( { setSymbol, onClose }:Props ) => {
         async load({signal, filterText}) {
             try {
                 let hintArray:any[] = [];
-                await fetch('stocks.json', {signal})
+                await fetch('../stocks.json', {signal})
                     .then((response) => {
                         return response.json();
                     })
