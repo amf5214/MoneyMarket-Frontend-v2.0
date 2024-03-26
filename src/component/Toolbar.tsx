@@ -53,7 +53,7 @@ const Toolbar = () => {
             </NavbarContent>
              {/* Nav buttons in the middle of the screen - Visibility = Wide screen */ }
             <NavbarContent className="hidden md:flex gap-4" justify="center">
-                <Link href={Path.LIVE_MARKETS} color={location.pathname == Path.LIVE_MARKETS ? "primary" : "foreground"}>
+                <Link href={Path.LIVE_MARKETS} color={location.pathname.includes(Path.LIVE_MARKETS) ? "primary" : "foreground"}>
                     Live Markets
                 </Link>
                 <Link href={Path.MARKET_NEWS} color={location.pathname == Path.MARKET_NEWS ? "primary" : "foreground"}>
