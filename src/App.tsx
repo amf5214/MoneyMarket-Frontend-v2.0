@@ -26,7 +26,7 @@ function App() {
           <Route path={Path.SIGNIN} element={<SignInPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path={Path.MARKET_NEWS} element={<MarketNewsPage />} />
-            <Route path={Path.LIVE_MARKETS} element={<LiveMarketsPage />} />
+            <Route path={Path.LIVE_MARKETS + "/:ticker"} element={<LiveMarketsPage />} />
           </Route>
         </Routes>
       </Router>
