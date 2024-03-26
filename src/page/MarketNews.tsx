@@ -51,17 +51,20 @@ export const MarketNewsPage = () => {
                                     {news.slice(0, 3).map((story, ind) => (
                 
                                         <Card shadow="sm" key={ind} isPressable onPress={() => window.location.href = story.url}>
-                                            <CardBody className="overflow-visible p-0">
+                                            <CardHeader className="text-center">
+                                                <b className="text-center">{story.title}</b>
+                                            </CardHeader>
+                                            <CardBody className="overflow-visible p-0 flex justify-center items-center">
                                                 <Image
                                                     shadow="sm"
                                                     radius="lg"
                                                     alt={story.title}
-                                                    className="w-full object-cover h-[50vh] w-[100vw] lg:w-[35vw]"
+                                                    className="w-full object-center h-[20vh] w-[50vw] lg:w-[20vw] md:w-[30vw]"
                                                     src={story.image_url}
                                                 />
                                             </CardBody>
                                             <CardFooter className="text-small justify-between">
-                                                <b>{story.title}</b>
+                                                <b>{story.description}</b>
                                             </CardFooter>
                                         </Card>
                                     ))}   
