@@ -61,7 +61,6 @@ export const TickerAutocomplete = () => {
 
     return (
         <Autocomplete 
-            label="Search a stock" 
             className="max-w-xs" 
             items={list.items}
             isLoading={list.isLoading}
