@@ -41,7 +41,7 @@ export const MarketNewsPage = () => {
             <div className="bg-gray-100 market-news-body">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none">
-                        <Card className="bg-slate-800">
+                        <Card className="bg-slate-800 market-box">
                             <CardHeader className="flex justify-center bg-slate-900">
                                 <h2 className="text-2xl font-bold text-white text-center">News</h2>
                             </CardHeader>

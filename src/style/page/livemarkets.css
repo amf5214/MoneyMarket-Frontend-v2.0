@@ -59,3 +59,7 @@
     -webkit-animation: gradient 60s ease infinite;
 	animation: gradient 60s ease infinite;
 }
+
+.market-box {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
