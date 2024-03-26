@@ -19,22 +19,33 @@ export const getWLAStocks = async (cookie:string) => {
         });
 
         const mostActive:ActiveStock[] = [];
+        const activeStocks:ActiveStock[] = [];
+        const topGainers:ActiveStock[] = [];
+        const topLosers:ActiveStock[] = [];
 
         await response.data.top_gainers.forEach((item:any) => {
             mostActive.push(new ActiveStock(item.ticker, item.price, item.change_amount, item.change_percentage, item.volume));
+            topGainers.push(new ActiveStock(item.ticker, item.price, item.change_amount, item.change_percentage, item.volume));
+
         })
 
         await response.data.most_actively_traded.forEach((item:any) => {
             mostActive.push(new ActiveStock(item.ticker, item.price, item.change_amount, item.change_percentage, item.volume));
+            activeStocks.push(new ActiveStock(item.ticker, item.price, item.change_amount, item.change_percentage, item.volume));
         })
 
         await response.data.top_losers.forEach((item:any) => {
             mostActive.push(new ActiveStock(item.ticker, item.price, item.change_amount, item.change_percentage, item.volume));
+            topLosers.push(new ActiveStock(item.ticker, item.price, item.change_amount, item.change_percentage, item.volume));
+
         })
 
         return {
             update_time: await response.last_updated,
-            mostActive: mostActive
+            mostActive: mostActive,
+            activeStocks: activeStocks,
+            topGainers: topGainers,
+            topLosers: topLosers
         };
     } catch(err) {
         if(err.response.status === 401) {
