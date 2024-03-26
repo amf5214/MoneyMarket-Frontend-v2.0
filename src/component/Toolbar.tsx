@@ -15,6 +15,7 @@ import Path from "../services/path.service";
 import AuthContext from "../provider/AuthProvider";
 import { useLocation } from "react-router-dom";
 import { ApiError } from "../services/error.service";
+import { TickerAutocomplete } from "./TickerAutocomplete";
 
 const Toolbar = () => {
 
@@ -45,7 +46,7 @@ const Toolbar = () => {
             <NavbarContent className="sm" justify="start">
                 <NavbarBrand>
                     <Link href="/" color={"foreground"}>
-                        <Avatar src="logo.jpg" className="rounded" style={{marginRight: ".5rem"}}/>
+                        <Avatar src="/logo.jpg" className="rounded" style={{marginRight: ".5rem"}}/>
                         <p style={{ marginLeft: ".5rem" }}>Money Market</p>
                     </Link>  
                 </NavbarBrand>
@@ -70,18 +71,7 @@ const Toolbar = () => {
             {(localUser != null && localUser != ApiError.UNAUTHORIZED) ?
                 <NavbarContent className="hidden md:flex gap-4" justify="end">
                     <NavbarItem>
-                        <Input
-                            classNames={{
-                                base: "max-w-full sm:max-w-[10rem] h-10",
-                                mainWrapper: "h-full",
-                                input: "text-small",
-                                inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-                            }}
-                            placeholder="Type to search..."
-                            size="sm"
-                            startContent={<SearchIcon />}
-                            type="search"
-                        />
+                        <TickerAutocomplete />
                     </NavbarItem>
                     <Dropdown placement="bottom-end">
                         <DropdownTrigger>
@@ -112,18 +102,7 @@ const Toolbar = () => {
             :   
                 <NavbarContent className="hidden md:flex gap-4" justify="end">
                     <NavbarItem>
-                        <Input
-                            classNames={{
-                                base: "max-w-full sm:max-w-[10rem] h-10",
-                                mainWrapper: "h-full",
-                                input: "text-small",
-                                inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-                            }}
-                            placeholder="Type to search..."
-                            size="sm"
-                            startContent={<SearchIcon />}
-                            type="search"
-                        />
+                        <TickerAutocomplete />
                     </NavbarItem>
                     <NavbarItem>
                         <Link href="/signin" key="signin">Sign In</Link>
