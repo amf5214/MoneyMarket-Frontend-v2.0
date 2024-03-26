@@ -284,7 +284,7 @@ export const LiveMarketsPage = () => {
                     </div> 
                 </div>
                 
-                <Navbar maxWidth="full" className="flex w-[92vw] relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 0, background: "transparent", backdropFilter: "none"}}>
+                {/* <Navbar maxWidth="full" className="flex w-[92vw] relative navheader justify-center" style={{margin: "1rem 0 auto", zIndex: 0, background: "transparent", backdropFilter: "none"}}>
                     {graphData.length != 0 ?
                         <NavbarContent className="hidden md:flex" justify="center">          
                                 <ButtonGroup>
@@ -296,7 +296,7 @@ export const LiveMarketsPage = () => {
                         </NavbarContent>
                     : null }
                     
-                </Navbar>
+                </Navbar> */}
 
                 {graphData.length != 0 ?
                     <div className="container-lg mx-auto grid grid-cols-2 gap-x-4 gap-y-4" style={{ color: "white", paddingBottom: "2rem", marginLeft: "2rem", marginRight: "2rem", marginBottom: "2rem", borderRadius: "1rem" }}>
