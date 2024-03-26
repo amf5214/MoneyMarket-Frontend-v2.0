@@ -16,6 +16,7 @@ import SignInPage from "./page/SignIn";
 import { MarketNewsPage } from "./page/MarketNews";
 import { LiveMarketsPage } from "./page/LiveMarkets";
 import PrivateRoutes from "./component/PrivateRoutes";
+import { LiveMarketsHomePage } from "./page/LiveMarketsHome";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path={Path.MARKET_NEWS} element={<MarketNewsPage />} />
             <Route path={Path.LIVE_MARKETS + "/:ticker"} element={<LiveMarketsPage />} />
+            <Route path={Path.LIVE_MARKETS} element={<LiveMarketsHomePage />} />
           </Route>
         </Routes>
       </Router>
