@@ -47,8 +47,8 @@ export const MarketNewsPage = () => {
                             </CardHeader>
                             <Divider className="bg-gray-500" />
                             <CardBody>
-                                <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0 bg-slate-800 p-4 rounded-lg">
                                     {news.slice(0, 3).map((story, ind) => (
+                                <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0 bg-slate-800 p-4 rounded-lg gap-y-4">
                 
                                         <Card shadow="sm" key={ind} isPressable onPress={() => window.location.href = story.url}>
                                             <CardHeader className="text-center text-large">
