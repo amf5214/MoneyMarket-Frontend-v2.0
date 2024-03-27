@@ -57,7 +57,7 @@ const Toolbar = () => {
                 <NavbarBrand>
                     <Link href="/" color={"foreground"}>
                         <Avatar src="/logo.jpg" className="rounded" style={{marginRight: ".5rem"}}/>
-                        <p style={{ marginLeft: ".5rem" }}>Money Market</p>
+                        <b style={{ marginLeft: ".5rem" }} className="text-xl">Money Market</b>
                     </Link>  
                 </NavbarBrand>
                 <Link href={Path.LIVE_MARKETS} color={location.pathname.includes(Path.LIVE_MARKETS) ? "primary" : "foreground"}>
