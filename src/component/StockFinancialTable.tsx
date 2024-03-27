@@ -43,28 +43,26 @@ export const StockFinancialTable = ( { ticker, width, height }:Props ) => {
 
     return (
         <>
-            {tableData.length != 0 ?
-                <Table removeWrapper aria-label="financials-table" style={{height:height*.7, width:width}}>
-                    <TableHeader>
-                        <TableColumn>Year</TableColumn>
-                        <TableColumn>Quarter</TableColumn>
-                        <TableColumn>Assets</TableColumn>
-                        <TableColumn>Liabilities</TableColumn>
-                        <TableColumn>Equity</TableColumn>
-                    </TableHeader>
-                    <TableBody items={tableData}>
-                        {(item) => (
-                            <TableRow key={item.ticker + "_" + item.index}>
-                                <TableCell>{item.year}</TableCell>
-                                <TableCell>{item.quarter}</TableCell>
-                                <TableCell>{formatCash(item.balancesheet.assets)}</TableCell>
-                                <TableCell>{formatCash(item.balancesheet.liabilities)}</TableCell>
-                                <TableCell>{formatCash(item.balancesheet.equity)}</TableCell>
-                            </TableRow>
-                        )}                    
-                    </TableBody>
-                </Table>
-            : null }
+            <Table removeWrapper aria-label="financials-table" style={{height:height*.7, width:width}}>
+                <TableHeader>
+                    <TableColumn>Year</TableColumn>
+                    <TableColumn>Quarter</TableColumn>
+                    <TableColumn>Assets</TableColumn>
+                    <TableColumn>Liabilities</TableColumn>
+                    <TableColumn>Equity</TableColumn>
+                </TableHeader>
+                <TableBody items={tableData} emptyContent={"No rows to display."}>
+                    {(item) => (
+                        <TableRow key={item.ticker + "_" + item.index}>
+                            <TableCell>{item.year}</TableCell>
+                            <TableCell>{item.quarter}</TableCell>
+                            <TableCell>{formatCash(item.balancesheet.assets)}</TableCell>
+                            <TableCell>{formatCash(item.balancesheet.liabilities)}</TableCell>
+                            <TableCell>{formatCash(item.balancesheet.equity)}</TableCell>
+                        </TableRow>
+                    )}                    
+                </TableBody>
+            </Table>
         
         </>
     )
