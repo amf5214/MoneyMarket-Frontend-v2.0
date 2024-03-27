@@ -51,20 +51,21 @@ export const MarketNewsPage = () => {
                                     {news.slice(0, 3).map((story, ind) => (
                 
                                         <Card shadow="sm" key={ind} isPressable onPress={() => window.location.href = story.url}>
-                                            <CardHeader className="text-center">
+                                            <CardHeader className="text-center text-large">
                                                 <b className="text-center">{story.title}</b>
                                             </CardHeader>
-                                            <CardBody className="overflow-visible p-0 flex justify-center items-center">
+                                            <Divider />
+                                            <CardBody className="overflow-visible p-0 flex justify-center items-center" style={{marginTop: "1rem"}}>
                                                 <Image
                                                     shadow="sm"
                                                     radius="lg"
                                                     alt={story.title}
-                                                    className="w-full object-center h-[20vh] w-[50vw] lg:w-[20vw] md:w-[30vw]"
+                                                    className="w-full object-center h-[25vh] lg:h-[30vh] md:h-[35vh] w-[60vw] lg:w-[26vw] md:w-[50vw]"
                                                     src={story.image_url}
                                                 />
                                             </CardBody>
                                             <CardFooter className="text-small justify-between">
-                                                <b>{story.description}</b>
+                                                <p>{story.description}</p>
                                             </CardFooter>
                                         </Card>
                                     ))}   
