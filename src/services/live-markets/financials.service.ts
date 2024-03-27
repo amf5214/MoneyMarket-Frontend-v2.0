@@ -1,5 +1,5 @@
 import axios from "axios";
-import { StockFinancialRecord } from "./FinancialRecord";
+import { BalanceSheetRecord, StockFinancialRecord } from "./FinancialRecord";
 import Path from "../path.service";
 import { ApiError } from "../error.service";
 
@@ -18,11 +18,19 @@ export const getFinancials = async (ticker:string, cookie:string) => {
         for(let i = 0; i < await response.data.results.length; i++) {
             if(await response.data.results[i].financials.cash_flow_statement != undefined) {
                 financialRecords.push(new StockFinancialRecord(
+                    i,
                     await response.data.results[i].tickers[0],
                     await response.data.results[i].fiscal_year,
                     await response.data.results[i].fiscal_period,
                     await response.data.results[i].financials.cash_flow_statement.net_cash_flow.value,
-                    await response.data.results[i].end_date
+                    await response.data.results[i].end_date,
+                    new BalanceSheetRecord(
+                        await response.data.results[i].financials.balance_sheet.current_assets.value, 
+                        await response.data.results[i].financials.balance_sheet.current_liabilities.value, 
+                        await response.data.results[i].financials.balance_sheet.assets.value, 
+                        await response.data.results[i].financials.balance_sheet.liabilities.value, 
+                        await response.data.results[i].financials.balance_sheet.equity.value
+                    )
                 ));
             }
             
