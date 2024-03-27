@@ -79,12 +79,29 @@ export const getStockCashFlow = async (ticker:string, cookie:string) => {
     
 }
 
+export const getBalanceSheet = async (ticker:string, cookie:string) => {
+    const assetsArray:Point[] = [];
+    const liabilitiesArray:Point[] = [];
+    const equityArray:Point[] =[];
     const years:number[] = [];
+    let data:any = await getFinancials(ticker, cookie);
 
-    returnArray.forEach((item) => {
-        years.push(new Date(item.x).getFullYear())
-    })
+    if(data == ApiError.UNAUTHORIZED) {
+        return data;
+    } 
 
-    return {yAxis:returnArray, years: [...new Set(years)]};
+    for(let i = 0; i < await data.length; i++) {
+        assetsArray.push({x:data[i].filing_date,y:data[i].balance_sheet.assets.value});
+        liabilitiesArray.push({x:data[i].filing_date,y:data[i].balance_sheet.liabilities.value});
+        equityArray.push({x:data[i].filing_date,y:data[i].balance_sheet.equity.value});
+        years.push(data[i].year)
+    }
+
+    return {
+        assets: assetsArray, 
+        liabilities: liabilitiesArray, 
+        equity: equityArray, 
+        years: [...new Set(years)]
+    };
     
 }
