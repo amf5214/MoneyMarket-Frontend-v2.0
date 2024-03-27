@@ -42,8 +42,8 @@ const Toolbar = () => {
 
     return (
         <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" isBordered className="h-full relative flex navheader">
-            {/* Logo and company name */ }
-            <NavbarContent className="sm" justify="start">
+            {/* Logo and company name - Visibility = Narrow Screen */ }
+            <NavbarContent className="sm md:hidden" justify="start">
                 <NavbarBrand>
                     <Link href="/" color={"foreground"}>
                         <Avatar src="/logo.jpg" className="rounded" style={{marginRight: ".5rem"}}/>
@@ -51,8 +51,15 @@ const Toolbar = () => {
                     </Link>  
                 </NavbarBrand>
             </NavbarContent>
-             {/* Nav buttons in the middle of the screen - Visibility = Wide screen */ }
+
+            {/* Nav buttons and brand logo on wide screens - Visibility = Wide screen */ }
             <NavbarContent className="hidden md:flex gap-4" justify="center">
+                <NavbarBrand>
+                    <Link href="/" color={"foreground"}>
+                        <Avatar src="/logo.jpg" className="rounded" style={{marginRight: ".5rem"}}/>
+                        <p style={{ marginLeft: ".5rem" }}>Money Market</p>
+                    </Link>  
+                </NavbarBrand>
                 <Link href={Path.LIVE_MARKETS} color={location.pathname.includes(Path.LIVE_MARKETS) ? "primary" : "foreground"}>
                     Live Markets
                 </Link>
@@ -66,6 +73,7 @@ const Toolbar = () => {
                     Content Hub
                 </Link>
             </NavbarContent>
+            
             
             {/* Search bar and avatar - Visibility = Wide screen */ }
             {(localUser != null && localUser != ApiError.UNAUTHORIZED) ?
@@ -101,9 +109,6 @@ const Toolbar = () => {
                 
             :   
                 <NavbarContent className="hidden md:flex gap-4" justify="end">
-                    <NavbarItem>
-                        <TickerAutocomplete />
-                    </NavbarItem>
                     <NavbarItem>
                         <Link href="/signin" key="signin">Sign In</Link>
                     </NavbarItem> 
