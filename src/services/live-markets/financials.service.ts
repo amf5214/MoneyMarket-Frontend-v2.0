@@ -49,15 +49,16 @@ function compare(a:any, b:any) {
   }
 
 export const getStockCashFlow = async (ticker:string, cookie:string) => {
-    try {
-        let returnArray:any[] = [];
-        const data:StockFinancialRecord[] = await getFinancials(ticker, cookie);
+    let returnArray:any[] = [];
+    let data:any = await getFinancials(ticker, cookie);
 
-        for(let i = 0; i < await data.length; i++) {
-            returnArray.push({x:data[i].filing_date,y:data[i].netCashFlow});
-        }
+    if(data == ApiError.UNAUTHORIZED) {
+        return data;
+    } 
 
-        const sorted = await returnArray.sort(compare);
+    for(let i = 0; i < await data.length; i++) {
+        returnArray.push({x:data[i].filing_date,y:data[i].netCashFlow});
+    }
 
     const sorted = await returnArray.sort(compare);
 
