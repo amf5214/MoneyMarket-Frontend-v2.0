@@ -61,10 +61,7 @@ export const getStockCashFlow = async (ticker:string, cookie:string) => {
 
     const sorted = await returnArray.sort(compare);
 
-        console.log(sorted);
-        await sorted.forEach((item) => {
-            years.push(new Date(item.x).getFullYear())
-        })
+    const years:number[] = [];
 
     await sorted.forEach((item) => {
         years.push(new Date(item.x).getFullYear())
