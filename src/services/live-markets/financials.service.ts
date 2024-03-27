@@ -3,6 +3,18 @@ import { BalanceSheetRecord, StockFinancialRecord } from "./FinancialRecord";
 import Path from "../path.service";
 import { ApiError } from "../error.service";
 
+function financialCompare(a:StockFinancialRecord, b:StockFinancialRecord) {
+    const aTime:Date = a.filing_date 
+    const bTime:Date = b.filing_date;
+    if (aTime < bTime) {
+      return -1;
+    }
+    if (aTime > bTime) {
+      return 1;
+    }
+    return 0;
+  }
+
 export const getFinancials = async (ticker:string, cookie:string) => {
     try {
         const response:any = await axios.post(`${Path.API_BASE}/stockdata/financials`,
@@ -36,7 +48,7 @@ export const getFinancials = async (ticker:string, cookie:string) => {
             
         }
 
-        return financialRecords;
+        return financialRecords.sort(financialCompare);
     } catch(err) {
         if(err.response.status === 401) {
             return ApiError.UNAUTHORIZED;
