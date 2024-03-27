@@ -56,18 +56,6 @@ export const getFinancials = async (ticker:string, cookie:string) => {
     }
 }
 
-function compare(a:any, b:any) {
-    const aTime:Date = new Date(a.x);
-    const bTime:Date = new Date(b.x);
-    if (aTime < bTime) {
-      return -1;
-    }
-    if (aTime > bTime) {
-      return 1;
-    }
-    return 0;
-  }
-
 export const getStockCashFlow = async (ticker:string, cookie:string) => {
     let returnArray:any[] = [];
     let data:any = await getFinancials(ticker, cookie);
@@ -80,14 +68,12 @@ export const getStockCashFlow = async (ticker:string, cookie:string) => {
         returnArray.push({x:data[i].filing_date,y:data[i].netCashFlow});
     }
 
-    const sorted = await returnArray.sort(compare);
-
     const years:number[] = [];
 
-    await sorted.forEach((item) => {
+    returnArray.forEach((item) => {
         years.push(new Date(item.x).getFullYear())
     })
 
-    return {yAxis:sorted, years: [...new Set(years)]};
+    return {yAxis:returnArray, years: [...new Set(years)]};
     
 }
