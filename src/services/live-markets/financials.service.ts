@@ -56,8 +56,14 @@ export const getFinancials = async (ticker:string, cookie:string) => {
     }
 }
 
+type Point = {
+    x:Date;
+    y:number;
+}
+
 export const getStockCashFlow = async (ticker:string, cookie:string) => {
-    let returnArray:any[] = [];
+    const returnArray:Point[] = [];
+    const years:number[] = [];
     let data:any = await getFinancials(ticker, cookie);
 
     if(data == ApiError.UNAUTHORIZED) {
@@ -66,7 +72,12 @@ export const getStockCashFlow = async (ticker:string, cookie:string) => {
 
     for(let i = 0; i < await data.length; i++) {
         returnArray.push({x:data[i].filing_date,y:data[i].netCashFlow});
+        years.push(data[i].year)
     }
+
+    return {yAxis:returnArray, years: [...new Set(years)]};
+    
+}
 
     const years:number[] = [];
 
