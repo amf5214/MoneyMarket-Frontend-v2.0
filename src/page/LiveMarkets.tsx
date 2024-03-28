@@ -21,6 +21,7 @@ import Toolbar from "../component/Toolbar";
 import { useWindowSize } from "../hook/size.hook";
 import Path from "../services/path.service";
 import { StockFinancialTable } from "../component/StockFinancialTable";
+import { BalanceSheetGraph } from "../component/BalanceSheetGraph";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -334,15 +335,19 @@ export const LiveMarketsPage = () => {
                         
                         <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 lg:col-span-1">
                             <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
-                                <Button onClick={(e) => setFinancialsIndex(0)} id="candlestick-button">Cash Flow</Button>
-                                <Button onClick={(e) => setFinancialsIndex(1)} id="candlestick-button">Balance Sheet</Button>
+                                <Button onClick={(e) => setFinancialsIndex(0)} id="candlestick-button">Cash Flow Chart</Button>
+                                <Button onClick={(e) => setFinancialsIndex(1)} id="candlestick-button">Balance Sheet Table</Button>
+                                <Button onClick={(e) => setFinancialsIndex(2)} id="candlestick-button">Balance Sheet Chart</Button>
                             </ButtonGroup>
                             <Card className="h-full flex-col mx-auto flex justify-center items-center">
                                 <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
                                     {
                                         financialsIndex == 0 ? 
                                         <FinancialsGraph ticker={displaySymbol} height={graphSize[1]} width={graphSize[0]} /> 
-                                        : <StockFinancialTable ticker={displaySymbol} height={graphSize[1]} width={graphSize[0]} />
+                                        : 
+                                        financialsIndex == 1 ? <StockFinancialTable ticker={displaySymbol} height={graphSize[1]} width={graphSize[0]} />
+                                        :
+                                        <BalanceSheetGraph ticker={displaySymbol} height={graphSize[1]} width={graphSize[0]} />
                                     }
                                 </CardBody>
                             </Card>
