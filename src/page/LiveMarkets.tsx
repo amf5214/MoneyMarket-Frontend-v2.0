@@ -95,6 +95,9 @@ export const LiveMarketsPage = () => {
     // State variable storing current financials card index
     const [financialsIndex, setFinancialsIndex] = useState(0);
 
+    // State variable storing span selection for year agg
+    const [yearSpan, setYearSpan] = useState("quarter")
+
     // Effect that pulls data on market status and updates the state variables
     useEffect(() => {
         const getMarket = async () => {
@@ -252,8 +255,18 @@ export const LiveMarketsPage = () => {
         dt = dt.minus({'years': 1});
         const date:Date = dt.toJSDate();
         setStartDate(date);
-        setTimeSpan('month');
-        const span = 'month';
+        setTimeSpan(yearSpan);
+        const span = yearSpan;
+        await handleSearch(date, span);
+    }
+
+    const handle2YearSpan = async () => {
+        let dt:DateTime = DateTime.local();
+        dt = dt.minus({'years': 2});
+        const date:Date = dt.toJSDate();
+        setStartDate(date);
+        setTimeSpan(yearSpan);
+        const span = yearSpan;
         await handleSearch(date, span);
     }
 
@@ -325,6 +338,7 @@ export const LiveMarketsPage = () => {
                                 <Button onClick={handleMonthSpan} id="candlestick-button">Month</Button>
                                 <Button onClick={handleQuarterSpan} id="candlestick-button">Quarter</Button>
                                 <Button onClick={handleYearSpan} id="candlestick-button">Year</Button>
+                                <Button onClick={handle2YearSpan} id="candlestick-button">2 Years</Button>
                             </ButtonGroup>
                             <Card>
                                 <CardBody>
