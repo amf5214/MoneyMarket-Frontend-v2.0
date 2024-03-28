@@ -24,16 +24,6 @@ import { useNavigate } from "react-router-dom";
    const initState:any[] = [];
    const [financialData, setFinancialData] = useState(initState);
 
-   // State variable to hold array of unique years data contains
-   // Array of number objects
-   const initStateYears:number[] = []
-   const [years, setYears] = useState(initStateYears);
-
-   // State variable to hold array of year group objects
-   // Array of objects of {title:string, cols:number}
-   const initYearGroups:any[] = [];
-   const [yearGroups, setYearGroups] = useState(initYearGroups);
-
    // Effect to pull data when modal is loaded and store necessary state data
    useEffect(() => {
       const getFinancialData = async () => {
@@ -45,29 +35,12 @@ import { useNavigate } from "react-router-dom";
                navigate("/signin")
             } else if (response != ApiError.UNAUTHORIZED && response != undefined) {
                setFinancialData(response.yAxis);
-               setYears(response.years);
             }
          }
       }
 
       getFinancialData();
    }, [ticker])
-
-   // Effect to create the yeargroup objects that create x axis grouping on the graph
-   useEffect(() => {
-      const lst:any[] = [];
-      years.forEach((item:number) => {
-         let num:number = 0;
-         financialData.forEach((obj, idx) => {
-            const date:Date = new Date(obj.x);
-            if(date.getFullYear() == item) {
-               num++;
-            } 
-         })
-         lst.push({title:item, cols: num});
-      })
-      setYearGroups(lst);
-   }, [financialData])
 
    // State object that stores configuration data for graphs
    const state = { 
@@ -98,20 +71,8 @@ import { useNavigate } from "react-router-dom";
           },
           xaxis: {
             type: 'category',
-            labels: {
-              formatter: function(val:Date) {
-                  const date:Date = new Date(val);
-                return " Q" + Math.floor((date.getMonth() + 3) / 3);
-              }
-            },
             offsetY: 10,
-            group: {
-               style: {
-                 fontSize: '10px',
-                 fontWeight: 700
-               },
-               groups: yearGroups     
-             }
+            
          },
          yaxis: {
             tooltip: {
