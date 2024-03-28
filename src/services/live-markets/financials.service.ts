@@ -4,8 +4,8 @@ import Path from "../path.service";
 import { ApiError } from "../error.service";
 
 function financialCompare(a:StockFinancialRecord, b:StockFinancialRecord) {
-    const aTime:Date = a.filing_date 
-    const bTime:Date = b.filing_date;
+    const aTime:number = a.year + Number.parseFloat(a.quarter.charAt(1)) / 5; 
+    const bTime:number = b.year + Number.parseFloat(b.quarter.charAt(1)) / 5; ;
     if (aTime < bTime) {
       return -1;
     }
@@ -29,12 +29,29 @@ export const getFinancials = async (ticker:string, cookie:string) => {
 
         for(let i = 0; i < await response.data.results.length; i++) {
             if(await response.data.results[i].financials.cash_flow_statement != undefined) {
+
                 financialRecords.push(new StockFinancialRecord(
                     i,
                     await response.data.results[i].tickers[0],
                     await response.data.results[i].fiscal_year,
                     await response.data.results[i].fiscal_period,
                     await response.data.results[i].financials.cash_flow_statement.net_cash_flow.value,
+                    await response.data.results[i].end_date,
+                    new BalanceSheetRecord(
+                        await response.data.results[i].financials.balance_sheet.current_assets.value, 
+                        await response.data.results[i].financials.balance_sheet.current_liabilities.value, 
+                        await response.data.results[i].financials.balance_sheet.assets.value, 
+                        await response.data.results[i].financials.balance_sheet.liabilities.value, 
+                        await response.data.results[i].financials.balance_sheet.equity.value
+                    )
+                ));
+            } else {
+                financialRecords.push(new StockFinancialRecord(
+                    i,
+                    await response.data.results[i].tickers[0],
+                    await response.data.results[i].fiscal_year,
+                    await response.data.results[i].fiscal_period,
+                    0,
                     await response.data.results[i].end_date,
                     new BalanceSheetRecord(
                         await response.data.results[i].financials.balance_sheet.current_assets.value, 
@@ -57,13 +74,12 @@ export const getFinancials = async (ticker:string, cookie:string) => {
 }
 
 type Point = {
-    x:Date;
+    x:string;
     y:number;
 }
 
 export const getStockCashFlow = async (ticker:string, cookie:string) => {
     const returnArray:Point[] = [];
-    const years:number[] = [];
     let data:any = await getFinancials(ticker, cookie);
 
     if(data == ApiError.UNAUTHORIZED) {
@@ -71,11 +87,10 @@ export const getStockCashFlow = async (ticker:string, cookie:string) => {
     } 
 
     for(let i = 0; i < await data.length; i++) {
-        returnArray.push({x:data[i].filing_date,y:data[i].netCashFlow});
-        years.push(data[i].year)
+        returnArray.push({x:data[i].year + " " + data[i].quarter,y:data[i].netCashFlow});
     }
 
-    return {yAxis:returnArray, years: [...new Set(years)]};
+    return {yAxis:returnArray};
     
 }
 
@@ -83,7 +98,6 @@ export const getBalanceSheet = async (ticker:string, cookie:string) => {
     const assetsArray:Point[] = [];
     const liabilitiesArray:Point[] = [];
     const equityArray:Point[] =[];
-    const years:number[] = [];
     let data:any = await getFinancials(ticker, cookie);
 
     if(data == ApiError.UNAUTHORIZED) {
@@ -91,17 +105,16 @@ export const getBalanceSheet = async (ticker:string, cookie:string) => {
     } 
 
     for(let i = 0; i < await data.length; i++) {
-        assetsArray.push({x:data[i].filing_date,y:data[i].balance_sheet.assets.value});
-        liabilitiesArray.push({x:data[i].filing_date,y:data[i].balance_sheet.liabilities.value});
-        equityArray.push({x:data[i].filing_date,y:data[i].balance_sheet.equity.value});
-        years.push(data[i].year)
+        console.log(data[i].year + " " + data[i].quarter);
+        assetsArray.push({x:data[i].year + " " + data[i].quarter,y:data[i].balancesheet.assets});
+        liabilitiesArray.push({x:data[i].year + " " + data[i].quarter,y:data[i].balancesheet.liabilities});
+        equityArray.push({x:data[i].year + " " + data[i].quarter,y:data[i].balancesheet.equity});
     }
 
     return {
         assets: assetsArray, 
         liabilities: liabilitiesArray, 
         equity: equityArray, 
-        years: [...new Set(years)]
     };
     
 }
