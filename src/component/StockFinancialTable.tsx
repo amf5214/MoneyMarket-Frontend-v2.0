@@ -43,7 +43,11 @@ export const StockFinancialTable = ( { ticker, width, height }:Props ) => {
 
     return (
         <>
-            <Table removeWrapper aria-label="financials-table" style={{height:height*.7, width:width}}>
+            <Table aria-label="financials-table" 
+                style={{height:height*.7, width:width}} 
+                color="primary" 
+                selectionMode={"multiple"}
+                selectionBehavior="toggle">
                 <TableHeader>
                     <TableColumn>Year</TableColumn>
                     <TableColumn>Quarter</TableColumn>
