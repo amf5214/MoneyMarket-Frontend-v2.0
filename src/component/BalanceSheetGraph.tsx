@@ -66,7 +66,7 @@ import { useNavigate } from "react-router-dom";
                 stacked: true
             },
             title: {
-                text: `${ticker} Assets`,
+                text: `${ticker} Balance Sheet`,
                 align: 'left'
             },
             plotOptions: {
