@@ -66,10 +66,10 @@ const Toolbar = () => {
                 <Link href={Path.MARKET_NEWS} color={location.pathname == Path.MARKET_NEWS ? "primary" : "foreground"}>
                     Market News
                 </Link>
-                <Link href="#" color={location.pathname.includes(Path.LEARNING_HUB) ? "primary" : "foreground"}>
+                <Link href={Path.LEARNING_HUB} color={location.pathname.includes(Path.LEARNING_HUB) ? "primary" : "foreground"}>
                     Learning Hub
                 </Link>
-                <Link href="#" color={location.pathname.includes(Path.CONTENT_HUB) ? "primary" : "foreground"}>
+                <Link href={Path.CONTENT_HUB} color={location.pathname.includes(Path.CONTENT_HUB) ? "primary" : "foreground"}>
                     Content Hub
                 </Link>
             </NavbarContent>
