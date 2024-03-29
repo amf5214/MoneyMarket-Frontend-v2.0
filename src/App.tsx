@@ -19,6 +19,7 @@ import PrivateRoutes from "./component/PrivateRoutes";
 import { LiveMarketsHomePage } from "./page/LiveMarketsHome";
 import { LearningHubPage } from "./page/LearningHub";
 import { LearningSeriesHomePage } from "./page/LearningSeriesHome";
+import { ContentHubPage } from "./page/content-hub";
 
 function App() {
 
@@ -32,7 +33,9 @@ function App() {
             <Route path={Path.LIVE_MARKETS + "/:ticker"} element={<LiveMarketsPage />} />
             <Route path={Path.LIVE_MARKETS} element={<LiveMarketsHomePage />} />
             <Route path={Path.LEARNING_HUB} element={<LearningHubPage />} />
-            <Route path={Path.LEARNING_SERIES + "/:seriesId"} element={<LearningSeriesHomePage />} />
+            <Route path={Path.CONTENT_HUB} element={<ContentHubPage />} />
+            <Route path={Path.LEARNING_SERIES + "/:seriesId"} element={<LearningSeriesHomePage edit={false}/>} />
+            <Route path={Path.LEARNING_SERIES + "/:seriesId/edit=true"} element={<LearningSeriesHomePage edit={true}/>} />
           </Route>
         </Routes>
       </Router>
