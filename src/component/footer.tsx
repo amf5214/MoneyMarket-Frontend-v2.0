@@ -1,4 +1,5 @@
-import Path from "../services/path.service"
+import { Button, Divider, Link } from "@nextui-org/react";
+import Path from "../services/path.service";
 
 export const Footer = () => {
     return (
