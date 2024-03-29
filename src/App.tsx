@@ -34,8 +34,7 @@ function App() {
             <Route path={Path.LIVE_MARKETS} element={<LiveMarketsHomePage />} />
             <Route path={Path.LEARNING_HUB} element={<LearningHubPage />} />
             <Route path={Path.CONTENT_HUB} element={<ContentHubPage />} />
-            <Route path={Path.LEARNING_SERIES + "/:seriesId"} element={<LearningSeriesHomePage edit={false}/>} />
-            <Route path={Path.LEARNING_SERIES + "/:seriesId/edit=true"} element={<LearningSeriesHomePage edit={true}/>} />
+            <Route path={Path.LEARNING_SERIES + "/:seriesId"} element={<LearningSeriesHomePage />} />
           </Route>
         </Routes>
       </Router>

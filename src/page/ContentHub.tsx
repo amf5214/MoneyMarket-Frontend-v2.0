@@ -38,7 +38,7 @@ export const ContentHubPage = () => {
                                         <div className="space-y-3 flex flex-col justify-center content-center items-center lg:grid md:grid sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 lg:gap-x-6 md:gap-x-6 sm:gap-x-6 lg:space-y-0 md:space-y-0 sm:space-y-0 bg-slate-800 rounded-lg gap-y-2">     
                                             {Array.from({ length: 12 }, (value, index) => index).map((ind) => (
 
-                                                <Card className="bg-transparent border-0 hover:bg-slate-900 p-1" shadow="none" isPressable onPress={e => navigate(Path.LEARNING_SERIES + "/" + seriesId + "/edit=true")}>
+                                                <Card className="bg-transparent border-0 hover:bg-slate-900 p-1" shadow="none" isPressable onPress={e => navigate(Path.LEARNING_SERIES + "/" + seriesId + "?edit=true")}>
                                                     <CardBody>
                                                         <Image
                                                             shadow="sm"

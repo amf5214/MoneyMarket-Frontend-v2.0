@@ -9,7 +9,7 @@ enum Path {
     LIVE_MARKETS_WATCHLIST = "/live-markets/watchlist",
     CONTENT_HUB = "/content-hub",
     LEARNING_HUB = "/learning-hub",
-    LEARNING_SERIES = "/learning-hub/series",
+    LEARNING_SERIES = "/learning/series",
     LEARNING_HUB_COURSE_BOOKMARKS = "/learning-hub/bookmarks"
 }
 
