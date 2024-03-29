@@ -9,6 +9,7 @@ import { ApiError } from "../services/error.service";
 import Toolbar from "../component/Toolbar";
 import "../style/page/marketnews.css"
 import { Card, CardBody, CardFooter, CardHeader, Divider, Image } from "@nextui-org/react";
+import { Footer } from "../component/footer";
 
 export const MarketNewsPage = () => {
 
@@ -74,6 +75,7 @@ export const MarketNewsPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 }

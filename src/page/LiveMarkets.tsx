@@ -22,6 +22,7 @@ import { useWindowSize } from "../hook/size.hook";
 import Path from "../services/path.service";
 import { StockFinancialTable } from "../component/StockFinancialTable";
 import { BalanceSheetGraph } from "../component/BalanceSheetGraph";
+import { Footer } from "../component/footer";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -403,6 +404,7 @@ export const LiveMarketsPage = () => {
                     </div>
                     }
             </div>
+            <Footer />
         </>
     )
 }

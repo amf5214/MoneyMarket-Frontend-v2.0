@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Path from "../services/path.service";
 import "../style/page/learninghubhome.css"
+import { Footer } from "../component/footer";
 
 export const LearningHubPage = () => {
 
@@ -37,7 +38,7 @@ export const LearningHubPage = () => {
                                         <div className="space-y-3 flex flex-col justify-center content-center items-center lg:grid lg:grid-cols-4 lg:gap-x-6 lg:space-y-0 bg-slate-800 rounded-lg gap-y-2">     
                                             {Array.from({ length: 12 }, (value, index) => index).map((ind) => (
 
-                                                <Card className="bg-transparent border-0 hover:bg-slate-900" shadow="none" isPressable onPress={e => navigate(Path.LEARNING_SERIES + "/" + seriesId)}>
+                                                <Card className="bg-transparent border-0 hover:bg-slate-900 p-1" shadow="none" isPressable onPress={e => navigate(Path.LEARNING_SERIES + "/" + seriesId)}>
                                                     <CardBody>
                                                         <Image
                                                             shadow="sm"
@@ -73,6 +74,7 @@ export const LearningHubPage = () => {
                     </CardFooter>
                 </Card>
             </div>
+            <Footer />
         </>
     );
 }

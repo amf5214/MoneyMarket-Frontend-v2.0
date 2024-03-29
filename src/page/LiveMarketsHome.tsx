@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { ApiError } from "../services/error.service";
 import { getWLAStocks } from "../services/ticker-carousel/marketdata.service";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../component/footer";
 
 export const LiveMarketsHomePage = () => {
 
@@ -60,6 +61,7 @@ export const LiveMarketsHomePage = () => {
                     </Tabs>
                 </div>
             </div>
+            <Footer />
         </>
     )
 }
