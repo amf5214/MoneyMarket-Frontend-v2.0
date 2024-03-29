@@ -12,16 +12,33 @@ export const Footer = () => {
         <>
         {showFooter == false ?
             <div className="w-full h-1/4 footer-wrapper">
-                <Button className="w-full text-black" onClick={e => setShowFooter(true)}>
+                <Button className="w-full bg-white" onClick={e => setShowFooter(true)}>
                     <MenuIcon />
                 </Button>
             </div>
         :
-            <div className="w-full h-1/2 footer-wrapper">
-                <div className="w-full flex flex-col content-center items-center justify-center p-4">
-                    <Button className="bg-transparent text-white" onClick={e => setShowFooter(false)} style={{alignSelf: "flex-start"}}>
+            <div className="w-full h-1/4 footer-wrapper">
+                <div className="w-full h-1/4 bg-white flex flex-col content-center items-center justify-center p-4">
+                    <Button className="bg-transparent text-black" onClick={e => setShowFooter(false)} style={{alignSelf: "flex-start"}}>
                         <CloseIcon />
-                    </Button>                
+                    </Button>
+                    <div className="w-full p-4 bg-transparent flex justify-around">
+                        <div className="flex flex-col content-center items-center">
+                                <Link className="text-small text-black text-center hover:underline" href={Path.HOME}>Home</Link>
+                                <Link className="text-small text-black text-center hover:underline" href={Path.ACCOUNT}>Account</Link>
+                                <Link className="text-small text-black text-center hover:underline" href={Path.SETTINGS}>Settings</Link>
+                        </div>
+                        <div className="flex flex-col content-center items-center">
+                                <Link className="text-small text-black text-center hover:underline" href={Path.LIVE_MARKETS}>Live Markets Home</Link>
+                                <Link className="text-small text-black text-center hover:underline" href={Path.LIVE_MARKETS_WATCHLIST}>Watch List</Link>
+                                <Link className="text-small text-black text-center hover:underline" href={Path.MARKET_NEWS}>Market News</Link>
+                        </div>
+                        <div className="flex flex-col content-center items-center">
+                                <Link className="text-small text-black text-center hover:underline" href={Path.LEARNING_HUB}>Learning Hub</Link>
+                                <Link className="text-small text-black text-center hover:underline" href={Path.CONTENT_HUB}>Content Hub</Link>
+                                <Link className="text-small text-black text-center hover:underline" href={Path.LEARNING_HUB_COURSE_BOOKMARKS}>Course Bookmarks</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
