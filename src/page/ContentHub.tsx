@@ -35,7 +35,7 @@ export const ContentHubPage = () => {
                             <Tabs selectedKey={pageIndex} disableCursorAnimation={true} disableAnimation={true} isDisabled style={{display: "none"}}>
                                 {Array.from({ length: pages }, (value, index) => index + 1).map((i) => (
                                     <Tab key={`${i}`}>
-                                        <div className="space-y-3 flex flex-col justify-center content-center items-center lg:grid lg:grid-cols-4 lg:gap-x-6 lg:space-y-0 bg-slate-800 rounded-lg gap-y-2">     
+                                        <div className="space-y-3 flex flex-col justify-center content-center items-center lg:grid md:grid sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 lg:gap-x-6 md:gap-x-6 sm:gap-x-6 lg:space-y-0 md:space-y-0 sm:space-y-0 bg-slate-800 rounded-lg gap-y-2">     
                                             {Array.from({ length: 12 }, (value, index) => index).map((ind) => (
 
                                                 <Card className="bg-transparent border-0 hover:bg-slate-900 p-1" shadow="none" isPressable onPress={e => navigate(Path.LEARNING_SERIES + "/" + seriesId + "/edit=true")}>
@@ -44,12 +44,12 @@ export const ContentHubPage = () => {
                                                             shadow="sm"
                                                             radius="none"
                                                             alt={title}
-                                                            className="w-full object-center w-[60vw] h-[25vh] lg:h-[16vh] lg:w-[15vw] md:w-[50vw] md:h-[35vh]"
+                                                            className="w-full object-center w-[60vw] h-[25vh] lg:h-[15vh] lg:w-[15vw] md:w-[50vw] md:h-[15vh] sm:h-[15vh]"
                                                             src={imageUrl}
                                                         />
-                                                        <b className="text-lg lg:text-small text-white">{title}</b>
-                                                        <div className="text-md lg:text-xs text-white">{authors}</div>
-                                                        <div className="text-md lg:text-xs text-white">{"page " + i + " item " + ind}</div>
+                                                        <b className="text-lg sm:text-small text-white">{title}</b>
+                                                        <div className="text-md sm:text-xs text-white">{authors}</div>
+                                                        <div className="text-md sm:text-xs text-white">{"page " + i + " item " + ind}</div>
                                                     </CardBody>
                                                 </Card>
                                             ))}
