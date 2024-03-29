@@ -154,12 +154,12 @@ const Toolbar = () => {
                         </Link>
                     </NavbarMenuItem>
                     <NavbarMenuItem>
-                        <Link href="#" color={"foreground"}>
+                        <Link href={Path.LEARNING_HUB} color={"foreground"}>
                             Learning Hub
                         </Link>
                     </NavbarMenuItem>
                     <NavbarMenuItem>
-                        <Link href="#" color={"foreground"}>
+                        <Link href={Path.CONTENT_HUB} color={"foreground"}>
                             Content Hub
                         </Link>
                     </NavbarMenuItem>
