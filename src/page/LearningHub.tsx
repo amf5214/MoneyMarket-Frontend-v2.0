@@ -25,7 +25,7 @@ export const LearningHubPage = () => {
         <>
             <Toolbar />
             <div className="w-full h-full flex flex-col items-center justify-center align-center content-center learning-hub-sub">
-                <Card className="bg-slate-800 market-box w-3/4 h-2/3 m-8">
+                <Card className="bg-slate-800 market-box w-3/4 h-2/3 m-8 drop-shadow-lg">
                     <CardHeader className="flex justify-center bg-slate-900">
                         <h2 className="text-2xl font-bold text-white text-center">Learning Hub</h2>
                     </CardHeader>
