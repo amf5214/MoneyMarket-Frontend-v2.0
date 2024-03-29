@@ -17,6 +17,8 @@ import { MarketNewsPage } from "./page/MarketNews";
 import { LiveMarketsPage } from "./page/LiveMarkets";
 import PrivateRoutes from "./component/PrivateRoutes";
 import { LiveMarketsHomePage } from "./page/LiveMarketsHome";
+import { LearningHubPage } from "./page/LearningHub";
+import { LearningSeriesHomePage } from "./page/LearningSeriesHome";
 
 function App() {
 
@@ -29,6 +31,8 @@ function App() {
             <Route path={Path.MARKET_NEWS} element={<MarketNewsPage />} />
             <Route path={Path.LIVE_MARKETS + "/:ticker"} element={<LiveMarketsPage />} />
             <Route path={Path.LIVE_MARKETS} element={<LiveMarketsHomePage />} />
+            <Route path={Path.LEARNING_HUB} element={<LearningHubPage />} />
+            <Route path={Path.LEARNING_SERIES + "/:seriesId"} element={<LearningSeriesHomePage />} />
           </Route>
         </Routes>
       </Router>
