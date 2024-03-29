@@ -19,7 +19,7 @@ import PrivateRoutes from "./component/PrivateRoutes";
 import { LiveMarketsHomePage } from "./page/LiveMarketsHome";
 import { LearningHubPage } from "./page/LearningHub";
 import { LearningSeriesHomePage } from "./page/LearningSeriesHome";
-import { ContentHubPage } from "./page/content-hub";
+import { ContentHubPage } from "./page/ContentHub";
 
 function App() {
 
