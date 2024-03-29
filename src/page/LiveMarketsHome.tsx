@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import { ApiError } from "../services/error.service";
 import { getWLAStocks } from "../services/ticker-carousel/marketdata.service";
 import { useNavigate } from "react-router-dom";
-import { Footer } from "../component/footer";
+import { Footer } from "../component/Footer";
 
 export const LiveMarketsHomePage = () => {
 

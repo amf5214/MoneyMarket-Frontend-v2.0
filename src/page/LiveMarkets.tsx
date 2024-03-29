@@ -22,7 +22,7 @@ import { useWindowSize } from "../hook/size.hook";
 import Path from "../services/path.service";
 import { StockFinancialTable } from "../component/StockFinancialTable";
 import { BalanceSheetGraph } from "../component/BalanceSheetGraph";
-import { Footer } from "../component/footer";
+import { Footer } from "../component/Footer";
 
 // Page to access market data
 export const LiveMarketsPage = () => {

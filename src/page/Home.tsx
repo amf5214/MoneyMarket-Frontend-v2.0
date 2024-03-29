@@ -1,6 +1,6 @@
 // Style imports
 import Toolbar from "../component/Toolbar";
-import { Footer } from "../component/footer";
+import { Footer } from "../component/Footer";
 import "../style/page/home.css"
 
 const Home = () => {

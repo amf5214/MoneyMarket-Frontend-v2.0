@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Path from "../services/path.service";
 import "../style/page/learninghubhome.css"
-import { Footer } from "../component/footer";
+import { Footer } from "../component/Footer";
 
 export const LearningHubPage = () => {
 
