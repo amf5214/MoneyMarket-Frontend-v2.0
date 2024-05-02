@@ -1,5 +1,5 @@
 enum Path {
-    API_BASE = "http://localhost:5000",
+    API_BASE = "https://moneymarket.up.railway.app",
     HOME = "/",
     SIGNIN = "/signin",
     ACCOUNT = "/account",
