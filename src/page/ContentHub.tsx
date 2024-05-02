@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Divider, Image, Pagination, PaginationItem, Tab, Tabs } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Divider, Image, Pagination, Tab, Tabs } from "@nextui-org/react";
 import { CardFooter } from "react-bootstrap";
 import Toolbar from "../component/Toolbar";
 import { useState } from "react";
@@ -20,7 +20,7 @@ export const ContentHubPage = () => {
     const [pageIndex, setPageIndex] = useState('1');
 
     // State variable to hold the size of the pagination wrapper
-    const [pages, setPages] = useState(4);
+    const [pages] = useState(4);
 
     return (
         <>
@@ -33,12 +33,12 @@ export const ContentHubPage = () => {
                     <Divider className="bg-gray-500" />
                     <CardBody>
                             <Tabs selectedKey={pageIndex} disableCursorAnimation={true} disableAnimation={true} isDisabled style={{display: "none"}}>
-                                {Array.from({ length: pages }, (value, index) => index + 1).map((i) => (
+                                {Array.from({ length: pages }, (_value, index:number) => index + 1).map((i) => (
                                     <Tab key={`${i}`}>
                                         <div className="space-y-3 flex flex-col justify-center content-center items-center lg:grid md:grid sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 lg:gap-x-6 md:gap-x-6 sm:gap-x-6 lg:space-y-0 md:space-y-0 sm:space-y-0 bg-slate-800 rounded-lg gap-y-2">     
-                                            {Array.from({ length: 12 }, (value, index) => index).map((ind) => (
+                                            {Array.from({ length: 12 }, (_value, index:number) => index).map((ind) => (
 
-                                                <Card className="bg-transparent border-0 hover:bg-slate-900 p-1" shadow="none" isPressable onPress={e => navigate(Path.LEARNING_SERIES + "/" + seriesId + "?edit=true")}>
+                                                <Card className="bg-transparent border-0 hover:bg-slate-900 p-1" shadow="none" isPressable onPress={_e => navigate(Path.LEARNING_SERIES + "/" + seriesId + "?edit=true")}>
                                                     <CardBody>
                                                         <Image
                                                             shadow="sm"

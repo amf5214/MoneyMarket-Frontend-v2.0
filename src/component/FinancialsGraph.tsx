@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import ReactApexChart from "react-apexcharts";
-import { Modal } from "react-bootstrap";
-import { DateTime } from 'luxon';
 import { getStockCashFlow } from "../services/live-markets/financials.service";
-import { Api } from "@mui/icons-material";
 import { ApiError } from "../services/error.service";
 import { useNavigate } from "react-router-dom";
 
@@ -43,7 +40,7 @@ import { useNavigate } from "react-router-dom";
    }, [ticker])
 
    // State object that stores configuration data for graphs
-   const state = { 
+   const state = {
       series: [{
           data: financialData,
           name: "Net Cash Flow"
@@ -51,7 +48,6 @@ import { useNavigate } from "react-router-dom";
       options: {
           title: {
               text: `${ticker} Net Cash Flow Analysis`,
-              align: 'left'
           },
           plotOptions: {
             bar: {
@@ -92,9 +88,15 @@ import { useNavigate } from "react-router-dom";
       }
    }
 
-    return (
+    // @ts-ignore
+     return (
          <>
-            <ReactApexChart options={state.options} series={state.series} type={'bar'} height={height*.7} width={width} />
+             {/* @ts-ignore */ }
+             <ReactApexChart options={state.options}
+                             series={state.series}
+                             type={'bar'}
+                             height={height * .7}
+                             width={width}/>
          </>
     );
  }

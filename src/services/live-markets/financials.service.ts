@@ -67,6 +67,7 @@ export const getFinancials = async (ticker:string, cookie:string) => {
 
         return financialRecords.sort(financialCompare);
     } catch(err) {
+        // @ts-ignore
         if(err.response.status === 401) {
             return ApiError.UNAUTHORIZED;
         }

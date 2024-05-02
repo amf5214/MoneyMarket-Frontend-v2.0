@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteItem, useNavbar } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from "react";

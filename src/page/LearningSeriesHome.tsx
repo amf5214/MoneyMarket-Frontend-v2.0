@@ -1,9 +1,8 @@
 import Toolbar from "../component/Toolbar";
-import { Footer } from "../component/Footer";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
-import { Accordion, Button, Card, Divider, Listbox, ListboxItem, Navbar, NavbarContent } from "@nextui-org/react";
+import { Button, Divider, Listbox, ListboxItem, Navbar, NavbarContent } from "@nextui-org/react";
 import "../style/page/learningserieshome.css";
 import { Offcanvas } from "../component/Offcanvas";
 
@@ -13,7 +12,7 @@ interface Props {
 
 export const LearningSeriesHomePage = ({ }:Props ) => {
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const [showOffcanvasMenu, setShowOffcanvasMenu] = useState(false);
 
@@ -37,6 +36,7 @@ export const LearningSeriesHomePage = ({ }:Props ) => {
         console.log(searchParams.get("edit"));
     }, [searchParams]);
 
+    // @ts-ignore
     return (
         <>
             <Toolbar />
@@ -46,7 +46,7 @@ export const LearningSeriesHomePage = ({ }:Props ) => {
                         <h1 className="text-center text-2xl text-white">{ dummyTitle }</h1>
                     </NavbarContent>
                     <NavbarContent justify="end">
-                        <Button isIconOnly variant="solid" color="primary" className="" onClick={e => setShowOffcanvasMenu(true)}>
+                        <Button isIconOnly variant="solid" color="primary" className="" onClick={_e => setShowOffcanvasMenu(true)}>
                             <MenuIcon />
                         </Button>
                     </NavbarContent>
@@ -60,10 +60,10 @@ export const LearningSeriesHomePage = ({ }:Props ) => {
                             className="lg:w-[85vw] lg:h-[65vh] border-0 mt-3 mb-3"
                             title="YouTube video player" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            allowfullscreen />
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen />
                     </div>
-                    <div className="w-full">
+                    <div>
 
                     </div>
                 </div>

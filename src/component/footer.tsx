@@ -1,4 +1,4 @@
-import { Button, Divider, Link } from "@nextui-org/react";
+import { Button, Link } from "@nextui-org/react";
 import Path from "../services/path.service";
 import "../style/component/footer.css";
 import { useState } from "react";
@@ -10,16 +10,16 @@ export const Footer = () => {
     const [showFooter, setShowFooter] = useState(false);
     return (
         <>
-        {showFooter == false ?
+        {!showFooter ?
             <div className="w-full h-1/4 footer-wrapper">
-                <Button className="w-full bg-white" onClick={e => setShowFooter(true)}>
+                <Button className="w-full bg-white" onClick={_e => setShowFooter(true)}>
                     <MenuIcon />
                 </Button>
             </div>
         :
             <div className="w-full h-1/4 footer-wrapper">
                 <div className="w-full h-1/4 bg-white flex flex-col content-center items-center justify-center p-4">
-                    <Button className="bg-transparent text-black" onClick={e => setShowFooter(false)} style={{alignSelf: "flex-start"}}>
+                    <Button className="bg-transparent text-black" onClick={_e => setShowFooter(false)} style={{alignSelf: "flex-start"}}>
                         <CloseIcon />
                     </Button>
                     <div className="w-full p-4 bg-transparent flex justify-around">

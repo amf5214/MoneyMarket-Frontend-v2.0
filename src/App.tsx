@@ -11,7 +11,6 @@ import './style/App.css';
 // Local imports
 import Path from "./services/path.service";
 import Home from "./page/Home";
-import Toolbar from './component/Toolbar';
 import SignInPage from "./page/SignIn";
 import { MarketNewsPage } from "./page/MarketNews";
 import { LiveMarketsPage } from "./page/LiveMarkets";

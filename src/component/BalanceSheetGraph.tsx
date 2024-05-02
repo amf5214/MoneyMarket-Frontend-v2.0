@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import ReactApexChart from "react-apexcharts";
-import { Modal } from "react-bootstrap";
-import { DateTime } from 'luxon';
-import { getBalanceSheet, getStockCashFlow } from "../services/live-markets/financials.service";
-import { Api } from "@mui/icons-material";
+import { getBalanceSheet } from "../services/live-markets/financials.service";
 import { ApiError } from "../services/error.service";
 import { useNavigate } from "react-router-dom";
 
@@ -96,8 +93,10 @@ import { useNavigate } from "react-router-dom";
         }
     }
 
-    return (
+    // @ts-ignore
+     return (
         <>
+            {/* @ts-ignore */ }
            <ReactApexChart options={state.options} series={state.series} type={'bar'} height={height*.7} width={width} />
         </>
    );

@@ -13,7 +13,7 @@ export const handleSignin = async (email:string, pwd:string) => {
         return await response.data['access_token'];
 
     } catch(err) {
-        console.log(err);
+        // @ts-ignore
         if(err.response.status === 401) {
             return ApiError.UNAUTHORIZED;
         }

@@ -7,7 +7,7 @@ import { ApiError } from "../error.service";
 const processStockData = (response:any, hasTime:boolean) => {
     const points:StockPoint[] = [];
 
-    response.results.forEach((item:any, idx:number) => {
+    response.results.forEach((item:any, _idx:number) => {
         points.push(new StockPoint(item, hasTime));
     })
 
@@ -32,6 +32,7 @@ export const getStockData = async (dto:TickerData, cookie:string) => {
         const processed = processStockData(await data, dto.timeSpan == 'hour');
         return processed;
     } catch(err) {
+        // @ts-ignore
         if(err.response.status == 401) {
             return ApiError.UNAUTHORIZED;
         }

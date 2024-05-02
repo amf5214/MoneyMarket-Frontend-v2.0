@@ -1,6 +1,6 @@
-import { Button, Card, CardBody, Divider, Input, Textarea } from "@nextui-org/react";
+import { Button, Card, CardBody, Input } from "@nextui-org/react";
 import { handleSignin } from "../services/auth/signin.service";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Cookies from "js-cookie";
 import { InvalidSigninModal } from "./InvalidSigninModal";
 import { SuccessfulSigninModal } from "./SuccessfulSigninModal";
@@ -12,7 +12,8 @@ export const SignInCard = () => {
 
     const navigate = useNavigate();
 
-    const { user, setUser } = useContext(AuthContext);
+    // @ts-ignore
+    const {user, setUser } = useContext(AuthContext);
 
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");

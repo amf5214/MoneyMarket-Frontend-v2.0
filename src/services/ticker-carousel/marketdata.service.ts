@@ -48,6 +48,7 @@ export const getWLAStocks = async (cookie:string) => {
             topLosers: topLosers
         };
     } catch(err) {
+        // @ts-ignore
         if(err.response.status === 401) {
             return ApiError.UNAUTHORIZED;
         }

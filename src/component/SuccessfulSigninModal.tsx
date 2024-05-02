@@ -1,4 +1,4 @@
-import { Divider, Modal, ModalBody, ModalContent, ModalHeader, ModalFooter, Button } from "@nextui-org/react"
+import { Modal, ModalBody, ModalContent, ModalHeader, ModalFooter, Button } from "@nextui-org/react"
 
 interface Props {
     setShow: () => void;

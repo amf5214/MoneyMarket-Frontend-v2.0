@@ -109,9 +109,12 @@ export const CandlestickGraph = ( { data, height, width, symbol, dates }:Candles
           }
     };
     
+    // @ts-ignore
     return (
         <>
+            {/* @ts-ignore */ }
             <ReactApexChart options={state.options} series={state.series} type="candlestick" height={height*.5} width={width}/>
+            {/* @ts-ignore */ }
             <ReactApexChart options={state.optionsBar} series={state.seriesBar} type="bar" height={height*.3} width={width} />
         </>
     )

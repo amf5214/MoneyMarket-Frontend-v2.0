@@ -1,4 +1,4 @@
-import { Card, Tab, Tabs } from "@nextui-org/react"
+import { Tab, Tabs } from "@nextui-org/react"
 import { StockTable } from "../component/StockTable"
 import Toolbar from "../component/Toolbar"
 import { ActiveStock } from "../services/ticker-carousel/activestock";

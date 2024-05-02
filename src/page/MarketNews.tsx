@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import getNews from "../services/market-news/marketnews.service";
 import { NewsStory } from "../services/market-news/newsstory.dto";
-import AuthContext from "../provider/AuthProvider";
-import { redirect, useHref, useNavigate } from "react-router-dom";
-import { UndoRounded } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 import { ApiError } from "../services/error.service";
 import Toolbar from "../component/Toolbar";
 import "../style/page/marketnews.css"
@@ -21,6 +19,7 @@ export const MarketNewsPage = () => {
     useEffect(() => {
         const updateNews = async () => {
             if(Cookies.get("Authorization") != null) {
+                // @ts-ignore
                 const response = await getNews(Cookies.get("Authorization"));
                 if(response != undefined && response != ApiError.UNAUTHORIZED) {
                     setNews(response);

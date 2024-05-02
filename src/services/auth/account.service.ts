@@ -10,7 +10,7 @@ const loadUser = async (cookie:string) => {
             });
         return await response.data;
     } catch(err) {
-        console.log(err);
+        // @ts-ignore
         if(err.response.status === 401) {
             return ApiError.UNAUTHORIZED;
         }

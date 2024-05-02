@@ -2,15 +2,13 @@
 import { useContext, useEffect, useState } from "react";
 
 // NextUI imports
-import { Avatar, Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, User } from "@nextui-org/react";
+import { Avatar, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, User } from "@nextui-org/react";
 
 // Other imports
-import SearchIcon from '@mui/icons-material/Search';
 import Cookies from "js-cookie";
 
 // Style imports
 import '../style/component/toolbar.css'
-import loadUser from "../services/auth/account.service";
 import Path from "../services/path.service";
 import AuthContext from "../provider/AuthProvider";
 import { useLocation } from "react-router-dom";
@@ -19,6 +17,7 @@ import { TickerAutocomplete } from "./TickerAutocomplete";
 
 const Toolbar = () => {
 
+    // @ts-ignore
     const { user, setUser } = useContext(AuthContext);
 
     const location = useLocation();
