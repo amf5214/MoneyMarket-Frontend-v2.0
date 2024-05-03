@@ -19,6 +19,7 @@ import { LiveMarketsHomePage } from "./page/LiveMarketsHome";
 import { LearningHubPage } from "./page/LearningHub";
 import { LearningSeriesHomePage } from "./page/LearningSeriesHome";
 import { ContentHubPage } from "./page/ContentHub";
+import {ProfilePage} from "./page/Profile.tsx";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
             <Route path={Path.LEARNING_HUB} element={<LearningHubPage />} />
             <Route path={Path.CONTENT_HUB} element={<ContentHubPage />} />
             <Route path={Path.LEARNING_SERIES + "/:seriesId"} element={<LearningSeriesHomePage />} />
+            <Route path={Path.ACCOUNT} element={<ProfilePage />} />
           </Route>
         </Routes>
       </Router>
