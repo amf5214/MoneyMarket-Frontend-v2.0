@@ -18,4 +18,20 @@ const loadUser = async (cookie:string) => {
     }
 }
 
+export const loadProfile = async (cookie:string) => {
+    try {
+        const response = await axios.get(`${Path.API_BASE}/profile`,
+            {
+                headers: { 'Authorization': `Bearer ${cookie}` },
+            });
+        return await response.data;
+    } catch(err) {
+        // @ts-ignore
+        if(err.response.status === 401) {
+            return ApiError.UNAUTHORIZED;
+        }
+        return null;
+    }
+}
+
 export default loadUser;
