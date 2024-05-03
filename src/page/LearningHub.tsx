@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import {ApiError} from "../services/error.service.ts";
 import PathService from "../services/path.service";
 import {LearningSeries} from "../services/learning-hub/LearningSeries.ts";
+import "../style/component/learninghub.css"
 
 export const LearningHubPage = () => {
 
@@ -59,7 +60,7 @@ export const LearningHubPage = () => {
                                         <div className="space-y-3 flex flex-col justify-center content-center items-center lg:grid md:grid sm:grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 lg:gap-x-6 md:gap-x-6 sm:gap-x-6 lg:space-y-0 md:space-y-0 sm:space-y-0 bg-slate-800 rounded-lg gap-y-2">     
                                             {Array.from({ length: homeContent.length }, (_value, index) => index).map((ind) => (
 
-                                                <Card className="bg-transparent border-0 hover:bg-slate-900 p-1" shadow="none" isPressable onPress={_e => navigate(Path.LEARNING_SERIES + "/" + homeContent[ind]._id + "?edit=false")}>
+                                                <Card className="bg-transparent border-0 hover:bg-slate-900 p-1 learningSeriesCard" shadow="none" isPressable onPress={_e => navigate(Path.LEARNING_SERIES + "/" + homeContent[ind]._id + "?edit=false")}>
                                                     <CardBody>
                                                         <Image
                                                             shadow="sm"
