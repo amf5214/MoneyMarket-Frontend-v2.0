@@ -3,7 +3,7 @@
  * @see https://v0.dev/t/yzZGxQPJoLN
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
-import {Avatar, Button, Card, Divider} from "@nextui-org/react";
+import {Avatar, Button, Card, Divider, Textarea} from "@nextui-org/react";
 import {CardContent} from "@mui/material";
 import {useEffect, useState} from "react";
 import Toolbar from "../component/Toolbar"
@@ -12,11 +12,20 @@ import loadUser, {loadProfile} from "../services/auth/account.service.ts";
 import Cookies from "js-cookie";
 import "../style/page/account.css"
 import EditIcon from '@mui/icons-material/Edit';
+import {useNavigate, useSearchParams} from "react-router-dom";
+import PathService from "../services/path.service.ts";
+import Path from "../services/path.service.ts";
 
 export const ProfilePage = () => {
 
+    const [searchParams] = useSearchParams();
+
+    const navigate = useNavigate();
+
     const [ user, setUser ] = useState(null);
     const [ profile, setProfile ] = useState(null);
+
+    const [editMode, setEditMode] = useState(0);
 
     useEffect(() => {
        const populate = async () => {
@@ -30,7 +39,22 @@ export const ProfilePage = () => {
            }
        }
         populate();
+
+       const mode = searchParams.get("edit");
+       if(mode != null) {
+           setEditMode(Number.parseInt(mode));
+       }
     },[]);
+
+    const completed = () => {
+        navigate(PathService.ACCOUNT + "?edit=0");
+        setEditMode(0);
+    }
+
+    const setEdit = () => {
+        navigate(PathService.ACCOUNT + "?edit=1");
+        setEditMode(1);
+    }
 
     // @ts-ignore
     return (
@@ -51,12 +75,22 @@ export const ProfilePage = () => {
 
                                     <Divider className="md:w-[70%] mt-3 mb-3"/>
 
-                                    { profile != null ? <p className="text-xs text-gray-500 dark:text-gray-400">Email: {profile.email}</p> : null }
-                                    { profile != null ? <p className="text-xs text-gray-500 dark:text-gray-400">Education: {profile.education}</p> : null }
-                                    { profile != null ? <p className="text-xs text-gray-500 dark:text-gray-400">Location: {profile.citystate}</p> : null }
-                                    <Button className="absolute top-2 right-2 bg-transparent">
+                                    {profile != null ? editMode == 0 ?
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">Email: {profile.email}</p> :
+                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Email"} value={profile.email} isDisabled/> : null}
+                                    {profile != null ? editMode == 0 ?
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">Education: {profile.education}</p> :
+                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Education"} value={profile.education} /> : null}
+                                    {profile != null ? editMode == 0 ?
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">Location: {profile.citystate}</p> :
+                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Location"} value={profile.citystate} /> : null}
+
+                                    <Button className="absolute top-2 right-2 bg-transparent" onClick={_e => setEdit()}>
                                         <EditIcon />
                                     </Button>
+
+                                    {editMode == 1 ? <Button color={"primary"} onClick={_e => completed()} >Complete</Button> : null}
+
                                 </CardContent>
                             </Card>
 
