@@ -38,18 +38,6 @@ export const LearningSeriesHomePage = ({ }:Props ) => {
         setShowOffcanvasMenu(false);
     }
 
-    const dummyUrl = "https://www.youtube.com/embed/kPd3MMxp6P4?si=XW_KqJahOE2zud4f"
-    const dummyTitle = "Complete C# Masterclass"
-    const modules = [
-        {title: "course Introduction", pageNumber: 1}, 
-        {title: "Introduction to DotNet", pageNumber: 2},
-        {title: "Object Oriented Programming", pageNumber: 3},
-        {title: "Compiling C#", pageNumber: 4},
-        {title: "Naming Convntions", pageNumber: 5},
-        {title: "Variable Types in C#", pageNumber: 6},
-        {title: "Introduction to Namespaces", pageNumber: 7}
-    ]
-
     useEffect(() => {
         console.log("edit=" + searchParams.get("edit"));
         console.log("page=" + searchParams.get("page") != undefined && searchParams.get("page") != null ? searchParams.get("page") : "undefined");
