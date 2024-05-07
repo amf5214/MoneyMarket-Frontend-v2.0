@@ -24,7 +24,7 @@ const Toolbar = () => {
     const { user, setUser } = useContext(AuthContext);
 
     // @ts-ignore
-    const [ profile, setProfile ] = useState(null);
+    const [ profile, setProfile ] = useState<Profile>(null);
 
     const location = useLocation();
 
