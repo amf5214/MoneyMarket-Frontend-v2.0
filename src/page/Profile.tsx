@@ -8,7 +8,7 @@ import {CardContent} from "@mui/material";
 import {useEffect, useState} from "react";
 import Toolbar from "../component/Toolbar"
 import {Footer} from "../component/Footer.tsx";
-import loadUser, {loadProfile, updateProfile} from "../services/auth/account.service.ts";
+import loadUser, {checkSubscriptionStatus, loadProfile, updateProfile} from "../services/auth/account.service.ts";
 import Cookies from "js-cookie";
 import "../style/page/account.css"
 import EditIcon from '@mui/icons-material/Edit';
@@ -28,6 +28,8 @@ export const ProfilePage = () => {
 
     const [editMode, setEditMode] = useState(0);
 
+    const [subscription, setSubscription] = useState(false);
+
     useEffect(() => {
        const populate = async () => {
            const cookie = Cookies.get("Authorization");
@@ -38,6 +40,13 @@ export const ProfilePage = () => {
                setProfile(await localProfile);
                setLocation(localProfile.citystate);
                setEducation(localProfile.education);
+               const subscriptionStatus = await checkSubscriptionStatus(cookie);
+               if(subscriptionStatus != null) {
+                   setSubscription(subscriptionStatus);
+               } else {
+                   setSubscription(false);
+               }
+
            }
        }
         populate();
@@ -77,31 +86,55 @@ export const ProfilePage = () => {
                         <CardContent className="flex flex-col items-center">
                             <Card className="w-[100%]">
                                 <CardContent className="flex flex-col items-center relative">
-                                    { profile != null ? <Avatar className="h-40 w-40 mb-4" alt="User Avatar" src={profile.bio}/> :
-                                        <Avatar className="h-40 w-40 mb-4" alt="User Avatar" src={""}/> }
+                                    {profile != null ?
+                                        <Avatar className="h-40 w-40 mb-4" alt="User Avatar" src={profile.bio}/> :
+                                        <Avatar className="h-40 w-40 mb-4" alt="User Avatar" src={""}/>}
 
                                     <figure className="flex flex-col items-center">
-                                        { user != null ? <div className="text-2xl font-bold">{user.username}</div> : null }
-                                        { profile != null ? <p className="text-xs text-gray-500 dark:text-gray-400">{profile.name}</p> : null }
+                                        {user != null ?
+                                            <div className="text-2xl font-bold">{user.username}</div> : null}
+                                        {profile != null ?
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">{profile.name}</p> : null}
                                     </figure>
 
                                     <Divider className="md:w-[70%] mt-3 mb-3"/>
 
                                     {profile != null ? editMode == 0 ?
                                         <p className="text-xs text-gray-500 dark:text-gray-400">Email: {profile.email}</p> :
-                                        <Textarea  className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Email"} placeholder={profile.email} isDisabled/> : null}
+                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2"
+                                                  variant={"bordered"} label={"Email"} placeholder={profile.email}
+                                                  isDisabled/> : null}
                                     {profile != null ? editMode == 0 ?
                                         <p className="text-xs text-gray-500 dark:text-gray-400">Education: {profile.education}</p> :
-                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Education"} value={education} onChange={e => setEducation(e.target.value)} /> : null}
+                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2"
+                                                  variant={"bordered"} label={"Education"} value={education}
+                                                  onChange={e => setEducation(e.target.value)}/> : null}
                                     {profile != null ? editMode == 0 ?
                                         <p className="text-xs text-gray-500 dark:text-gray-400">Location: {profile.citystate}</p> :
-                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Location"} value={location} onChange={e => setLocation(e.target.value)} /> : null}
+                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2"
+                                                  variant={"bordered"} label={"Location"} value={location}
+                                                  onChange={e => setLocation(e.target.value)}/> : null}
+                                    {profile != null && editMode == 0 && subscription ?
+                                        <figure className="flex flex-row items-center mt-4">
+                                            <Button color="primary">
+                                                Premium Subscriber
+                                            </Button>
+                                        </figure>
+                                        : profile != null && editMode == 0 && !subscription ?
+                                            <figure className="flex flex-row items-center mt-4">
+                                                <Button color="primary">
+                                                     Subscribe to Access Learning Hub
+                                                </Button>
+                                            </figure>
+                                        : null}
 
-                                    <Button className="absolute top-2 right-2 bg-transparent" onClick={_e => setEdit()}>
-                                        <EditIcon />
+                                    <Button className="absolute top-2 right-2 bg-transparent"
+                                            onClick={_e => setEdit()}>
+                                        <EditIcon/>
                                     </Button>
 
-                                    {editMode == 1 ? <Button color={"primary"} onClick={_e => completed()} >Complete</Button> : null}
+                                    {editMode == 1 ? <Button color={"primary"}
+                                                                 onClick={_e => completed()}>Complete</Button> : null}
 
                                 </CardContent>
                             </Card>

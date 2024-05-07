@@ -53,4 +53,22 @@ export const updateProfile = async (cookie:string, education:string, location:st
     }
 }
 
+export const checkSubscriptionStatus = async (cookie:string) => {
+    try {
+        const response = await axios.get(`${Path.API_BASE}/payment/verify-subscription`,
+            { headers: {
+                    'Authorization': `Bearer ${cookie}`
+                },
+            });
+        return response.status == 200;
+    } catch(err) {
+        // @ts-ignore
+        if(err.response.status === 500) {
+            return false;
+        }
+        return null;
+    }
+}
+
+
 export default loadUser;
