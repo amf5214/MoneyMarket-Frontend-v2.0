@@ -84,9 +84,9 @@ const Toolbar = () => {
                 <Link href={Path.LEARNING_HUB} color={location.pathname.includes(Path.LEARNING_HUB) ? "primary" : "foreground"}>
                     Learning Hub
                 </Link>
-                <Link href={Path.CONTENT_HUB} color={location.pathname.includes(Path.CONTENT_HUB) ? "primary" : "foreground"}>
-                    Content Hub
-                </Link>
+                {/*<Link href={Path.CONTENT_HUB} color={location.pathname.includes(Path.CONTENT_HUB) ? "primary" : "foreground"}>*/}
+                {/*    Content Hub*/}
+                {/*</Link>*/}
             </NavbarContent>
             
             
@@ -136,7 +136,7 @@ const Toolbar = () => {
                                         />
                                 }
                                 </DropdownItem>
-                                <DropdownItem key="settings">My Settings</DropdownItem>
+                                {/*<DropdownItem key="settings">My Settings</DropdownItem>*/}
                                 <DropdownItem key="help">Help</DropdownItem>
                                 <DropdownItem onClick={handleSignout} key="logout">Log Out</DropdownItem>
                         </DropdownMenu>
@@ -209,17 +209,17 @@ const Toolbar = () => {
                             Learning Hub
                         </Link>
                     </NavbarMenuItem>
-                    <NavbarMenuItem>
-                        <Link href={Path.CONTENT_HUB} color={"foreground"}>
-                            Content Hub
-                        </Link>
-                    </NavbarMenuItem>
+                    {/*<NavbarMenuItem>*/}
+                    {/*    <Link href={Path.CONTENT_HUB} color={"foreground"}>*/}
+                    {/*        Content Hub*/}
+                    {/*    </Link>*/}
+                    {/*</NavbarMenuItem>*/}
                     <Divider />
-                    <NavbarMenuItem>
-                        <Link href="#" color={"foreground"}>
-                            My Settings
-                        </Link>
-                    </NavbarMenuItem>
+                    {/*<NavbarMenuItem>*/}
+                    {/*    <Link href="#" color={"foreground"}>*/}
+                    {/*        My Settings*/}
+                    {/*    </Link>*/}
+                    {/*</NavbarMenuItem>*/}
                     <NavbarMenuItem>
                         <Link href="#" color={"foreground"}>
                             Help
