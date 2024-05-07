@@ -8,13 +8,14 @@ import {CardContent} from "@mui/material";
 import {useEffect, useState} from "react";
 import Toolbar from "../component/Toolbar"
 import {Footer} from "../component/Footer.tsx";
-import loadUser, {loadProfile} from "../services/auth/account.service.ts";
+import loadUser, {loadProfile, updateProfile} from "../services/auth/account.service.ts";
 import Cookies from "js-cookie";
 import "../style/page/account.css"
 import EditIcon from '@mui/icons-material/Edit';
 import {useNavigate, useSearchParams} from "react-router-dom";
 import PathService from "../services/path.service.ts";
-import Path from "../services/path.service.ts";
+import {Profile} from "../services/Profile.ts";
+import {User} from "../services/auth/User.ts";
 
 export const ProfilePage = () => {
 
@@ -22,8 +23,8 @@ export const ProfilePage = () => {
 
     const navigate = useNavigate();
 
-    const [ user, setUser ] = useState(null);
-    const [ profile, setProfile ] = useState(null);
+    const [ user, setUser ] = useState<User>();
+    const [ profile, setProfile ] = useState<Profile>();
 
     const [editMode, setEditMode] = useState(0);
 
@@ -35,7 +36,8 @@ export const ProfilePage = () => {
                setUser(await localUser);
                const localProfile = await loadProfile(cookie);
                setProfile(await localProfile);
-               console.log(await localProfile);
+               setLocation(localProfile.citystate);
+               setEducation(localProfile.education);
            }
        }
         populate();
@@ -44,9 +46,16 @@ export const ProfilePage = () => {
        if(mode != null) {
            setEditMode(Number.parseInt(mode));
        }
-    },[]);
+    },[searchParams]);
 
-    const completed = () => {
+    const completed = async () => {
+        const cookie = Cookies.get("Authorization");
+        if(cookie != undefined) {
+            console.log(`education: {${education}}, location:{${location}}`);
+            const response = await updateProfile(cookie, education, location);
+            console.log(response);
+        }
+
         navigate(PathService.ACCOUNT + "?edit=0");
         setEditMode(0);
     }
@@ -55,6 +64,9 @@ export const ProfilePage = () => {
         navigate(PathService.ACCOUNT + "?edit=1");
         setEditMode(1);
     }
+
+    const [location, setLocation] = useState("");
+    const [education, setEducation] = useState("");
 
     // @ts-ignore
     return (
@@ -77,13 +89,13 @@ export const ProfilePage = () => {
 
                                     {profile != null ? editMode == 0 ?
                                         <p className="text-xs text-gray-500 dark:text-gray-400">Email: {profile.email}</p> :
-                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Email"} value={profile.email} isDisabled/> : null}
+                                        <Textarea  className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Email"} placeholder={profile.email} isDisabled/> : null}
                                     {profile != null ? editMode == 0 ?
                                         <p className="text-xs text-gray-500 dark:text-gray-400">Education: {profile.education}</p> :
-                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Education"} value={profile.education} /> : null}
+                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Education"} value={education} onChange={e => setEducation(e.target.value)} /> : null}
                                     {profile != null ? editMode == 0 ?
                                         <p className="text-xs text-gray-500 dark:text-gray-400">Location: {profile.citystate}</p> :
-                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Location"} value={profile.citystate} /> : null}
+                                        <Textarea className="text-xs text-gray-500 dark:text-gray-400 m-2" variant={"bordered"} label={"Location"} value={location} onChange={e => setLocation(e.target.value)} /> : null}
 
                                     <Button className="absolute top-2 right-2 bg-transparent" onClick={_e => setEdit()}>
                                         <EditIcon />
