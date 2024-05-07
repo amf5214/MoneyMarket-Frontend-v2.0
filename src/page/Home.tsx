@@ -1,5 +1,6 @@
 // Style imports
 import Toolbar from "../component/Toolbar";
+import { Footer } from "../component/Footer";
 import "../style/page/home.css"
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
                     <h3 style={{fontSize: "x-large"}}>Alpha Storm Project</h3>
                 </figure>
             </div>
+            <Footer />
         </>
     );
 }

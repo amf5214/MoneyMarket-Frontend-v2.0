@@ -1,0 +1,32 @@
+@-webkit-keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.profile-content {
+    font-family: "Kanit", serif;
+    background: -webkit-linear-gradient(120deg, #004643, #004643f1, #004643e7, #004643d1, #004643c1, #004643a1);
+    background: linear-gradient(120deg, #004643, #004643f1, #004643e7, #004643d1, #004643c1, #004643a1);
+    -webkit-animation: gradient 60s ease infinite;
+    animation: gradient 60s ease infinite;
+}

@@ -14,6 +14,7 @@ const getNews = async (cookie:string) => {
         console.log(await jsonResult);
         return await jsonResult;
     } catch(err) {
+        // @ts-ignore
         if(err.response.status === 401) {
             return ApiError.UNAUTHORIZED;
         }

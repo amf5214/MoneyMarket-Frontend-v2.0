@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { getFinancials } from "../services/live-markets/financials.service";
 import Cookies from "js-cookie";
 import { ApiError } from "../services/error.service";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
     ticker:string;
@@ -13,8 +12,6 @@ interface Props {
 }
 
 export const StockFinancialTable = ( { ticker, width, height }:Props ) => {
-
-    const navigate = useNavigate();
 
     const initArray:StockFinancialRecord[] = [];
     const [tableData, setTableData] = useState(initArray);

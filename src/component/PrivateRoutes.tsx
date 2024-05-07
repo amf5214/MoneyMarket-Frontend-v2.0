@@ -1,16 +1,19 @@
 import { Outlet, Navigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import loadUser from '../services/auth/account.service';
+import { ApiError } from '../services/error.service';
 
 const PrivateRoutes = () => {
     let auth = Cookies.get("Authorization");
+
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         const updateUser = async () => {
             if(auth != undefined) {
                 const user = await loadUser(auth);
-                auth = await user;
+                setUser(await user);
             }
         }
 
@@ -18,7 +21,9 @@ const PrivateRoutes = () => {
     }, []);
 
     return(
-        auth ? <Outlet/> : <Navigate to="/signin"/>
+        <>
+            { auth && user != ApiError.UNAUTHORIZED ? <Outlet/> : <Navigate to="/signin"/> }
+        </>
     )
 }
 

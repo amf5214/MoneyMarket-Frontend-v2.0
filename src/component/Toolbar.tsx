@@ -2,24 +2,29 @@
 import { useContext, useEffect, useState } from "react";
 
 // NextUI imports
-import { Avatar, Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, User } from "@nextui-org/react";
+import { Avatar, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, User } from "@nextui-org/react";
 
 // Other imports
-import SearchIcon from '@mui/icons-material/Search';
 import Cookies from "js-cookie";
 
 // Style imports
 import '../style/component/toolbar.css'
-import loadUser from "../services/auth/account.service";
 import Path from "../services/path.service";
 import AuthContext from "../provider/AuthProvider";
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { ApiError } from "../services/error.service";
 import { TickerAutocomplete } from "./TickerAutocomplete";
+import loadUser, {loadProfile} from "../services/auth/account.service.ts";
 
 const Toolbar = () => {
 
+    const navigate = useNavigate();
+
+    // @ts-ignore
     const { user, setUser } = useContext(AuthContext);
+
+    // @ts-ignore
+    const [ profile, setProfile ] = useState(null);
 
     const location = useLocation();
 
@@ -37,9 +42,19 @@ const Toolbar = () => {
     }, [user])
 
     useEffect(() => {
-        console.log(location);
-    }, [location])
+        const populate = async () => {
+            const cookie = Cookies.get("Authorization");
+            if(cookie != undefined) {
+                const localUser = await loadUser(cookie);
+                setUser(await localUser);
+                const localProfile = await loadProfile(cookie);
+                setProfile(await localProfile);
+            }
+        }
+        populate();
+    },[]);
 
+    // @ts-ignore
     return (
         <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full" isBordered className="h-full relative flex navheader">
             {/* Logo and company name - Visibility = Narrow Screen */ }
@@ -66,12 +81,12 @@ const Toolbar = () => {
                 <Link href={Path.MARKET_NEWS} color={location.pathname == Path.MARKET_NEWS ? "primary" : "foreground"}>
                     Market News
                 </Link>
-                <Link href="#" color={location.pathname.includes(Path.LEARNING_HUB) ? "primary" : "foreground"}>
+                <Link href={Path.LEARNING_HUB} color={location.pathname.includes(Path.LEARNING_HUB) ? "primary" : "foreground"}>
                     Learning Hub
                 </Link>
-                <Link href="#" color={location.pathname.includes(Path.CONTENT_HUB) ? "primary" : "foreground"}>
-                    Content Hub
-                </Link>
+                {/*<Link href={Path.CONTENT_HUB} color={location.pathname.includes(Path.CONTENT_HUB) ? "primary" : "foreground"}>*/}
+                {/*    Content Hub*/}
+                {/*</Link>*/}
             </NavbarContent>
             
             
@@ -83,24 +98,45 @@ const Toolbar = () => {
                     </NavbarItem>
                     <Dropdown placement="bottom-end">
                         <DropdownTrigger>
-                            <Avatar   
-                                as={"button"}
-                                name={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
-                                src="https://i.pravatar.cc/200?img=13"
-                                color="primary"  
-                                isBordered
-                            />
+                            {profile != null ?
+                                <Avatar
+                                    as={"button"}
+                                    name={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
+                                    src={profile.bio}
+                                    color="primary"
+                                    isBordered
+                                /> :
+                                <Avatar
+                                    as={"button"}
+                                    name={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
+                                    src=""
+                                    color="primary"
+                                    isBordered
+                                />
+                            }
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Profile Actions" variant="flat">
                                 <DropdownItem key="profile" className="h-14 gap-2">
-                                    <User   
-                                        name={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
-                                        description={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["username"] : "Not signed in"}
-                                        avatarProps={{
-                                            src: "https://i.pravatar.cc/200?img=13"                                    }}
-                                    />
+                                    {profile != null ?
+                                        <User
+                                            name={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
+                                            description={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["username"] : "Not signed in"}
+                                            avatarProps={{
+                                                src: profile.bio}}
+                                            as={"button"}
+                                            onClick={_e => navigate(Path.ACCOUNT)}
+                                        /> :
+                                        <User
+                                            name={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
+                                            description={(localUser != null && localUser != ApiError.UNAUTHORIZED) ? localUser["username"] : "Not signed in"}
+                                            avatarProps={{
+                                                src: ""}}
+                                            as={"button"}
+                                            onClick={_e => navigate(Path.ACCOUNT)}
+                                        />
+                                }
                                 </DropdownItem>
-                                <DropdownItem key="settings">My Settings</DropdownItem>
+                                {/*<DropdownItem key="settings">My Settings</DropdownItem>*/}
                                 <DropdownItem key="help">Help</DropdownItem>
                                 <DropdownItem onClick={handleSignout} key="logout">Log Out</DropdownItem>
                         </DropdownMenu>
@@ -129,15 +165,30 @@ const Toolbar = () => {
             {(localUser && localUser != ApiError.UNAUTHORIZED) != null ?
                 <NavbarMenu>
                     <NavbarMenuItem style={{marginTop: ".5rem"}}>
-                        <User  
-                            as={"button"}
-                            name={localUser != null ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
-                            avatarProps={{
-                                src: "https://i.pravatar.cc/200?img=13",
-                                color: "primary",  
-                                isBordered: true
-                            }}
-                        />
+                        {profile != null ?
+                            <User
+                                as={"button"}
+                                name={localUser != null ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
+                                avatarProps={{
+                                    src: profile.bio,
+                                    color: "primary",
+                                    isBordered: true
+                                }}
+                                onClick={_e => navigate(Path.ACCOUNT)}
+
+                            /> :
+                            <User
+                                as={"button"}
+                                name={localUser != null ? localUser["firstName"] + " " + localUser["lastName"] : "Not signed in"}
+                                avatarProps={{
+                                    src: "",
+                                    color: "primary",
+                                    isBordered: true
+                                }}
+                                onClick={_e => navigate(Path.ACCOUNT)}
+
+                            />
+                        }
                     </NavbarMenuItem>
                     <NavbarMenuItem>
                         <Link onClick={handleSignout} key="logout">Log Out</Link>
@@ -154,21 +205,21 @@ const Toolbar = () => {
                         </Link>
                     </NavbarMenuItem>
                     <NavbarMenuItem>
-                        <Link href="#" color={"foreground"}>
+                        <Link href={Path.LEARNING_HUB} color={"foreground"}>
                             Learning Hub
                         </Link>
                     </NavbarMenuItem>
-                    <NavbarMenuItem>
-                        <Link href="#" color={"foreground"}>
-                            Content Hub
-                        </Link>
-                    </NavbarMenuItem>
+                    {/*<NavbarMenuItem>*/}
+                    {/*    <Link href={Path.CONTENT_HUB} color={"foreground"}>*/}
+                    {/*        Content Hub*/}
+                    {/*    </Link>*/}
+                    {/*</NavbarMenuItem>*/}
                     <Divider />
-                    <NavbarMenuItem>
-                        <Link href="#" color={"foreground"}>
-                            My Settings
-                        </Link>
-                    </NavbarMenuItem>
+                    {/*<NavbarMenuItem>*/}
+                    {/*    <Link href="#" color={"foreground"}>*/}
+                    {/*        My Settings*/}
+                    {/*    </Link>*/}
+                    {/*</NavbarMenuItem>*/}
                     <NavbarMenuItem>
                         <Link href="#" color={"foreground"}>
                             Help

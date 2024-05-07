@@ -4,7 +4,7 @@ import { ApiError } from "../error.service";
 
 export const handleSignUp = async (firstName:string, lastName:string, email:string, password:string, username:string) => {
     try {
-        const response = await axios.post(`${Path.API_BASE}/auth/signup`,
+        await axios.post(`${Path.API_BASE}/auth/signup`,
         JSON.stringify({
             firstName:firstName,
             lastName:lastName,
@@ -19,7 +19,7 @@ export const handleSignUp = async (firstName:string, lastName:string, email:stri
         return "successful";
 
     } catch(err) {
-        console.log(err);
+        // @ts-ignore
         if(err.response.status === 401) {
             return ApiError.UNAUTHORIZED;
         }

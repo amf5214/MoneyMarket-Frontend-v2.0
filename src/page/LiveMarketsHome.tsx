@@ -1,4 +1,4 @@
-import { Card, Tab, Tabs } from "@nextui-org/react"
+import { Tab, Tabs } from "@nextui-org/react"
 import { StockTable } from "../component/StockTable"
 import Toolbar from "../component/Toolbar"
 import { ActiveStock } from "../services/ticker-carousel/activestock";
@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { ApiError } from "../services/error.service";
 import { getWLAStocks } from "../services/ticker-carousel/marketdata.service";
 import { useNavigate } from "react-router-dom";
+import { Footer } from "../component/Footer";
 
 export const LiveMarketsHomePage = () => {
 
@@ -60,6 +61,7 @@ export const LiveMarketsHomePage = () => {
                     </Tabs>
                 </div>
             </div>
+            <Footer />
         </>
     )
 }

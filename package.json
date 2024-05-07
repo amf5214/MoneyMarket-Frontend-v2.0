@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npm install serve && serve dist -s -n -L -p $PORT"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -23,12 +24,14 @@
     "js-cookie": "^3.0.5",
     "js-cookies": "^1.0.4",
     "luxon": "^3.4.4",
+    "mongodb": "^6.5.0",
     "nice-react-ticker": "^2.1.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "serve": "^14.2.3"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

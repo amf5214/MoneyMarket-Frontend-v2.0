@@ -1,10 +1,8 @@
-import { Button, Card, CardBody, Divider, Input, Progress, ScrollShadow, Textarea } from "@nextui-org/react";
+import { Button, Card, CardBody, Input, Progress, ScrollShadow } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { InvalidSignupModal } from "./InvalidSignupModal";
 import { SuccessfulSignupModal } from "./SuccessfulSignupModal";
 import { handleSignUp } from "../services/auth/signup.service";
-import { Password } from "@mui/icons-material";
 
 import "../style/page/signin.css"
 
@@ -136,7 +134,7 @@ export const SignUpCard = () => {
                             </figure>
                             
                         </form>
-                        <Button isDisabled={progress == 100 ? false : true} color="primary" variant="shadow" className="max-w-[100%]" onClick={handleSubmit}>
+                        <Button isDisabled={progress != 100} color="primary" variant="shadow" className="max-w-[100%]" onClick={handleSubmit}>
                             Submit
                         </Button>
                     </ScrollShadow>

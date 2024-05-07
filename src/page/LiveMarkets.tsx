@@ -1,27 +1,26 @@
-import { Autocomplete, AutocompleteItem, Button, ButtonGroup, Card, CardBody, Chip, Divider, Input, Navbar, NavbarContent, NavbarItem, Skeleton } from "@nextui-org/react"
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
-import SearchIcon from '@mui/icons-material/Search';
-import Ticker, { FinancialTicker, NewsTicker } from 'nice-react-ticker';
+import { Button, ButtonGroup, Card, CardBody, Skeleton } from "@nextui-org/react"
+import { useEffect, useState } from "react";
+import Ticker, { FinancialTicker } from 'nice-react-ticker';
 import Cookies from "js-cookie";
 import { getMarketStatus, getWLAStocks } from "../services/ticker-carousel/marketdata.service";
 import { ActiveStock } from "../services/ticker-carousel/activestock";
 import "../style/page/livemarkets.css";
-import { useAsyncList } from "@react-stately/data";
-import { TickerAutocomplete } from "../component/TickerAutocomplete";
 import { getStockData } from "../services/live-markets/ticker.service";
 import { TickerData } from "../services/live-markets/dto";
 import { API_FORMAT, formatDateString } from "../services/date.service";
+// @ts-ignore
 import { DateTime } from 'luxon';
 import { CandlestickGraph } from "../component/CandlestickGraph";
 import { FinancialsGraph } from "../component/FinancialsGraph";
 import { getTickerDetails } from "../services/live-markets/tickerdetails.service";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ApiError } from "../services/error.service";
 import Toolbar from "../component/Toolbar";
 import { useWindowSize } from "../hook/size.hook";
 import Path from "../services/path.service";
 import { StockFinancialTable } from "../component/StockFinancialTable";
 import { BalanceSheetGraph } from "../component/BalanceSheetGraph";
+import { Footer } from "../component/Footer";
 
 // Page to access market data
 export const LiveMarketsPage = () => {
@@ -32,8 +31,8 @@ export const LiveMarketsPage = () => {
     const states = ["open", "extended-hours", "closed"];
 
     // Style classes for market status objects
-    const openClass = "bg-green-200 text-green-600";
-    const closeClass = "bg-red-200 text-red-600";
+    // const openClass = "bg-green-200 text-green-600";
+    // const closeClass = "bg-red-200 text-red-600";
 
     // State variables for status of markets
     const [nyseState, setNYSEState] = useState("");
@@ -76,7 +75,7 @@ export const LiveMarketsPage = () => {
     dt = dt.minus({'weeks': 4});
     const date:Date = dt.toJSDate();
     const [startDate, setStartDate] = useState(date);
-    const [endDate, setEndDate] = useState(new Date());
+    const [endDate] = useState(new Date());
 
     // State variable to store aggregation level
     const [timeSpan, setTimeSpan] = useState("day");
@@ -96,13 +95,14 @@ export const LiveMarketsPage = () => {
     const [financialsIndex, setFinancialsIndex] = useState(0);
 
     // State variable storing span selection for year agg
-    const [yearSpan, setYearSpan] = useState("quarter")
+    const [yearSpan] = useState("quarter")
 
     // Effect that pulls data on market status and updates the state variables
     useEffect(() => {
         const getMarket = async () => {
             try {
                 if(Cookies.get('Authorization') != null) {
+                    // @ts-ignore
                     const response = await getMarketStatus(Cookies.get('Authorization'));
                     if(response != undefined && response != ApiError.UNAUTHORIZED) {
                         setNYSEState(await response.exchanges.nyse);
@@ -128,6 +128,7 @@ export const LiveMarketsPage = () => {
             try {
                 if(Cookies.get('Authorization') != null) {
                     setActiveStocksArray(activeStocks);
+                    // @ts-ignore
                     const response = await getWLAStocks(Cookies.get('Authorization'));
                     if(response != undefined && response != ApiError.UNAUTHORIZED) {
                         setActiveStocksArray(response.mostActive);
@@ -349,9 +350,9 @@ export const LiveMarketsPage = () => {
                         
                         <div className="container-lg mx-auto flex flex-col justify-center items-center col-span-2 lg:col-span-1">
                             <ButtonGroup style={{alignSelf: "flex-start", background: "transparent", color: "white"}}>
-                                <Button onClick={(e) => setFinancialsIndex(0)} id="candlestick-button">Cash Flow Chart</Button>
-                                <Button onClick={(e) => setFinancialsIndex(1)} id="candlestick-button">Balance Sheet Table</Button>
-                                <Button onClick={(e) => setFinancialsIndex(2)} id="candlestick-button">Balance Sheet Chart</Button>
+                                <Button onClick={(_e) => setFinancialsIndex(0)} id="candlestick-button">Cash Flow Chart</Button>
+                                <Button onClick={(_e) => setFinancialsIndex(1)} id="candlestick-button">Balance Sheet Table</Button>
+                                <Button onClick={(_e) => setFinancialsIndex(2)} id="candlestick-button">Balance Sheet Chart</Button>
                             </ButtonGroup>
                             <Card className="h-full flex-col mx-auto flex justify-center items-center">
                                 <CardBody className="h-full flex-col mx-auto flex justify-center items-center">
@@ -403,6 +404,7 @@ export const LiveMarketsPage = () => {
                     </div>
                     }
             </div>
+            <Footer />
         </>
     )
 }
